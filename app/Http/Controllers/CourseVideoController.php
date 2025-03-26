@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Google_Client;
 use App\Models\Course;
 use App\Models\CourseVideo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\DataTables\CourseVideosDataTable;
 use AymanElmalah\YoutubeUploader\Facades\Youtube;
-// use Alaouy\Youtube\Facades\Youtube;
-// use alchemyguy\YoutubeLaravelApi\VideoService;
-// use alchemyguy\YoutubeLaravelApi\AuthenticateService;
 
 class CourseVideoController extends Controller
 {
