@@ -20,6 +20,8 @@ use App\Http\Controllers\Trooper\TCourseController;
 use App\Http\Controllers\Trooper\TDashboardController;
 
 Route::get('/', [PageController::class, 'index'])->name('welcome');
+// Route::get('/test-yt', [CourseVideoController::class, 'testYT']);
+Route::get('/successauth', [CourseVideoController::class, 'callback']);
 
 Route::middleware(['auth','phone.verified'])
 ->prefix('troopers')

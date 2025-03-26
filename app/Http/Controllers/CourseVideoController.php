@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Google_Client;
 use App\Models\Course;
 use App\Models\CourseVideo;
 use Illuminate\Http\Request;
-use App\DataTables\CourseVideosDataTable;
 use Illuminate\Support\Facades\Storage;
+use App\DataTables\CourseVideosDataTable;
+use AymanElmalah\YoutubeUploader\Facades\Youtube;
+// use Alaouy\Youtube\Facades\Youtube;
+// use alchemyguy\YoutubeLaravelApi\VideoService;
+// use alchemyguy\YoutubeLaravelApi\AuthenticateService;
 
 class CourseVideoController extends Controller
 {
@@ -30,23 +35,54 @@ class CourseVideoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
-    
+
         $filePath = $request->input('video'); 
-    
-        CourseVideo::create([
+
+        $courseVideo = CourseVideo::create([
             'course_id' => $request->course_id,
             'title' => $request->title,
             'description' => $request->description,
             'video_url' => $filePath
         ]);
-    
-        return redirect()->route('admin.videos.index', $request->course_id)
+
+        $redirectURL = 'http://localhost:8000/successauth';
+
+        return redirect()
+                ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
+                ->with([
+                    'courseVideo' => $courseVideo,
+                    'course_id' => $request->course_id,
+                    'redirect_url' => $redirectURL
+                ]);
+    }
+
+    public function callback(Request $request) 
+    {
+        $courseVideo = session('courseVideo');
+        $courseId = session('course_id');
+        $redirectURL = session('redirect_url');
+
+        if ($courseVideo && $courseId) {
+            // VIDEO URL FROM KEY 'video_url'
+            $videoUrlData = json_decode($courseVideo->video_url, true);
+            $videoPath = $videoUrlData['path'];
+
+            Youtube::setRedirectUrl($redirectURL)->upload('storage/' . $videoPath,
+                [
+                    'title' => $courseVideo->title,
+                    'description' => $courseVideo->description,
+                    'tags' => ['cooking', 'cook'],
+                    'category_id' => 1,
+                ]
+            );
+            
+            return redirect()->route('admin.videos.index', $courseId)
                          ->with('success', 'Video successfully uploaded.');
+        } else {
+            return response()->json(['error' => 'No session data found'], 404);
+        }
     }
     
-    
-    
-
     public function edit($course_id, $video_id)
     {
         $course = Course::findOrFail($course_id);
