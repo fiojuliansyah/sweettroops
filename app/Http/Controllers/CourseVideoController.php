@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Jobs\UploadFileJob;
 use App\Models\CourseVideo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\DataTables\CourseVideosDataTable;
 use AymanElmalah\YoutubeUploader\Facades\Youtube;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 
 class CourseVideoController extends Controller
 {
@@ -31,24 +35,26 @@ class CourseVideoController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $filePath = $request->input('video'); 
-
+        // VALUE SEBENARNYA UNTUK KOLOM VIDEO URL SAYA GANTI DENGAN VIDEO NAME AGAR LEBIH DINAMIS
         $courseVideo = CourseVideo::create([
             'course_id' => $request->course_id,
             'title' => $request->title,
             'description' => $request->description,
-            'video_url' => $filePath
+            'video_url' => $request->filename
         ]);
 
-        $redirectURL = 'http://localhost:8000/successauth';
+        return redirect()->route('admin.videos.create', $courseVideo->course_id)
+                         ->with('success', 'Video successfully uploaded.');
 
-        return redirect()
-                ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
-                ->with([
-                    'courseVideo' => $courseVideo,
-                    'course_id' => $request->course_id,
-                    'redirect_url' => $redirectURL
-                ]);
+        // $redirectURL = 'http://localhost:8000/successauth';
+
+        // return redirect()
+        //         ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
+        //         ->with([
+        //             'courseVideo' => $courseVideo,
+        //             'course_id' => $request->course_id,
+        //             'redirect_url' => $redirectURL
+        //         ]);
     }
 
     public function callback(Request $request) 
@@ -71,7 +77,7 @@ class CourseVideoController extends Controller
                 ]
             );
             
-            return redirect()->route('admin.videos.index', $courseId)
+            return redirect()->route('admin.videos.create', $courseId)
                          ->with('success', 'Video successfully uploaded.');
         } else {
             return response()->json(['error' => 'No session data found'], 404);
@@ -123,13 +129,47 @@ class CourseVideoController extends Controller
 
     public function upload(Request $request)
     {
-        $request->validate([
-            'video' => 'required|file|mimes:mp4,mov,flv,wmv|max:2048000',
-        ]);
+        // $request->validate([
+        //     'video' => 'required|file|mimes:mp4,mov,flv,wmv|max:2048000',
+        // ]);
 
-        $file = $request->file('video');
-        $path = $file->store('videos', 'public'); 
+        // $file = $request->file('video');
 
-        return response()->json(['path' => $path]);
+        // dispatch(new UploadFileJob($file));
+
+        // return response()->json(['path' => 'videos/']);
+
+        /**
+         * 
+         * New code for large file upload
+         * 
+         */
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+
+        $fileReceived = $receiver->receive();
+
+        if ($fileReceived->isFinished()) {
+            $file = $fileReceived->getFile();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = str_replace('.'.$extension, '', $file->getClientOriginalName());
+            $fileName .= '_' . md5(time()) . '.' . $extension;
+
+            $disk = Storage::disk(config('filesystems.default'));
+            $path = $disk->putFileAs('videos', $file, $fileName);
+
+            unlink($file->getPathname());
+
+            return [
+                'path' => asset('storage/' . $path),
+                'filename' => $fileName
+            ];
+        }
+
+        $handler = $fileReceived->handler();
+
+        return [
+            'done' => $handler->getPercentageDone(),
+            'status' => true
+        ];
     }
 }

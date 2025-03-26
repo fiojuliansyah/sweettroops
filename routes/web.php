@@ -72,7 +72,7 @@ Route::middleware(['auth','admin'])
     Route::put('/videos/{id}', [CourseVideoController::class, 'update'])->name('videos.update');
     Route::delete('/videos/{id}', [CourseVideoController::class, 'destroy'])->name('videos.destroy');
     Route::post('/videos', [CourseVideoController::class, 'store'])->name('videos.store');
-    Route::post('/videos/upload', [CourseVideoController::class, 'upload'])->name('videos.upload')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    Route::post('/video-upload/large', [CourseVideoController::class, 'upload'])->name('videos.upload')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 });
 
 require __DIR__.'/auth.php';
