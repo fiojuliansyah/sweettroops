@@ -34,25 +34,43 @@ class CourseVideoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
-
-        // VALUE SEBENARNYA UNTUK KOLOM VIDEO URL SAYA GANTI DENGAN VIDEO NAME AGAR LEBIH DINAMIS
-        $courseVideo = CourseVideo::create([
+    
+        $courseVideoData = [
             'course_id' => $request->course_id,
             'title' => $request->title,
+            'type' => $request->type,
             'description' => $request->description,
-            'video_url' => $request->filename
-        ]);
-        
-        $redirectURL = 'http://localhost:8000/successauth';
-
-        return redirect()
+        ];
+    
+        if ($request->type == 'url') {
+            $courseVideoData['link_url'] = $request->link_url;
+            $courseVideo = CourseVideo::create($courseVideoData);
+    
+            return redirect()->route('admin.videos.index', $request->course_id)->with([
+                'courseVideo' => $courseVideo,
+                'course_id' => $request->course_id,
+            ]);
+        }
+    
+        if ($request->type == 'video') {
+            $courseVideoData['video_url'] = $request->filename;
+            $courseVideo = CourseVideo::create($courseVideoData);
+    
+            $redirectURL = 'http://localhost:8000/successauth';
+    
+            return redirect()
                 ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
                 ->with([
                     'courseVideo' => $courseVideo,
                     'course_id' => $request->course_id,
-                    'redirect_url' => $redirectURL
+                    'redirect_url' => $redirectURL,
                 ]);
+        }
+    
+        // Default redirect if no valid type is provided
+        return redirect()->route('errorauth')->with('error', 'Invalid video type');
     }
+    
 
     public function callback(Request $request) 
     {
@@ -61,7 +79,6 @@ class CourseVideoController extends Controller
         $redirectURL = session('redirect_url');
 
         if ($courseVideo && $courseId) {
-            // VIDEO URL FROM KEY 'video_url'
             $videoUrlData = json_decode($courseVideo->video_url, true);
             $videoPath = $videoUrlData['path'];
 
@@ -128,21 +145,6 @@ class CourseVideoController extends Controller
 
     public function upload(Request $request)
     {
-        // $request->validate([
-        //     'video' => 'required|file|mimes:mp4,mov,flv,wmv|max:2048000',
-        // ]);
-
-        // $file = $request->file('video');
-
-        // dispatch(new UploadFileJob($file));
-
-        // return response()->json(['path' => 'videos/']);
-
-        /**
-         * 
-         * New code for large file upload
-         * 
-         */
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
         $fileReceived = $receiver->receive();

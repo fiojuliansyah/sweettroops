@@ -16,6 +16,8 @@ return new class extends Migration
             $table->integer('course_id')->nullable();
             $table->string('title')->nullable();
             $table->string('duration')->nullable();
+            $table->string('type')->nullable();
+            $table->string('link_url')->nullable();
             $table->string('video_url')->nullable();
             $table->text('description')->nullable();
             $table->string('status')->default('active');
