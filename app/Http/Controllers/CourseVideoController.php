@@ -73,6 +73,8 @@ class CourseVideoController extends Controller
                     'category_id' => 1,
                 ]
             );
+
+            Storage::delete('storage/' . $videoPath);
             
             return redirect()->route('admin.videos.create', $courseId)
                          ->with('success', 'Video successfully uploaded.');
