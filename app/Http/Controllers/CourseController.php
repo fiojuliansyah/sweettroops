@@ -61,20 +61,17 @@ class CourseController extends Controller
             }
         }
     
-        // Handle trailer upload
         $trailerPath = null;
         if ($request->hasFile('trailer')) {
             $trailerPath = $request->file('trailer')->store('trailers', 'public');
-            $course->trailer = $trailerPath;
         }
         
     
-        // Create course
         $course = Course::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
             'thumbnail' => json_encode($thumbnailPaths),
-            'trailer' => $trailerPath, // Store trailer path
+            'trailer' => $trailerPath,
             'category_id' => $request->category_id,
             'type_id' => $request->type_id,
             'description' => $request->description,
