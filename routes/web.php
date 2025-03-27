@@ -17,6 +17,7 @@ use App\Http\Controllers\YouTubeAuthController;
 use App\Http\Controllers\ChunkedUploadController;
 use App\Http\Controllers\YouTubeUploadController;
 use App\Http\Controllers\Trooper\TCourseController;
+use App\Http\Controllers\Trooper\TDiscussController;
 use App\Http\Controllers\Trooper\TDashboardController;
 
 Route::get('/', [PageController::class, 'index'])->name('welcome');
@@ -38,7 +39,7 @@ Route::middleware(['auth','phone.verified'])
     Route::get('/my-transactions', [TDashboardController::class, 'myTransactions'])->name('my-transactions');
     Route::delete('/transaction/{transactionId}', [TDashboardController::class, 'deleteTransaction'])->name('transaction.delete');
 
-    Route::get('/course/{slug}/discuss', [TCourseController::class, 'discussCourse'])->name('discuss-course');
+    Route::get('/course/{slug}/discuss', [TDiscussController::class, 'discussCourse'])->name('discuss-course');
 
     Route::post('/buy-course/{id}', [PaymentController::class, 'buyCourse'])->name('buy.course');
     Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');

@@ -56,21 +56,7 @@ class TCourseController extends Controller
         $title = 'All Courses';
     
         return view('troopers.courses.detail-course', compact('title', 'course'));
-    }
-
-    public function discussCourse($slug)
-    {
-        $user = Auth::id();
-        $courseList = Competition::where('user_id', $user)->get();
-        $course = $courseList->first();
-        $title = 'Discuss Courses';
-    
-        if (!$course) {
-            return redirect()->back()->with('error', 'You have not joined any courses.');
-        }
-    
-        return view('troopers.courses.discuss', compact('title', 'course', 'courseList'));
-    }    
+    }   
 
     public function myCourse(Request $request)
     {
