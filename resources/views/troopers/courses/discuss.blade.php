@@ -18,7 +18,11 @@
                         @foreach ($courseList as $item)   
                             <div class="d-flex align-items-start gap-16">
                                 <div class="position-relative flex-shrink-0">
-                                    <img src="{{ asset('storage/' . $item->course->thumbnail) }}" alt="" class="w-44 h-44 rounded-circle object-fit-cover flex-shrink-0">
+                                    @php
+                                        $thumbnails = json_decode($item->course->thumbnail, true);
+                                        $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                                    @endphp
+                                    <img src="{{ asset('storage/' . $firstThumbnail) }}" alt="" class="w-44 h-44 rounded-circle object-fit-cover flex-shrink-0">
                                     <span class="activation-badge w-12 h-12 border-2 position-absolute inset-block-end-0 inset-inline-end-0"></span>
                                 </div>
                                 <div class="d-flex flex-column">
