@@ -51,7 +51,7 @@
                     <div class="col-xxl-3 col-lg-4 col-sm-6">
                         <div class="card border border-gray-100">
                             <div class="card-body p-8">
-                                <a href="course-details.html" class="rounded-20 overflow-hidden text-center mb-8 flex-center p-8">
+                                <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="rounded-20 overflow-hidden text-center mb-8 flex-center p-8">
                                     @php
                                         $thumbnails = json_decode($course->thumbnail, true);
                                         $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
@@ -66,7 +66,7 @@
                                     @if ($course->is_featured == 1)  
                                         <span class="text-13 py-2 px-10 rounded-pill bg-warning-50 text-warning-600 mb-16">Featured</span>
                                     @endif
-                                    <h5 class="mb-0"><a href="course-details.html" class="hover-text-main-600">{{ $course->title }}</a></h5>
+                                    <h5 class="mb-0"><a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="hover-text-main-600">{{ $course->title }}</a></h5>
 
                                     <div class="flex-align gap-8 flex-wrap mt-16">
                                         <div>
@@ -102,8 +102,7 @@
                                             <span class="text-13 fw-bold text-gray-600">4.9</span>
                                             <span class="text-13 fw-bold text-gray-600">(12k)</span>
                                         </div>
-                                        <a href="course-details.html" class="btn btn-outline-main rounded-pill py-9">View Details</a>
-                                        <a href="javascript:void(0)" class="btn btn-main rounded-pill py-9 buy-course" data-course-id="{{ $course->id }}"> BUY Course </a>
+                                        <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="btn btn-outline-main rounded-pill py-9">Detail Course</a>
                                     </div>
                                 </div>
                             </div>
@@ -150,31 +149,3 @@
     </div>
 </div>
 @endsection
-
-@push('js')
-<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
-<script>
-    document.querySelectorAll('.buy-course').forEach(button => {
-        button.addEventListener('click', function () {
-            let courseId = this.getAttribute('data-course-id');
-
-            fetch(`{{ url('/troopers/buy-course/') }}/${courseId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.snapToken) {
-                    snap.pay(data.snapToken);
-                } else {
-                    alert('Payment error');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-</script>
-@endpush
