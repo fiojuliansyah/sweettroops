@@ -40,6 +40,7 @@ Route::middleware(['auth','phone.verified'])
     Route::delete('/transaction/{transactionId}', [TDashboardController::class, 'deleteTransaction'])->name('transaction.delete');
 
     Route::get('/course/{slug}/discuss', [TDiscussController::class, 'discussCourse'])->name('discuss-course');
+    Route::post('/discussion/{courseId}/comment', [TDiscussController::class, 'postComment'])->name('discussion.comment');
 
     Route::post('/buy-course/{id}', [PaymentController::class, 'buyCourse'])->name('buy.course');
     Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');

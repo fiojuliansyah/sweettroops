@@ -28,5 +28,8 @@ class Course extends Model
         return $this->hasMany(CourseVideo::class);
     }
 
-
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
