@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="card-footer border-top border-gray-100">
-                <form action="{{ route('troopers.discussion.comment', ['courseId' => $course->id]) }}" class="flex-align gap-8 chat-box-bottom">
+                <form action="{{ route('troopers.discussion.comment', ['courseId' => $course->id]) }}" method="POST" class="flex-align gap-8 chat-box-bottom">
                     @csrf
                     {{-- <label for="fileUp" class="flex-shrink-0 file-btn w-48 h-48 flex-center bg-main-50 text-24 text-main-600 rounded-circle hover-bg-main-100 transition-2">
                         <i class="ph ph-plus"></i>
