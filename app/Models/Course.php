@@ -23,4 +23,10 @@ class Course extends Model
         return $this->hasMany(Competition::class);
     }
 
+    public function videos()
+    {
+        return $this->hasMany(CourseVideo::class);
+    }
+
+
 }

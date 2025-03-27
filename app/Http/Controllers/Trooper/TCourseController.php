@@ -49,7 +49,7 @@ class TCourseController extends Controller
     
     public function detailCourse($slug)
     {
-        $course = Course::where('slug', $slug)->first();
+        $course = Course::with('videos')->where('slug', $slug)->first();
         $title = 'All Courses';
     
         return view('troopers.courses.detail-course', compact('title', 'course'));

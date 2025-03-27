@@ -28,34 +28,12 @@
 
                         <div class="flex-align flex-wrap gap-24">
                             <span class="py-6 px-16 bg-main-50 text-main-600 rounded-pill text-15">{{ $course->category->name }}</span>
-                            <div class=" share-social position-relative">
-                                <button type="button" class="share-social__button text-gray-200 text-26 d-flex hover-text-main-600"><i class="ph ph-share-network"></i></button>
-                                <div class="share-social__icons bg-white box-shadow-2xl p-16 border border-gray-100 rounded-8 position-absolute inset-block-start-100 inset-inline-end-0">
-                                    <ul class="flex-align gap-8">
-                                        <li>
-                                            <a href="https://www.facebook.com" class="flex-center w-36 h-36 border border-main-600 text-white rounded-circle text-xl bg-main-600 hover-bg-main-800 hover-border-main-800"><i class="ph ph-facebook-logo"></i></a> 
-                                        </li>
-                                        <li>
-                                            <a href="https://www.google.com" class="flex-center w-36 h-36 border border-main-600 text-white rounded-circle text-xl bg-main-600 hover-bg-main-800 hover-border-main-800"> <i class="ph ph-twitter-logo"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.twitter.com" class="flex-center w-36 h-36 border border-main-600 text-white rounded-circle text-xl bg-main-600 hover-bg-main-800 hover-border-main-800"><i class="ph ph-linkedin-logo"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.instagram.com" class="flex-center w-36 h-36 border border-main-600 text-white rounded-circle text-xl bg-main-600 hover-bg-main-800 hover-border-main-800"><i class="ph ph-instagram-logo"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <button type="button" class="bookmark-icon text-gray-200 text-26 d-flex hover-text-main-600">
-                                <i class="ph ph-bookmarks"></i>
-                            </button>
                         </div>
                     </div>
 
                     <div class="rounded-16 overflow-hidden">
                         <video id="player" class="player" playsinline controls data-poster="{{ asset('storage/' . $course->thumbnail) }}">
-                            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4">
+                            <source src="{{ asset('storage/' . $course->trailer) }}" type="video/mp4">
                         </video>
                     </div>
                     
@@ -125,20 +103,23 @@
                         <button type="button" class="course-item__button active flex-align gap-4 w-100 p-16 border-bottom border-gray-100">
                             <span class="d-block text-start">
                                 <span class="d-block h5 mb-0 text-line-1">The Courses Program</span>
-                                <span class="d-block text-15 text-gray-300">2 / 5 | 4.4 min</span>
                             </span>
                             <span class="course-item__arrow ms-auto text-20 text-gray-500"><i class="ph ph-arrow-right"></i></span>
                         </button>
                         <div class="course-item-dropdown active border-bottom border-gray-100">
                             <ul class="course-list p-16 pb-0">
-                                <li class="course-list__item flex-align gap-8 mb-16 active">
-                                    <div class="w-100">
-                                        <a href="#" class="text-gray-300 fw-medium d-block hover-text-main-600 d-lg-block">
-                                            1. Welcome to this course
-                                            <span class="text-gray-300 fw-normal d-block">2.4 min</span>
-                                        </a>
-                                    </div>
-                                </li>
+                                @forelse ($course->videos as $video)
+                                    <li class="course-list__item flex-align gap-8 mb-16 active">
+                                        <div class="w-100">
+                                            <a href="#" class="text-gray-300 fw-medium d-block hover-text-main-600 d-lg-block">
+                                                {{ $video->title ?? '' }}
+                                                <span class="text-gray-300 fw-normal d-block">2.4 min</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                @empty
+                                    <p class="mb-16">Tidak ada Video Tersedia</p>
+                                @endforelse
                             </ul>
                         </div>
                     </div>

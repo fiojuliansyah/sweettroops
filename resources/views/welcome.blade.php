@@ -15,7 +15,7 @@
                      <h1>{{ $slider->title }}</h1>
                      <p class="header-p">{{ $slider->subtitle }}</p>
                      <div class="hidden-small">
-                        <a class="btn btn-primary" href="{{ $slider->link }}">Lihat Menu</a>
+                        <a class="btn btn-primary" href="{{ $slider->link }}">Lihat Detail</a>
                      </div>
                      <!--/hidden-small -->
                   </div>

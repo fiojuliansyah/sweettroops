@@ -52,7 +52,11 @@
                         <div class="card border border-gray-100">
                             <div class="card-body p-8">
                                 <a href="course-details.html" class="rounded-20 overflow-hidden text-center mb-8 flex-center p-8">
-                                    <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="Course Image" width="500">
+                                    @php
+                                        $thumbnails = json_decode($course->thumbnail, true);
+                                        $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                                    @endphp
+                                    <img src="{{ asset('storage/' . $firstThumbnail) }}" alt="Course Image" width="500">
                                 </a>
                                 <div class="p-8">
                                     <span class="text-13 py-2 px-10 rounded-pill bg-success-50 text-success-600 mb-16">{{ $course->category->name }}</span>

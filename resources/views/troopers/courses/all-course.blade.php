@@ -58,9 +58,14 @@
                     <div class="col-xxl-3 col-lg-4 col-sm-6">
                         <div class="card border border-gray-100">
                             <div class="card-body p-8">
-                                <a href="course-details.html" class="rounded-20 overflow-hidden text-center mb-8 flex-center p-8">
-                                    <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="Course Image" width="500">
+                                <a href="{{ route('troopers.detail-course', $course->slug) }}" class="rounded-20 overflow-hidden text-center mb-8 flex-center p-8">
+                                    @php
+                                        $thumbnails = json_decode($course->thumbnail, true);
+                                        $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                                    @endphp
+                                    <img src="{{ asset('storage/' . $firstThumbnail) }}" alt="Course Image" width="500">
                                 </a>
+                                
                                 <div class="p-8">
                                     <span class="text-13 py-2 px-10 rounded-pill bg-success-50 text-success-600 mb-16">{{ $course->category->name }}</span>
                                     @if ($course->is_recommend == 1)  
@@ -69,7 +74,7 @@
                                     @if ($course->is_featured == 1)  
                                         <span class="text-13 py-2 px-10 rounded-pill bg-warning-50 text-warning-600 mb-16">Featured</span>
                                     @endif
-                                    <h5 class="mb-0"><a href="course-details.html" class="hover-text-main-600">{{ $course->title }}</a></h5>
+                                    <h5 class="mb-0"><a href="{{ route('troopers.detail-course', $course->slug) }}" class="hover-text-main-600">{{ $course->title }}</a></h5>
 
                                     <div class="flex-align gap-8 flex-wrap mt-16">
                                         <div>

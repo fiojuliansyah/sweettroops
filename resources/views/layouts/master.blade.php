@@ -58,6 +58,37 @@
 
         @include('layouts.partials.top-navbar')
 
+        @if(auth()->user() && !auth()->user()->email)
+        <div class="modal fade" id="editNameModal" tabindex="-1" aria-labelledby="editNameModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editNameModalLabel">Edit Your Name</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('troopers.account.modal') }}" method="POST">
+                        @csrf
+                        @method('PUT') 
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', auth()->user()->name) }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{ old('email', auth()->user()->email) }}" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endif
+
         @if(session('success'))
         <div id="success-alert" style="position: fixed; top: 20px; right: 20px; min-width: 300px; background-color: #198754; color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 9999; overflow: hidden;">
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -137,6 +168,14 @@
 
     <!-- main js -->
     <script src="/admin/assets/js/main.js"></script>
+
+    <script>
+        @if(auth()->user() && !auth()->user()->email)
+            $(document).ready(function() {
+                $('#editNameModal').modal('show');
+            });
+        @endif
+    </script>
 
     @stack('js')
 

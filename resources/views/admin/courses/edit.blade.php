@@ -19,59 +19,63 @@
             <div class="card-body">
                 <form action="{{ route('admin.courses.update', $course->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
-                    
+                    @method('PUT') <!-- For update route -->
                     <div class="row gy-20">
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Course Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control" required value="{{ old('title', $course->title) }}">
+                            <input type="text" name="title" class="form-control" required placeholder="Enter course title" value="{{ old('title', $course->title) }}">
                         </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Instructor Name <span class="text-danger">*</span></label>
-                            <input type="text" name="instructor" class="form-control" required value="{{ old('instructor', $course->instructor) }}">
+                            <input type="text" name="instructor" class="form-control" required placeholder="Enter instructor name" value="{{ old('instructor', $course->instructor) }}">
                         </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Category <span class="text-danger">*</span></label>
                             <select name="category_id" class="form-select" required>
+                                <option value="" disabled selected>Select Category</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $category->id == $course->category_id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
+                                    <option value="{{ $category->id }}" {{ $course->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Course Type <span class="text-danger">*</span></label>
                             <select name="type_id" class="form-select" required>
+                                <option value="" disabled selected>Select Type</option>
                                 @foreach ($types as $type)
-                                    <option value="{{ $type->id }}" {{ $type->id == $course->type_id ? 'selected' : '' }}>
-                                        {{ $type->name }}
-                                    </option>
+                                    <option value="{{ $type->id }}" {{ $course->type_id == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-sm-12">
                             <label class="h5 mb-8 fw-semibold font-heading">Description</label>
-                            <textarea name="description" class="form-control" rows="4">{{ old('description', $course->description) }}</textarea>
+                            <textarea name="description" class="form-control" rows="4" placeholder="Enter course description">{{ old('description', $course->description) }}</textarea>
                         </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Normal Price</label>
-                            <input type="number" name="normal_price" class="form-control" value="{{ old('normal_price', $course->normal_price) }}">
+                            <input type="number" name="normal_price" class="form-control" placeholder="Enter normal price" value="{{ old('normal_price', $course->normal_price) }}">
                         </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Discounted Price</label>
-                            <input type="number" name="price" class="form-control" value="{{ old('price', $course->price) }}">
+                            <input type="number" name="price" class="form-control" placeholder="Enter discounted price" value="{{ old('price', $course->price) }}">
                         </div>
                         <div class="col-sm-12">
                             <label class="h5 mb-8 fw-semibold font-heading">Thumbnail</label>
-                            <input type="file" name="thumbnail" class="form-control">
                             @if($course->thumbnail)
-                                <img src="{{ asset('storage/' . $course->thumbnail) }}" class="mt-2 rounded" width="150" alt="Course Thumbnail">
+                                <div>
+                                    <img src="{{ asset('storage/' . json_decode($course->thumbnail)[0]) }}" alt="Current Thumbnail" style="max-width: 100px;">
+                                    <p>Current Thumbnail</p>
+                                </div>
                             @endif
+                            <input type="file" name="thumbnail[]" class="form-control" multiple>
                         </div>
                         <div class="col-sm-12">
+                            <label class="h5 mb-8 fw-semibold font-heading">Trailer</label>
+                            <input type="file" name="trailer" class="form-control">
+                        </div>  
+                        <div class="col-sm-12">
                             <label class="h5 mb-8 fw-semibold font-heading">Course Points</label>
-                            <input type="number" name="point" class="form-control" value="{{ old('point', $course->point) }}">
+                            <input type="number" name="point" class="form-control" placeholder="Enter course points" value="{{ old('point', $course->point) }}">
                         </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Featured Course</label>

@@ -23,7 +23,9 @@ class CoursesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('thumbnail', function($query){
-                return '<img src="' . asset('storage/' . $query->thumbnail) . '" alt="' . $query->title . '" class="w-40 h-40 rounded-8 object-cover">';
+                $thumbnails = json_decode($query->thumbnail, true);
+                $thumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                return '<img src="' . asset('storage/' . $thumbnail) . '" alt="' . $query->title . '" class="w-40 h-40 rounded-8 object-cover">';
             })
             ->addColumn('action', function($query){
                 return view('admin.courses.action', compact('query'))->render();
@@ -31,6 +33,7 @@ class CoursesDataTable extends DataTable
             ->rawColumns(['thumbnail', 'action'])
             ->setRowId('id');
     }
+    
 
     /**
      * Get the query source of dataTable.

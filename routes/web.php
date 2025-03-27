@@ -28,6 +28,9 @@ Route::middleware(['auth','phone.verified'])
 ->name('troopers.')
 ->group(function () {
     Route::get('/dashboard', [TDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/account', [TDashboardController::class, 'account'])->name('account');
+    Route::put('/account', [TDashboardController::class, 'updateAccount'])->name('account.update');
+    Route::put('/account/modal', [TDashboardController::class, 'updateModal'])->name('account.modal');
 
     Route::get('/course/all', [TCourseController::class, 'allCourse'])->name('all-course');
     Route::get('/course/{slug}/detail', [TCourseController::class, 'detailCourse'])->name('detail-course');

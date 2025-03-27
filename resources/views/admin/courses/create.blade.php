@@ -59,9 +59,13 @@
                             <input type="number" name="price" class="form-control" placeholder="Enter discounted price">
                         </div>
                         <div class="col-sm-12">
-                            <label class="h5 mb-8 fw-semibold font-heading">Thumbnail</label>
-                            <input type="file" name="thumbnail" class="form-control">
-                        </div>
+                            <label class="h5 mb-8 fw-semibold font-heading">Thumbnails</label>
+                            <input type="file" name="thumbnail[]" class="form-control" multiple>
+                        </div>                        
+                        <div class="col-sm-12">
+                            <label class="h5 mb-8 fw-semibold font-heading">Trailer</label>
+                            <input type="file" name="trailer" class="form-control">
+                        </div>                        
                         <div class="col-sm-12">
                             <label class="h5 mb-8 fw-semibold font-heading">Course Points</label>
                             <input type="number" name="point" class="form-control" placeholder="Enter course points">

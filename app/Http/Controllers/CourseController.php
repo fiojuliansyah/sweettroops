@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use App\Models\Type;
 use App\Models\Course;
 use App\Models\Category;
@@ -38,7 +39,8 @@ class CourseController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|array', // Use array for multiple files
+            'thumbnail.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for each image
             'category_id' => 'required|integer',
             'type_id' => 'required|integer',
             'description' => 'nullable|string',
@@ -50,16 +52,29 @@ class CourseController extends Controller
             'is_recommend' => 'boolean',
             'is_active' => 'boolean',
         ]);
-
-        $thumbnailPath = null;
+    
+        // Handle thumbnail upload
+        $thumbnailPaths = [];
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+            foreach ($request->file('thumbnail') as $file) {
+                $thumbnailPaths[] = $file->store('thumbnails', 'public');
+            }
         }
-
+    
+        // Handle trailer upload
+        $trailerPath = null;
+        if ($request->hasFile('trailer')) {
+            $trailerPath = $request->file('trailer')->store('trailers', 'public');
+            $course->trailer = $trailerPath;
+        }
+        
+    
+        // Create course
         $course = Course::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
-            'thumbnail' => $thumbnailPath,
+            'thumbnail' => json_encode($thumbnailPaths),
+            'trailer' => $trailerPath, // Store trailer path
             'category_id' => $request->category_id,
             'type_id' => $request->type_id,
             'description' => $request->description,
@@ -71,9 +86,10 @@ class CourseController extends Controller
             'is_recommend' => $request->is_recommend ?? 0,
             'is_active' => $request->is_active ?? 1,
         ]);
-
+    
         return redirect()->route('admin.courses.index')->with('success', 'Course created successfully.');
     }
+    
 
     /**
      * Display the specified resource.
@@ -83,9 +99,7 @@ class CourseController extends Controller
         return view('admin.courses.show', compact('course'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Course $course)
     {
         $title = 'Edit Course';
@@ -101,7 +115,8 @@ class CourseController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|array',
+            'thumbnail.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'required|integer',
             'type_id' => 'required|integer',
             'description' => 'nullable|string',
@@ -113,19 +128,29 @@ class CourseController extends Controller
             'is_recommend' => 'boolean',
             'is_active' => 'boolean',
         ]);
-
+    
+        // Handle thumbnail upload
         if ($request->hasFile('thumbnail')) {
-            $course->thumbnail = $request->file('thumbnail')->store('thumbnails', 'public');
+            $thumbnailPaths = [];
+            foreach ($request->file('thumbnail') as $file) {
+                $thumbnailPaths[] = $file->store('thumbnails', 'public');
+            }
+            $course->thumbnail = json_encode($thumbnailPaths);
         }
-
-        $course->update($request->except('thumbnail'));
-
+    
+        // Handle trailer upload
+        if ($request->hasFile('trailer')) {
+            $trailerPath = $request->file('trailer')->store('trailers', 'public');
+            $course->trailer = $trailerPath;
+        }
+    
+        // Update the rest of the course
+        $course->update($request->except('thumbnail', 'trailer'));
+    
         return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
+    
     public function destroy(Course $course)
     {
         
