@@ -42,19 +42,16 @@ class CourseVideoController extends Controller
             'description' => $request->description,
             'video_url' => $request->filename
         ]);
+        
+        $redirectURL = 'http://localhost:8000/successauth';
 
-        return redirect()->route('admin.videos.create', $courseVideo->course_id)
-                         ->with('success', 'Video successfully uploaded.');
-
-        // $redirectURL = 'http://localhost:8000/successauth';
-
-        // return redirect()
-        //         ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
-        //         ->with([
-        //             'courseVideo' => $courseVideo,
-        //             'course_id' => $request->course_id,
-        //             'redirect_url' => $redirectURL
-        //         ]);
+        return redirect()
+                ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
+                ->with([
+                    'courseVideo' => $courseVideo,
+                    'course_id' => $request->course_id,
+                    'redirect_url' => $redirectURL
+                ]);
     }
 
     public function callback(Request $request) 
