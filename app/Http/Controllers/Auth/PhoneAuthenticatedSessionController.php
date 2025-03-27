@@ -44,7 +44,7 @@ class PhoneAuthenticatedSessionController extends Controller
         $user->notify(new Otp($phone, $otp));
     
         ModelsOtp::create([
-            'number' => $request->phone,
+            'number' => $phone,
             'otp' => $otp,
             'type' => 'verify_phone',
             'user_id' => $user->id,
