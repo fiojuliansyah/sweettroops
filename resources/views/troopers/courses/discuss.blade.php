@@ -69,7 +69,7 @@
                         <i class="ph ph-plus"></i>
                     </label>
                     <input type="file" name="fileName" id="fileUp" hidden> --}}
-                    <input type="text" class="form-control h-48 border-transparent px-20 focus-border-main-600 bg-main-50 rounded-pill placeholder-15" placeholder="Type your message...">
+                    <input type="text" name="comment" class="form-control h-48 border-transparent px-20 focus-border-main-600 bg-main-50 rounded-pill placeholder-15" placeholder="Type your message...">
                     <button type="submit" class="flex-shrink-0 submit-btn btn btn-main rounded-pill flex-align gap-4 py-15">
                         Submit <span class="d-flex text-md d-sm-flex d-none"><i class="ph-fill ph-paper-plane-tilt"></i></span> 
                     </button>
