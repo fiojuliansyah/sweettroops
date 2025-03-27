@@ -30,7 +30,6 @@ class TCourseController extends Controller
             $query->where('type_id', $request->type_id);
         }
     
-        
         if ($request->has('price') && $request->price != '') {
             if ($request->price == 'termurah') {
                 $query->orderBy('price', 'asc');
@@ -39,13 +38,17 @@ class TCourseController extends Controller
             }
         }
     
+        $query->where('is_active', 1);
+        
         $courses = $query->paginate(8);
+    
         $title = 'All Courses';
         $categories = Category::all();
         $types = Type::all();
     
         return view('troopers.courses.all-course', compact('title', 'courses', 'categories', 'types'));
     }
+    
     
     public function detailCourse($slug)
     {

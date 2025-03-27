@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\DataTables\CoursesDataTable;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -105,9 +106,6 @@ class CourseController extends Controller
         return view('admin.courses.edit', compact('title', 'course', 'types', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Course $course)
     {
         $request->validate([
@@ -126,7 +124,6 @@ class CourseController extends Controller
             'is_active' => 'boolean',
         ]);
     
-        // Handle thumbnail upload
         if ($request->hasFile('thumbnail')) {
             $thumbnailPaths = [];
             foreach ($request->file('thumbnail') as $file) {
@@ -135,13 +132,11 @@ class CourseController extends Controller
             $course->thumbnail = json_encode($thumbnailPaths);
         }
     
-        // Handle trailer upload
         if ($request->hasFile('trailer')) {
             $trailerPath = $request->file('trailer')->store('trailers', 'public');
             $course->trailer = $trailerPath;
         }
     
-        // Update the rest of the course
         $course->update($request->except('thumbnail', 'trailer'));
     
         return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully.');
@@ -150,14 +145,24 @@ class CourseController extends Controller
     
     public function destroy(Course $course)
     {
-        
-        if ($course->image && Storage::disk('public')->exists($course->image)) {
-            Storage::disk('public')->delete($course->image);
+        if ($course->thumbnail) {
+            $thumbnails = json_decode($course->thumbnail, true);
+            
+            foreach ($thumbnails as $thumbnail) {
+                if (Storage::disk('public')->exists($thumbnail)) {
+                    Storage::disk('public')->delete($thumbnail);
+                }
+            }
+        }
+    
+        if ($course->trailer && Storage::disk('public')->exists($course->trailer)) {
+            Storage::disk('public')->delete($course->trailer);
         }
         
         $course->delete();
-        
+    
         return redirect()->route('admin.courses.index')
-            ->with('success', 'Course deleted successfully');
+            ->with('success', 'Course and its files deleted successfully');
     }
+    
 }
