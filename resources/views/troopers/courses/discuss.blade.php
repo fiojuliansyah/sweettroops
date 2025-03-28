@@ -36,7 +36,7 @@
                                         <div class="d-flex flex-column">
                                             <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">
                                                 {{ $item->course->title }}</h6>
-                                            <span class="text-line-1 text-13 text-gray-200">{{ $lastComment }}</span>
+                                            <span class="text-line-1 text-13 text-gray-200">{{ $lastComment->user->name }} : {{ $lastComment->comment }}</span>
                                         </div>
                                     </div>
                                 </a>
