@@ -15,15 +15,24 @@ class TDiscussController extends Controller
         $user = Auth::id();
         $courseList = Competition::where('user_id', $user)->get();
         $course = $courseList->first();
-        $comments = Comment::where('course_id', $course->id)->get();
-        $title = 'Discuss Courses';
-    
+        
         if (!$course) {
             return redirect()->back()->with('error', 'You have not joined any courses.');
         }
     
-        return view('troopers.courses.discuss', compact('title', 'course', 'courseList', 'comments'));
+        // Fetch all comments for the course
+        $comments = Comment::where('course_id', $course->id)->get();
+    
+        // Get the last (most recent) comment
+        $lastComment = Comment::where('course_id', $course->id)
+                              ->latest()
+                              ->first();
+    
+        $title = 'Discuss Courses';
+        
+        return view('troopers.courses.discuss', compact('title', 'course', 'courseList', 'comments', 'lastComment'));
     }
+    
 
     public function postComment(Request $request, $courseId)
     {
