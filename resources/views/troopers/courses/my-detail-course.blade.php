@@ -66,7 +66,9 @@
             <h4 class="mb-20">Discuss</h4>
             <div class="card mb-20">
                 <div class="card-body">
-                    <p class="mb-16">Diskusi akan tersedia setelah membeli kelas ini</p>
+                    <div style="text-align: center">
+                        <a href="{{ route('troopers.discuss-course', $course->slug) }}"  class="btn btn-outline-main rounded-pill py-9" target="_blank">Discuss Room</a>
+                    </div>
                 </div>
             </div>
             <h4 class="mb-20">Materi</h4>
@@ -76,7 +78,6 @@
                         <div class="course-item-dropdown active border-bottom border-gray-100">
                             <ul class="course-list p-16 pb-0">
                                 <li class="course-list__item flex-align gap-8 mb-16 active">
-                                    <span class="circle flex-shrink-0 text-32 d-flex text-gray-100"><i class="ph ph-circle"></i></span>
                                     <div class="w-100">
                                         <a href="#" class="text-gray-300 fw-medium d-block hover-text-main-600 d-lg-block">
                                             Welcome to this course

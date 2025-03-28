@@ -16,20 +16,22 @@
                 <div class="chat-list-wrapper p-24 overflow-y-auto scroll-sm">
                     <div class="chat-list__item flex-between gap-8 cursor-pointer">
                         @foreach ($courseList as $item)   
+                        <a href="{{ route('troopers.discuss-course', $item->course->slug) }}">
                             <div class="d-flex align-items-start gap-16">
-                                <div class="position-relative flex-shrink-0">
-                                    @php
-                                        $thumbnails = json_decode($item->course->thumbnail, true);
-                                        $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
-                                    @endphp
-                                    <img src="{{ asset('storage/' . $firstThumbnail) }}" alt="" class="w-44 h-44 rounded-circle object-fit-cover flex-shrink-0">
-                                    <span class="activation-badge w-12 h-12 border-2 position-absolute inset-block-end-0 inset-inline-end-0"></span>
+                                    <div class="position-relative flex-shrink-0">
+                                        @php
+                                            $thumbnails = json_decode($item->course->thumbnail, true);
+                                            $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                                        @endphp
+                                        <img src="{{ asset('storage/' . $firstThumbnail) }}" alt="" class="w-44 h-44 rounded-circle object-fit-cover flex-shrink-0">
+                                        <span class="activation-badge w-12 h-12 border-2 position-absolute inset-block-end-0 inset-inline-end-0"></span>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">{{ $item->course->title }}</h6>
+                                        <span class="text-line-1 text-13 text-gray-200">You: I will send you...</span>
+                                    </div>
                                 </div>
-                                <div class="d-flex flex-column">
-                                    <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">{{ $item->course->title }}</h6>
-                                    <span class="text-line-1 text-13 text-gray-200">You: I will send you...</span>
-                                </div>
-                            </div>
+                            </a>
                         @endforeach
                     </div>
                 </div>
