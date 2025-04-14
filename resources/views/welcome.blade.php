@@ -140,7 +140,7 @@
                               <ul class="post-bar">
                                  <li><i class="fa fa-user"></i><a href="#">{{ $course->instructor }}</a></li>
                               </ul>
-                              <p class="post-description">{{ $course->description }}</p>
+                              <p class="post-description">{!! $course->description !!}</p>
                               <!-- button -->
                               <a class="btn btn-primary btn-md" href="{{ route('troopers.detail-course', $course->slug) }}">Baca Selengkapnya</a>
                            </div>
