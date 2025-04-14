@@ -44,7 +44,7 @@
                         </div>
                         <div class="mb-24 pb-24 border-bottom border-gray-100">
                             <h5 class="mb-12 fw-bold">Description</h5>
-                            <p class="text-gray-300 text-15 mb-8">{{ $course->description }}</p>
+                            <p class="text-gray-300 text-15 mb-8">{!! $course->description !!}</p>
                         </div>
                         <div class="">
                             <h5 class="mb-12 fw-bold">Instructor</h5>
