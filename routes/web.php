@@ -70,6 +70,7 @@ Route::middleware(['auth','admin'])
     Route::resource('sliders', SliderController::class);
     Route::resource('users', UserController::class);
     Route::post('/admin/users/import', [UserController::class, 'importExcel'])->name('users.import');
+    Route::post('/admin/competitions/import', [CourseController::class, 'importCompetitionExcel'])->name('competitions.import');
     Route::resource('courses', CourseController::class);
     Route::post('/courses/import', [CourseController::class, 'importExcel'])->name('courses.import');
     Route::get('/admin/discuss', [DashboardController::class, 'adminDiscussCourse'])->name('discuss-course');

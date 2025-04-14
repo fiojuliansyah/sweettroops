@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Imports\CoursesImport;
+use App\Imports\CompetitionsImport;
 use App\DataTables\CoursesDataTable;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
@@ -178,4 +179,14 @@ class CourseController extends Controller
         return redirect()->back()->with('success', 'Data courses berhasil diimport!');
     }
     
+    public function importCompetitionExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new CompetitionsImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data kompetisi berhasil diimport!');
+    }
 }
