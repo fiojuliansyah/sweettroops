@@ -69,7 +69,9 @@ Route::middleware(['auth','admin'])
     Route::resource('types', TypeController::class);
     Route::resource('sliders', SliderController::class);
     Route::resource('users', UserController::class);
+    Route::post('/admin/users/import', [UserController::class, 'importExcel'])->name('users.import');
     Route::resource('courses', CourseController::class);
+    Route::post('/courses/import', [CourseController::class, 'importExcel'])->name('courses.import');
     Route::get('/admin/discuss', [DashboardController::class, 'adminDiscussCourse'])->name('discuss-course');
     
     Route::get('/courses/{course_id}/videos', [CourseVideoController::class, 'index'])->name('videos.index');

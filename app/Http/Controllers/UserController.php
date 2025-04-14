@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Course;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\DataTables\UserDataTable;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -128,5 +130,16 @@ class UserController extends Controller
     {
         $users = User::query();
         return DataTables::eloquent($users)->make(true);
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data users berhasil diimport!');
     }
 }

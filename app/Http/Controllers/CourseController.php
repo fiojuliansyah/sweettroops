@@ -8,7 +8,9 @@ use App\Models\Course;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Imports\CoursesImport;
 use App\DataTables\CoursesDataTable;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
@@ -163,6 +165,17 @@ class CourseController extends Controller
     
         return redirect()->route('admin.courses.index')
             ->with('success', 'Course and its files deleted successfully');
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new CoursesImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data courses berhasil diimport!');
     }
     
 }

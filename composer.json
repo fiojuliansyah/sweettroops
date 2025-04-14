@@ -14,8 +14,10 @@
         "laravel/reverb": "^1.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "maatwebsite/excel": "^3.1",
         "midtrans/midtrans-php": "^2.6",
         "php-ffmpeg/php-ffmpeg": "^1.3",
+        "phpoffice/phpspreadsheet": "^1.29",
         "pion/laravel-chunk-upload": "^1.5",
         "rahulhaque/laravel-filepond": "^12.0",
         "yajra/laravel-datatables": "^12.0"

@@ -15,6 +15,9 @@
 
         <!-- Breadcrumb Right Start -->
         <div class="flex-align gap-8 flex-wrap">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#importModal" class="btn btn-outline-main">
+                <i class="ph ph-upload-simple me-2"></i> Import Excel
+            </a>            
             <a href="{{ route('admin.courses.create') }}" class="btn btn-main">
                 <i class="ph ph-plus-circle me-2"></i> Add New Course
             </a>
@@ -29,6 +32,32 @@
         </div>
     </div>
 </div>
+<!-- Modal Import Excel -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form action="{{ route('admin.courses.import') }}" method="POST" enctype="multipart/form-data" class="modal-content">
+          @csrf
+          <div class="modal-header">
+              <h5 class="modal-title" id="importModalLabel">Import Courses dari Excel</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+          </div>
+          <div class="modal-body">
+              @if (session('success'))
+                  <div class="alert alert-success">{{ session('success') }}</div>
+              @endif
+              <div class="mb-3">
+                  <label for="file" class="form-label">Upload file Excel (.xlsx, .xls)</label>
+                  <input class="form-control" type="file" name="file" id="file" accept=".xlsx,.xls" required>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+              <button type="submit" class="btn btn-main">Import</button>
+          </div>
+      </form>
+    </div>
+  </div>
+  
 @endsection
 
 @push('js')
