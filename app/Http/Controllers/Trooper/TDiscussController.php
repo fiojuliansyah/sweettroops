@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Trooper;
 
+use App\Models\Course;
 use App\Models\Comment;
 use App\Models\Competition;
 use Illuminate\Http\Request;
