@@ -12,12 +12,10 @@
                             <div class="grettings-box-two__content">
                                 <h2 class="fw-medium mb-0 flex-align gap-10">Hi, {{ Auth::user()->name }} <img
                                         src="/admin/assets/images/icons/wave-hand.png" alt=""> </h2>
-                                <h2 class="fw-medium mb-16">What do you want to learn today with your partner?
+                                <h2 class="fw-medium mb-16">Apa yang ingin Anda pelajari hari ini?
                                 </h2>
-                                <p class="text-15 text-gray-400">Discover courses, track progress, and achieve
-                                    your learning goods seamlessly.</p>
-                                <a href="{{ route('troopers.all-course') }}" class="btn btn-main rounded-pill mt-32">Explore
-                                    Courses</a>
+                                <p class="text-15 text-gray-400">Temukan kursus, lacak kemajuan, dan raih materi pembelajaran Anda dengan mudah.</p>
+                                <a href="{{ route('troopers.all-course') }}" class="btn btn-main rounded-pill mt-32">Jelajahi Kursus</a>
                             </div>
                         </div>
                         <div class="col-lg-6 d-md-block d-none mt-auto">
@@ -44,8 +42,8 @@
                                 </div>
                             </div>
 
-                            <h4 class="mb-2">155+</h4>
-                            <span class="text-gray-300">Completed Courses</span>
+                            <h4 class="mb-2">{{ $courseCount ?? '-' }}</h4>
+                            <span class="text-gray-300">Kursus</span>
                         </div>
                     </div>
                 </div>
@@ -60,7 +58,7 @@
                                     class="remove-tooltip-title rounded-tooltip-value"></div>
                             </div>
 
-                            <h4 class="mb-2">39+</h4>
+                            <h4 class="mb-2">{{ $mycourseCount ?? '-' }}</h4>
                             <span class="text-gray-300">Earned Certificate</span>
                         </div>
                     </div>
@@ -71,13 +69,13 @@
                             <div class="flex-between gap-8 mb-24">
                                 <span
                                     class="flex-shrink-0 w-48 h-48 flex-center rounded-circle bg-purple-600 text-white text-2xl"><i
-                                        class="ph-fill ph-certificate"></i></span>
+                                        class="ph-fill ph-coins"></i></span>
                                 <div id="course-progress" class="remove-tooltip-title rounded-tooltip-value">
                                 </div>
                             </div>
 
-                            <h4 class="mb-2">25+</h4>
-                            <span class="text-gray-300">Course in Progress</span>
+                            <h4 class="mb-2">{{ $mytransactionCount ?? '-' }}</h4>
+                            <span class="text-gray-300">Transaksi dalam Proses</span>
                         </div>
                     </div>
                 </div>
@@ -92,7 +90,7 @@
                                     class="remove-tooltip-title rounded-tooltip-value"></div>
                             </div>
 
-                            <h4 class="mb-2">18k+</h4>
+                            <h4 class="mb-2">{{ $mycourseCount ?? '-' }}</h4>
                             <span class="text-gray-300">Community Support</span>
                         </div>
                     </div>

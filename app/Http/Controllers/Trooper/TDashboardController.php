@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Trooper;
 
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Competition;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +18,10 @@ class TDashboardController extends Controller
     public function index()
     {
         $title = 'Dashboard';
-        return view('troopers.dashboard', compact('title'));
+        $courseCount = Course::count();
+        $mycourseCount = Competition::where('user_id', Auth::user()->id)->count();
+        $mytransactionCount = Transaction::where('user_id', Auth::user()->id)->count();
+        return view('troopers.dashboard', compact('title','courseCount','mycourseCount','mytransactionCount'));
     }
 
     public function myTransactions()

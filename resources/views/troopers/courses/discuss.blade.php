@@ -17,8 +17,8 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="chat-list-wrapper p-24 overflow-y-auto scroll-sm">
-                        <div class="chat-list__item flex-between gap-8 cursor-pointer">
-                            @foreach ($courseList as $item)
+                        @foreach ($courseList as $item)
+                            <div class="chat-list__item flex-between gap-8 cursor-pointer">
                                 <a href="{{ route('troopers.discuss-course', $item->course->slug) }}">
                                     <div class="d-flex align-items-start gap-16">
                                         <div class="position-relative flex-shrink-0">
@@ -36,12 +36,12 @@
                                         <div class="d-flex flex-column">
                                             <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">
                                                 {{ $item->course->title }}</h6>
-                                            <span class="text-line-1 text-13 text-gray-200">{{ $lastComment->user->name }} : {{ $lastComment->comment }}</span>
+                                            <span class="text-line-1 text-13 text-gray-200">{{ $lastComment->user->name ?? '' }} : {{ $lastComment->comment ?? '' }}</span>
                                         </div>
                                     </div>
                                 </a>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -24,8 +24,8 @@
             </div>
             <div class="card-body p-0">
                 <div class="chat-list-wrapper p-24 overflow-y-auto scroll-sm">
-                    <div class="chat-list__item flex-between gap-8 cursor-pointer">
-                        @foreach ($courseList as $course)   
+                    @foreach ($courseList as $course)   
+                        <div class="chat-list__item flex-between gap-8 cursor-pointer">
                             <div class="d-flex align-items-start gap-16">
                                 <div class="position-relative flex-shrink-0">
                                     <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="" class="w-44 h-44 rounded-circle object-fit-cover flex-shrink-0">
@@ -33,11 +33,10 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">{{ $course->title }}</h6>
-                                    <span class="text-line-1 text-13 text-gray-200">You: I will send you...</span>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -51,36 +50,6 @@
                         <div class="d-flex flex-column">
                             <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">{{ $course->title }}</h6>
                             <span class="text-line-1 text-13 text-gray-200">Online</span>
-                        </div>
-                    </div>
-
-                    <div class="flex-align gap-16">
-                        <button type="button" class="text-main-600 text-xl d-flex"><i class="ph-fill ph-phone"></i></button>
-                        <button type="button" class="text-main-600 text-xl d-flex"><i class="ph-fill ph-video-camera"></i></button>
-                        <div class="dropdown flex-shrink-0">
-                            <button class="text-gray-400 text-xl d-flex rounded-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="ph-fill ph-dots-three-outline-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu--md border-0 bg-transparent p-0">
-                                <div class="card border border-gray-100 rounded-12 box-shadow-custom">
-                                    <div class="card-body p-12">
-                                        <div class="max-h-200 overflow-y-auto scroll-sm pe-8">
-                                            <ul>
-                                                <li class="mb-0">
-                                                    <button type="button" class="delete-item-btn py-6 text-15 px-8 hover-bg-gray-50 text-gray-300 w-100 rounded-8 fw-normal text-xs d-block text-start">
-                                                        <span class="text"><i class="ph ph-x-circle"></i> All Clear</span>
-                                                    </button>
-                                                </li>
-                                                <li class="mb-0">
-                                                    <button type="button" class="delete-item-btn py-6 text-15 px-8 hover-bg-gray-50 text-gray-300 w-100 rounded-8 fw-normal text-xs d-block text-start">
-                                                        <span class="text"><i class="ph ph-user-minus"></i> Block</span>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

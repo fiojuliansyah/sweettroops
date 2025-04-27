@@ -105,11 +105,6 @@
                                     </div>
                                     
                                     <div class="flex-between gap-4 flex-wrap mt-24">
-                                        <div class="flex-align gap-4">
-                                            <span class="text-15 fw-bold text-warning-600 d-flex"><i class="ph-fill ph-star"></i></span>
-                                            <span class="text-13 fw-bold text-gray-600">4.9</span>
-                                            <span class="text-13 fw-bold text-gray-600">(12k)</span>
-                                        </div>
                                         <a href="{{ route('troopers.detail-course', $course->slug) }}" class="btn btn-outline-main rounded-pill py-9">View Details</a>
                                         <a href="javascript:void(0)" class="btn btn-main rounded-pill py-9 buy-course" data-course-id="{{ $course->id }}"> BUY Course </a>
                                     </div>

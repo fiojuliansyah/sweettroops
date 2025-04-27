@@ -20,10 +20,8 @@ class TDiscussController extends Controller
             return redirect()->back()->with('error', 'You have not joined any courses.');
         }
     
-        // Fetch all comments for the course
         $comments = Comment::where('course_id', $course->id)->get();
     
-        // Get the last (most recent) comment
         $lastComment = Comment::where('course_id', $course->id)
                               ->latest()
                               ->first();

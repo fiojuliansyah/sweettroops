@@ -11,8 +11,7 @@ class UsersImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        // Skip jika nama kosong (baris dianggap kosong/tidak valid)
-        if (empty($row['name'])) {
+        if (empty($row['email'])) {
             return null;
         }
 
