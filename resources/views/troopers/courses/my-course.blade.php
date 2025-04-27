@@ -77,7 +77,7 @@
                                     <div class="flex-align gap-8 mt-12 pt-12 border-top border-gray-100">
                                         <div class="flex-align gap-4">
                                             <span class="text-sm text-main-600 d-flex"><i class="ph ph-video-camera"></i></span>
-                                            <span class="text-13 text-gray-600">1 Lesson</span>
+                                            <span class="text-13 text-gray-600">{{ $course->videos->count() }} Lesson</span>
                                         </div>
                                         <div class="flex-align gap-4">
                                             <span class="text-sm text-main-600 d-flex"><i class="ph ph-clock"></i></span>
