@@ -38,6 +38,8 @@
                                                 {{ $item->course->title }}</h6>
                                                 @if ($lastComment)   
                                                     <span class="text-line-1 text-13 text-gray-200">{{ $lastComment->user->name ?? 'Anonymous' }} : {{ $lastComment->comment ?? 'No comment available' }}</span>
+                                                @else
+                                                    <span class="text-line-1 text-13 text-gray-200">No comment available</span>
                                                 @endif
                                         </div>
                                     </div>
