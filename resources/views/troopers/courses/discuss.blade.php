@@ -24,6 +24,7 @@
                                 <img src="{{ $com->user->profile_picture ?? '/admin/assets/images/thumbs/user-img.png' }}" alt="User Image"
                                     class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
                                 <div class="chat-box-item__content">
+                                    <small>{{ $com->user->name }}</small>
                                     <p class="chat-box-item__text py-16 px-16 px-lg-4">{{ $com->comment }}</p>
                                     <span class="text-gray-200 text-13 mt-2 d-block">
                                         {{ \Carbon\Carbon::parse($com->created_at)->diffForHumans() }}
