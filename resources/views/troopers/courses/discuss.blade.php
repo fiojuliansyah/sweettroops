@@ -6,15 +6,6 @@
         <div class="chart-wrapper d-flex flex-wrap gap-24">
             <!-- chat sidebar Start -->
             <div class="card chat-list">
-                <div class="card-header py-16 border-bottom border-gray-100">
-                    <form action="#" class="position-relative">
-                        <button type="submit" class="input-icon text-xl d-flex text-gray-600 pointer-event-none"><i
-                                class="ph ph-magnifying-glass"></i></button>
-                        <input type="text"
-                            class="form-control ps-44 h-44 border-gray-100 focus-border-main-600 rounded-pill placeholder-15"
-                            placeholder="Search here...">
-                    </form>
-                </div>
                 <div class="card-body p-0">
                     <div class="chat-list-wrapper p-24 overflow-y-auto scroll-sm">
                         @foreach ($courseList as $item)
