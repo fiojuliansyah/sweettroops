@@ -73,6 +73,7 @@
                                     </div>
                                     
                                     <div class="flex-between gap-4 flex-wrap mt-24">
+                                        <a href="{{ route('troopers.discuss-course', $course->slug) }}" class="btn btn-main rounded-pill py-9">Forum Diskusi</a>
                                         <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="btn btn-outline-main rounded-pill py-9">Detail Course</a>
                                     </div>
                                 </div>

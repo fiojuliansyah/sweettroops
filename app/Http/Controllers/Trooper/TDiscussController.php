@@ -12,19 +12,19 @@ class TDiscussController extends Controller
 {
     public function discussCourse($slug)
     {
-        $user = Auth::id();
-        $courseList = Competition::where('user_id', $user)->get();
-        $course = $courseList->first();
+        // $user = Auth::id();
+        // $courseList = Competition::where('user_id', $user)->get();
+        // $course = $courseList->first();
         
-        if (!$course) {
-            return redirect()->back()->with('error', 'You have not joined any courses.');
-        }
+        // if (!$course) {
+        //     return redirect()->back()->with('error', 'You have not joined any courses.');
+        // }
     
-        $comments = Comment::where('course_id', $course->id)->get();
+        // $comments = Comment::where('course_id', $course->id)->get();
     
-        $lastComment = Comment::where('course_id', $course->id)
-                              ->latest()
-                              ->first();
+        // $lastComment = Comment::where('course_id', $course->id)
+        //                       ->latest()
+        //                       ->first();
     
         $title = 'Discuss Courses';
         

@@ -37,17 +37,7 @@
                         <span class="icon"><i class="ph ph-coins"></i></span>
                         <span class="text">Transaksi Saya</span>
                     </a>
-                </li>
-                <li class="sidebar-menu__item">
-                    @php
-                        $firstCourse = \App\Models\Competition::where('user_id', Auth::id())->first();
-                    @endphp
-                    <a href="{{ $firstCourse ? route('troopers.discuss-course', $firstCourse->course->slug) : '#' }}" 
-                    class="sidebar-menu__link {{ Route::is(['troopers.discuss-course']) ? 'activePage' : '' }}">
-                        <span class="icon"><i class="ph ph-chats-teardrop"></i></span>
-                        <span class="text">Diskusi</span>
-                    </a>
-                </li>    
+                </li>   
                 @if (Auth::user()->role == 'admin')  
                     <li><span>Manage</span></li>
                     <br>
