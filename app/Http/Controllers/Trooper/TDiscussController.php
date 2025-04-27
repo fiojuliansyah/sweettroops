@@ -28,7 +28,7 @@ class TDiscussController extends Controller
     
         $title = 'Discuss Courses';
         
-        return view('troopers.courses.discuss', compact('title', 'course', 'courseList', 'comments', 'lastComment'));
+        return view('troopers.courses.discuss', compact('title', 'course', 'courseList', 'comments', 'lastComment', 'slug'));
     }
 
     public function postComment(Request $request, $courseId)
