@@ -53,7 +53,7 @@
                     <div class="chat-list__item flex-between gap-8 cursor-pointer">
                         <div class="d-flex align-items-start gap-16">
                             <div class="d-flex flex-column">
-                                <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">{{ $course->course->title }}</h6>
+                                <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">{{ $course->title }}</h6>
                                 <span class="text-line-1 text-13 text-gray-200">Online</span>
                             </div>
                         </div>
