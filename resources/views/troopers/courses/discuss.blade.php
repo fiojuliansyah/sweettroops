@@ -20,14 +20,14 @@
                 <div class="card-body p-0">
                     <div class="chat-box-item-wrapper overflow-y-auto scroll-sm p-24">
                         @foreach ($comments as $com)
-                            <div
-                                class="chat-box-item @if ($com->user_id == Auth::check()) right @endif d-flex align-items-end gap-8">
-                                <img src="/admin/assets/images/thumbs/user-img.png" alt=""
+                            <div class="chat-box-item @if ($com->user_id == Auth::id()) right @endif d-flex align-items-end gap-8">
+                                <img src="{{ $com->user->profile_picture ?? '/admin/assets/images/thumbs/user-img.png' }}" alt="User Image"
                                     class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
                                 <div class="chat-box-item__content">
                                     <p class="chat-box-item__text py-16 px-16 px-lg-4">{{ $com->comment }}</p>
-                                    <span
-                                        class="text-gray-200 text-13 mt-2 d-block">{{ \Carbon\Carbon::parse($com->created_at)->diffForHumans() }}</span>
+                                    <span class="text-gray-200 text-13 mt-2 d-block">
+                                        {{ \Carbon\Carbon::parse($com->created_at)->diffForHumans() }}
+                                    </span>
                                 </div>
                             </div>
                         @endforeach
