@@ -21,7 +21,7 @@
                     <div class="chat-box-item-wrapper overflow-y-auto scroll-sm p-24">
                         @foreach ($comments as $com)
                             <div
-                                class="chat-box-item @if (Auth::check()) right @endif d-flex align-items-end gap-8">
+                                class="chat-box-item @if ($com->user_id == Auth::check()) right @endif d-flex align-items-end gap-8">
                                 <img src="/admin/assets/images/thumbs/user-img.png" alt=""
                                     class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
                                 <div class="chat-box-item__content">

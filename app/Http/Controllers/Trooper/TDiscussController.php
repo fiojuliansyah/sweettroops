@@ -21,13 +21,10 @@ class TDiscussController extends Controller
         
         $comments = Comment::where('course_id', $course->id)->get();
         
-        $lastComment = Comment::where('course_id', $course->id)
-                              ->latest()
-                              ->first();
         
         $title = 'Discuss Courses';
     
-        return view('troopers.courses.discuss', compact('title', 'course', 'comments', 'lastComment'));
+        return view('troopers.courses.discuss', compact('title', 'course', 'comments'));
     }
     
 
