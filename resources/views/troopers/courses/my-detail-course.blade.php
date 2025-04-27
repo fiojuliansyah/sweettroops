@@ -52,7 +52,7 @@
                                 <img src="/admin/assets/images/thumbs/mentor-img1.png" alt="" class="w-44 h-44 rounded-circle object-fit-cover flex-shrink-0">
                                 <div class="d-flex flex-column">
                                     <h6 class="text-15 fw-bold mb-0">{{ $course->instructor }}</h6>
-                                    <span class="text-13 text-gray-300">Baking Mentor</span>
+                                    <span class="text-13 text-gray-300">Mentor</span>
                                 </div>
                             </div>
                         </div>
