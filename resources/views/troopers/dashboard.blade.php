@@ -59,7 +59,7 @@
                             </div>
 
                             <h4 class="mb-2">{{ $mycourseCount ?? '-' }}</h4>
-                            <span class="text-gray-300">Earned Certificate</span>
+                            <span class="text-gray-300">Kursus Saya</span>
                         </div>
                     </div>
                 </div>
