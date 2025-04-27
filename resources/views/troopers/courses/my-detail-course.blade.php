@@ -31,11 +31,9 @@
                         </div>
                     </div>
 
-                    <div class="rounded-16 overflow-hidden">
-                        <video id="player" class="player" playsinline controls data-poster="{{ asset('storage/' . $course->thumbnail) }}">
-                            <source src="{{ asset('storage/' . $course->trailer) }}" type="video/mp4">
-                        </video>
-                    </div>
+                    <video id="player" class="player" playsinline controls data-poster="{{ asset('storage/' . $course->thumbnail) }}" oncontextmenu="return false;">
+                        <source src="{{ $course->videos->first()->link_url }}" type="video/mp4">
+                    </video>                    
                     
                     <div class="mt-24">
                         <div class="mb-24 pb-24 border-bottom border-gray-100">
@@ -44,7 +42,7 @@
                         </div>
                         <div class="mb-24 pb-24 border-bottom border-gray-100">
                             <h5 class="mb-12 fw-bold">Description</h5>
-                            <p class="text-gray-300 text-15 mb-8">{{ $course->description }}</p>
+                            <p class="text-gray-300 text-15 mb-8">{!! $course->description !!}</p>
                         </div>
                         <div class="">
                             <h5 class="mb-12 fw-bold">Instructor</h5>
@@ -77,14 +75,16 @@
                     <div class="course-item">
                         <div class="course-item-dropdown active border-bottom border-gray-100">
                             <ul class="course-list p-16 pb-0">
-                                <li class="course-list__item flex-align gap-8 mb-16 active">
-                                    <div class="w-100">
-                                        <a href="#" class="text-gray-300 fw-medium d-block hover-text-main-600 d-lg-block">
-                                            Welcome to this course
-                                            <span class="text-gray-300 fw-normal d-block">2.4 min</span>
-                                        </a>
-                                    </div>
-                                </li>
+                                @foreach ($course->videos as $video)
+                                    <li class="course-list__item flex-align gap-8 mb-16 active">
+                                        <div class="w-100">
+                                            <a href="#" class="text-gray-300 fw-medium d-block hover-text-main-600 d-lg-block">
+                                                {{ $video->title }}
+                                                <span class="text-gray-300 fw-normal d-block">{{ $video->duration ?? '-' }} min</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
