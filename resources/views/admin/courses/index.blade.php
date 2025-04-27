@@ -20,7 +20,10 @@
             </a>            
             <a href="#" data-bs-toggle="modal" data-bs-target="#importModal" class="btn btn-outline-main">
                 <i class="ph ph-upload-simple me-2"></i> Import Excel
-            </a>            
+            </a>  
+            <a href="#" data-bs-toggle="modal" data-bs-target="#importVideoModal" class="btn btn-outline-main">
+                <i class="ph ph-upload-simple me-2"></i> Import Videos
+            </a>           
             <a href="{{ route('admin.courses.create') }}" class="btn btn-main">
                 <i class="ph ph-plus-circle me-2"></i> Add New Course
             </a>
@@ -67,6 +70,30 @@
             @csrf
             <div class="modal-header">
                 <h5 class="modal-title" id="importCompetitionModalLabel">Import Competitions dari Excel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+                @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+                <div class="mb-3">
+                    <label for="file" class="form-label">Upload file Excel (.xlsx, .xls)</label>
+                    <input class="form-control" type="file" name="file" id="file" accept=".xlsx,.xls" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-main">Import</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="importVideoModal" tabindex="-1" aria-labelledby="importVideoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form action="{{ route('admin.course.import-videos') }}" method="POST" enctype="multipart/form-data" class="modal-content">
+            @csrf
+            <div class="modal-header">
+                <h5 class="modal-title" id="importVideoModalLabel">Import Videos dari Excel</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
             </div>
             <div class="modal-body">

@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Imports\CoursesImport;
 use App\Imports\CompetitionsImport;
+use App\Imports\CourseVideosImport;
 use App\DataTables\CoursesDataTable;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
@@ -188,5 +189,18 @@ class CourseController extends Controller
         Excel::import(new CompetitionsImport, $request->file('file'));
 
         return redirect()->back()->with('success', 'Data kompetisi berhasil diimport!');
+    }
+
+    public function importVideos(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv,ods|max:2048',
+        ]);
+
+        $file = $request->file('file');
+
+        Excel::import(new CourseVideosImport, $file);
+
+        return back()->with('success', 'Videos imported successfully.');
     }
 }
