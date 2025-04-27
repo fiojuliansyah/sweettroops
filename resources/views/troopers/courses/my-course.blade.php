@@ -5,17 +5,15 @@
     <!-- Breadcrumb Start -->
 <div class="breadcrumb mb-24">
 <ul class="flex-align gap-4">
-<li><a href="#" class="text-gray-200 fw-normal text-15 hover-text-main-600">Courses</a></li>
+<li><a href="#" class="text-gray-200 fw-normal text-15 hover-text-main-600">Kursus</a></li>
 <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
-<li><span class="text-main-600 fw-normal text-15">All Course</span></li>
+<li><span class="text-main-600 fw-normal text-15">Semua Kursus</span></li>
 </ul>
 </div>
 <!-- Breadcrumb End -->
 
     <div class="card">
         <div class="card-body">
-            <h4 class="mb-0">Recommended For You</h4>
-            <br>
             <form action="{{ route('troopers.all-course') }}" method="GET" class="search-input-form">
                 <div class="search-input">
                     <select name="category_id" class="form-control form-select h6 rounded-4 mb-0 py-6 px-8">
