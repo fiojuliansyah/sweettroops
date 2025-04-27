@@ -13,24 +13,23 @@ class TDiscussController extends Controller
     public function discussCourse($slug)
     {
         $user = Auth::id();
-        $course = Competition::where('user_id', $user)
-                             ->first()
-                             ->course; // Pastikan Anda mendapatkan data course yang terkait dengan user
+        $courseList = Competition::where('user_id', $user)->get();
+        $course = $courseList->first();
         
         if (!$course) {
             return redirect()->back()->with('error', 'You have not joined any courses.');
         }
     
         $comments = Comment::where('course_id', $course->id)->get();
+    
         $lastComment = Comment::where('course_id', $course->id)
                               ->latest()
                               ->first();
     
         $title = 'Discuss Courses';
-    
-        return view('troopers.courses.discuss', compact('title', 'course', 'comments', 'lastComment'));
+        
+        return view('troopers.courses.discuss', compact('title', 'course', 'courseList', 'comments', 'lastComment'));
     }
-    
 
     public function postComment(Request $request, $courseId)
     {
