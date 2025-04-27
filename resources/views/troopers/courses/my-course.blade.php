@@ -73,17 +73,6 @@
                                             <span class="text-gray-600 text-13">Tipe Kelas <a href="profile.html" class="fw-semibold text-gray-700 hover-text-main-600 hover-text-decoration-underline">{{ $course->type->name }}</a> </span>
                                         </div>
                                     </div>
-
-                                    <div class="flex-align gap-8 mt-12 pt-12 border-top border-gray-100">
-                                        <div class="flex-align gap-4">
-                                            <span class="text-sm text-main-600 d-flex"><i class="ph ph-video-camera"></i></span>
-                                            <span class="text-13 text-gray-600">{{ $course->videos->count() }} Lesson</span>
-                                        </div>
-                                        <div class="flex-align gap-4">
-                                            <span class="text-sm text-main-600 d-flex"><i class="ph ph-clock"></i></span>
-                                            <span class="text-13 text-gray-600">2 Hours</span>
-                                        </div>
-                                    </div>
                                     
                                     <div class="flex-between gap-4 flex-wrap mt-24">
                                         <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="btn btn-outline-main rounded-pill py-9">Detail Course</a>
