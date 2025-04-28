@@ -5,118 +5,119 @@
     <!-- Breadcrumb Start -->
 <div class="breadcrumb mb-24">
 <ul class="flex-align gap-4">
-<li><a href="index.html" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+<li><a href="#" class="text-gray-200 fw-normal text-15 hover-text-main-600">Kursus</a></li>
 <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
-<li><span class="text-main-600 fw-normal text-15">Discuss</span></li>
+<li><span class="text-main-600 fw-normal text-15">Kursus Saya</span></li>
 </ul>
 </div>
 <!-- Breadcrumb End -->
-    
 
-    <div class="chart-wrapper d-flex flex-wrap gap-24">
-        <!-- chat sidebar Start -->
-        <div class="card chat-list">
-            <div class="card-header py-16 border-bottom border-gray-100">
-                <form action="#" class="position-relative">
-                    <button type="submit" class="input-icon text-xl d-flex text-gray-600 pointer-event-none"><i class="ph ph-magnifying-glass"></i></button> 
-                    <input type="text" class="form-control ps-44 h-44 border-gray-100 focus-border-main-600 rounded-pill placeholder-15" placeholder="Search here...">
-                </form>
-            </div>
-            <div class="card-body p-0">
-                <div class="chat-list-wrapper p-24 overflow-y-auto scroll-sm">
-                    @foreach ($courseList as $course)   
-                        <div class="chat-list__item flex-between gap-8 cursor-pointer">
-                            <div class="d-flex align-items-start gap-16">
-                                <div class="position-relative flex-shrink-0">
-                                    <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="" class="w-44 h-44 rounded-circle object-fit-cover flex-shrink-0">
-                                    <span class="activation-badge w-12 h-12 border-2 position-absolute inset-block-end-0 inset-inline-end-0"></span>
-                                </div>
-                                <div class="d-flex flex-column">
-                                    <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">{{ $course->title }}</h6>
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ route('troopers.all-course') }}" method="GET" class="search-input-form">
+                <div class="search-input">
+                    <select name="category_id" class="form-control form-select h6 rounded-4 mb-0 py-6 px-8">
+                        <option value="" selected disabled>Kategori</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="search-input">
+                    <select name="type_id" class="form-control form-select h6 rounded-4 mb-0 py-6 px-8">
+                        <option value="" selected disabled>Tipe Kelas</option>
+                        @foreach($types as $type)
+                            <option value="{{ $type->id }}" {{ request('type_id') == $type->id ? 'selected' : '' }}>
+                                {{ $type->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="search-input">
+                    <button type="submit" class="btn btn-main rounded-pill py-9 w-100">Search</button>
+                </div>
+            </form>                    
+        </div>
+    </div>
+    <div class="card mt-14">
+        <div class="card-body">
+            
+            <div class="row g-20">
+                @foreach ($courses as $course)   
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="card border border-gray-100">
+                            <div class="card-body p-8">
+                                <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="rounded-20 overflow-hidden text-center mb-8 flex-center p-8">
+                                    @php
+                                        $thumbnails = json_decode($course->thumbnail, true);
+                                        $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                                    @endphp
+                                    <img src="{{ asset('storage/' . $firstThumbnail) }}" alt="Course Image" width="500">
+                                </a>
+                                <div class="p-8">
+                                    <span class="text-13 py-2 px-10 rounded-pill bg-success-50 text-success-600 mb-16">{{ $course->category->name }}</span>
+                                    @if ($course->is_recommend == 1)  
+                                        <span class="text-13 py-2 px-10 rounded-pill bg-info-50 text-info-600 mb-16">Recommended</span>
+                                    @endif
+                                    @if ($course->is_featured == 1)  
+                                        <span class="text-13 py-2 px-10 rounded-pill bg-warning-50 text-warning-600 mb-16">Featured</span>
+                                    @endif
+                                    <h5 class="mb-0"><a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="hover-text-main-600">{{ $course->title }}</a></h5>
+
+                                    <div class="flex-align gap-8 flex-wrap mt-16">
+                                        <div>
+                                            <span class="text-gray-600 text-13">Tipe Kelas <a href="profile.html" class="fw-semibold text-gray-700 hover-text-main-600 hover-text-decoration-underline">{{ $course->type->name }}</a> </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex-between gap-4 flex-wrap mt-24">
+                                        <a href="{{ route('troopers.discuss-course', $course->slug) }}" class="btn btn-main rounded-pill py-9">Forum Diskusi</a>
+                                        <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="btn btn-outline-main rounded-pill py-9">Detail Course</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
-        </div>
-        <!-- chat sidebar End -->
 
-        <!-- chat sidebar Start -->
-        <div class="card chat-box">
-            <div class="card-header py-16 border-bottom border-gray-100">
-                <div class="chat-list__item flex-between gap-8 cursor-pointer">
-                    <div class="d-flex align-items-start gap-16">
-                        <div class="d-flex flex-column">
-                            <h6 class="text-line-1 text-15 text-gray-400 fw-bold mb-0">{{ $course->title }}</h6>
-                            <span class="text-line-1 text-13 text-gray-200">Online</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="flex-between flex-wrap gap-8 mt-20">
+                <!-- Tombol Previous -->
+                @if ($courses->onFirstPage())
+                    <span class="btn btn-outline-gray rounded-pill py-9 flex-align gap-4 disabled">
+                        <i class="ph ph-arrow-left"></i> Previous
+                    </span>
+                @else
+                    <a href="{{ $courses->previousPageUrl() }}" class="btn btn-outline-gray rounded-pill py-9 flex-align gap-4">
+                        <i class="ph ph-arrow-left"></i> Previous
+                    </a>
+                @endif
+            
+                <!-- Pagination Number -->
+                <ul class="pagination flex-align flex-wrap">
+                    @foreach ($courses->getUrlRange(1, $courses->lastPage()) as $page => $url)
+                        <li class="page-item {{ $page == $courses->currentPage() ? 'active' : '' }}">
+                            <a class="page-link h-44 w-44 flex-center text-15 rounded-8 fw-medium" href="{{ $url }}">{{ $page }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            
+                <!-- Tombol Next -->
+                @if ($courses->hasMorePages())
+                    <a href="{{ $courses->nextPageUrl() }}" class="btn btn-outline-main rounded-pill py-9 flex-align gap-4">
+                        Next <i class="ph ph-arrow-right"></i>
+                    </a>
+                @else
+                    <span class="btn btn-outline-gray rounded-pill py-9 flex-align gap-4 disabled">
+                        Next <i class="ph ph-arrow-right"></i>
+                    </span>
+                @endif
             </div>
-            <div class="card-body p-0">
-                <div class="chat-box-item-wrapper overflow-y-auto scroll-sm p-24">
-                    <div class="chat-box-item d-flex align-items-end gap-8">
-                         <img src="assets/images/thumbs/avatar-img1.png" alt="" class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
-                         <div class="chat-box-item__content">
-                             <p class="chat-box-item__text p-16 rounded-16 mb-12">Hello Mac</p>
-                             <p class="chat-box-item__text py-16 px-16 px-lg-4">Lorem ipsum dolor sit amet consectetur. Cursus vulputate eget ullamcorper bibendum pulvinar sed at libero. Vulputate amet fermentum sapien amet tempus ac donec.</p>
-                             <span class="text-gray-200 text-13 mt-2 d-block">10 min ago</span>
-                         </div>
-                    </div>
-                    <div class="chat-box-item right d-flex align-items-end gap-8">
-                         <img src="assets/images/thumbs/avatar-img1.png" alt="" class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
-                         <div class="chat-box-item__content">
-                             <p class="chat-box-item__text py-16 px-16 px-lg-4">Lorem ipsum dolor sit amet consect.Cursus vulputate eget ullamcorper bibendum </p>
-                             <span class="text-gray-200 text-13 mt-2 d-block">10 min ago</span>
-                         </div>
-                    </div>
-                    <div class="chat-box-item d-flex align-items-end gap-8">
-                         <img src="assets/images/thumbs/avatar-img1.png" alt="" class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
-                         <div class="chat-box-item__content">
-                             <p class="chat-box-item__text py-16 px-16 px-lg-4">Lorem ipsum dolor sit amet consectetur. Cursus vulputate eget ullamcorper bibendum pulvinar sed at libero.</p>
-                             <span class="text-gray-200 text-13 mt-2 d-block">10 min ago</span>
-                         </div>
-                    </div>
-                    <div class="chat-box-item right d-flex align-items-end gap-8">
-                         <img src="assets/images/thumbs/avatar-img1.png" alt="" class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
-                         <div class="chat-box-item__content">
-                             <p class="chat-box-item__text py-16 px-16 px-lg-4">Lorem ipsum dolor sit amet consect.Cursus vulputate eget ullamcorper bibendum </p>
-                             <span class="text-gray-200 text-13 mt-2 d-block">10 min ago</span>
-                         </div>
-                    </div>
-                    <div class="chat-box-item d-flex align-items-end gap-8">
-                         <img src="assets/images/thumbs/avatar-img1.png" alt="" class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
-                         <div class="chat-box-item__content">
-                             <p class="chat-box-item__text p-16 rounded-16 mb-12">Hello Mac</p>
-                             <p class="chat-box-item__text py-16 px-16 px-lg-4">Lorem ipsum dolor sit amet consectetur. Cursus vulputate eget ullamcorper bibendum pulvinar sed at libero. Vulputate amet fermentum sapien amet tempus ac donec.</p>
-                             <span class="text-gray-200 text-13 mt-2 d-block">10 min ago</span>
-                         </div>
-                    </div>
-                    <div class="chat-box-item right d-flex align-items-end gap-8">
-                        <img src="assets/images/thumbs/avatar-img1.png" alt="" class="w-40 h-40 rounded-circle object-fit-cover flex-shrink-0">
-                        <div class="chat-box-item__content">
-                            <p class="chat-box-item__text py-4 px-16 px-lg-4">...</p>
-                            <span class="text-gray-200 text-13 mt-2 d-block">10 min ago</span>
-                        </div>
-                   </div>
-                </div>
-            </div>
-            <div class="card-footer border-top border-gray-100">
-                <form action="#" class="flex-align gap-8 chat-box-bottom">
-                    <label for="fileUp" class="flex-shrink-0 file-btn w-48 h-48 flex-center bg-main-50 text-24 text-main-600 rounded-circle hover-bg-main-100 transition-2">
-                        <i class="ph ph-plus"></i>
-                    </label>
-                    <input type="file" name="fileName" id="fileUp" hidden>
-                    <input type="text" class="form-control h-48 border-transparent px-20 focus-border-main-600 bg-main-50 rounded-pill placeholder-15" placeholder="Type your message...">
-                    <button type="submit" class="flex-shrink-0 submit-btn btn btn-main rounded-pill flex-align gap-4 py-15">
-                        Submit <span class="d-flex text-md d-sm-flex d-none"><i class="ph-fill ph-paper-plane-tilt"></i></span> 
-                    </button>
-                </form>
-            </div>
+            
+            
         </div>
-        <!-- chat sidebar End -->
     </div>
-     
 </div>
 @endsection

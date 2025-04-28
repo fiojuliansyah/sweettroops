@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Type;
 use App\Models\Course;
+use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -13,17 +16,16 @@ class DashboardController extends Controller
         return view('dashboard', compact('title'));
     }
 
-    public function adminDiscussCourse()
+    public function adminDiscussCourse(Request $request)
     {
-        $courseList = Course::all();
-        $course = $courseList->first();
-        $title = 'Admin Discuss Courses';
-    
-        if (!$course) {
-            return redirect()->back()->with('error', 'No courses available.');
-        }
-    
-        return view('admin.discuss', compact('title', 'course', 'courseList'));
+        
+        $courses = Course::paginate(12);
+        
+        $title = 'All Courses';
+        $categories = Category::all();
+        $types = Type::all();
+        
+        return view('admin.discuss', compact('title', 'courses', 'categories', 'types'));
     }
     
 }
