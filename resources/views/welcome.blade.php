@@ -34,7 +34,7 @@
           <section class="inside-page">
              <div class="inside-wrapper container">
                <div class="col-md-12">
-                  <h2 class="text-center-sm">Kelas Berbasis Cinta</h2>
+                  <h2 class="text-center-sm">{{ $homepage->title }}</h2>
                   <img class="img-responsive img-rounded pull-right-lg col-md-4 center-block" src="img/services/services-home.jpg" alt="">
                   <p class="lead res-margin">Kami telah menawarkan kelas baking berkualitas tinggi. Setiap kelas dirancang dengan penuh cinta untuk membantu Anda menguasai keterampilan praktis yang akan membawa Anda ke level berikutnya dalam dunia baking.</p>
                   <p>Di SweetTroops Baking Studio, kami percaya bahwa proses belajar harus menyenangkan dan menginspirasi. Kami tidak hanya mengajarkan resep, tetapi juga memberi Anda keterampilan yang akan Anda gunakan sepanjang hidup. Dengan instruktur berpengalaman dan bahan berkualitas tinggi, kami menciptakan pengalaman belajar yang tak terlupakan.</p>
