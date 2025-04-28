@@ -79,9 +79,15 @@
                         </a>
                     </li>
                     <li class="sidebar-menu__item">
+                        <a href="{{ route('admin.homepages.index') }}" class="sidebar-menu__link">
+                            <span class="icon"><i class="ph ph-squares-four"></i></span>
+                            <span class="text">Home Setting</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu__item">
                         <a href="{{ route('admin.sliders.index') }}" class="sidebar-menu__link">
                             <span class="icon"><i class="ph ph-books"></i></span>
-                            <span class="text">SLider</span>
+                            <span class="text">Slider</span>
                         </a>
                     </li>
                 @endif        

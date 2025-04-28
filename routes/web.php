@@ -9,6 +9,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CourseVideoController;
 use App\Http\Controllers\TempUploadsController;
@@ -69,6 +70,9 @@ Route::middleware(['auth','admin'])
     Route::resource('types', TypeController::class);
     Route::resource('sliders', SliderController::class);
     Route::resource('users', UserController::class);
+    Route::get('admin/homepages', [HomePageController::class, 'index'])->name('homepages.index');
+    Route::post('admin/homepages/save/{id?}', [HomePageController::class, 'save'])->name('homepages.save');
+
     Route::post('/admin/users/import', [UserController::class, 'importExcel'])->name('users.import');
     Route::post('/admin/competitions/import', [CourseController::class, 'importCompetitionExcel'])->name('competitions.import');
     Route::post('/admin/course-video/import', [CourseController::class, 'importVideos'])->name('course.import-videos');
