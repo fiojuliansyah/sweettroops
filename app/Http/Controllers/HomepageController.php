@@ -48,7 +48,6 @@ class HomePageController extends Controller
             'hours' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
-            'map_url' => 'required|string',
         ]);
 
         // Mencari data berdasarkan ID atau buat data baru jika ID tidak ada
