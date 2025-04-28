@@ -30,20 +30,24 @@
                             <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" placeholder="Enter email address">
                         </div>
                         <div class="col-sm-6">
+                            <label class="h5 mb-8 fw-semibold font-heading">Phone <span class="text-danger">*</span></label>
+                            <input type="phone" name="phone" class="form-control" value="{{ old('phone', $user->phone) }}" placeholder="Enter Phone Number">
+                        </div>
+                        <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Role <span class="text-danger">*</span></label>
                             <select name="role" class="form-select" required>
                                 <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                                 <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
                             </select>
                         </div>
-                        <div class="col-sm-6">
+                        {{-- <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Password (Leave empty to keep current)</label>
                             <input type="password" name="password" class="form-control" placeholder="Enter new password">
                         </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Confirm Password</label>
                             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm new password">
-                        </div>
+                        </div> --}}
                         <div class="col-sm-12">
                             <label class="h5 mb-8 fw-semibold font-heading">Assign Courses</label>
                             <div class="form-check">
