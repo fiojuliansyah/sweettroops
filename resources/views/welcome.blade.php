@@ -36,9 +36,8 @@
                <div class="col-md-12">
                   <h2 class="text-center-sm">{{ $homepage->title }}</h2>
                   <img class="img-responsive img-rounded pull-right-lg col-md-4 center-block" src="img/services/services-home.jpg" alt="">
-                  <p class="lead res-margin">Kami telah menawarkan kelas baking berkualitas tinggi. Setiap kelas dirancang dengan penuh cinta untuk membantu Anda menguasai keterampilan praktis yang akan membawa Anda ke level berikutnya dalam dunia baking.</p>
-                  <p>Di SweetTroops Baking Studio, kami percaya bahwa proses belajar harus menyenangkan dan menginspirasi. Kami tidak hanya mengajarkan resep, tetapi juga memberi Anda keterampilan yang akan Anda gunakan sepanjang hidup. Dengan instruktur berpengalaman dan bahan berkualitas tinggi, kami menciptakan pengalaman belajar yang tak terlupakan.</p>
-                  <p>Apakah Anda seorang pemula atau ingin meningkatkan keterampilan baking Anda, kelas kami dirancang untuk memberikan pengalaman langsung yang menyenangkan dan edukatif. Bergabunglah dengan kami dan temukan kecintaan Anda pada dunia baking sambil mengembangkan keahlian praktis di setiap langkahnya.</p>
+                  <p class="lead res-margin">{{ $homepage->sub_title }}</p>
+                  <p>{{ $homepage->detail }}</p>
                </div>               
                 <!-- owl-carousel -->
                 <div id="owl-services" class="owl-carousel owl-theme text-center res-margin">
@@ -65,9 +64,9 @@
                   <div class="col-md-12">
                      <!-- Tabs -->
                      <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#A">Kenapa Memilih Kelas Kami?</a></li>
-                        <li><a data-toggle="tab" href="#B">Filosofi Pengajaran</a></li>
-                        <li><a data-toggle="tab" href="#C">Kualitas Pengajaran</a></li>
+                        <li class="active"><a data-toggle="tab" href="#A">{{ $homepage->tab_1 }}</a></li>
+                        <li><a data-toggle="tab" href="#B">{{ $homepage->tab_2 }}</a></li>
+                        <li><a data-toggle="tab" href="#C">{{ $homepage->tab_3 }}</a></li>
                      </ul>
                      <!-- /nav-tabs -->
                      <!--/nav nav-tabs -->
@@ -77,31 +76,21 @@
                               <div class="col-md-5 p-2">
                                  <img class="img-responsive img-rounded center-block" src="img/tab1.jpg" alt="">
                               </div>
-                              <h3 class="text-center-sm">Kenapa Memilih Kelas Kami?</h3>
-                              <p>Kelas baking kami didesain untuk memberikan pengalaman langsung dalam membuat kue yang lezat dan berkualitas. Kami menawarkan kursus yang mudah diikuti, baik untuk pemula maupun profesional. Dengan pengajaran dari instruktur berpengalaman, Anda akan menguasai teknik-teknik dasar hingga tingkat lanjut.</p>
-                              <p><strong>Kami percaya bahwa setiap orang bisa menjadi ahli dalam membuat kue dengan latihan yang tepat dan bahan yang berkualitas.</strong></p>
-                              <p>Apakah Anda ingin belajar cara membuat kue-kue khas atau menciptakan kreasi kue unik Anda sendiri? Kami siap membantu Anda mencapai tujuan tersebut dalam kelas praktis yang menyenangkan dan bermanfaat.</p>
+                              <h3 class="text-center-sm">{{ $homepage->title_tab_1 }}</h3>
+                              <p>{{ $homepage->detail_tab_1 }}</p>
                            </div>
                            <!-- /tab-pane -->
                            <div class="tab-pane fade" id="B">
-                              <h3 class="text-center-sm">Filosofi Pengajaran</h3>
+                              <h3 class="text-center-sm">{{ $homepage->title_tab_2 }}</h3>
                               <div class="col-md-4 p-2 pull-right-lg">
                                  <img class="img-responsive img-rounded center-block" src="img/tab2.jpg" alt="">
                               </div>
-                              <p>Di SweetTroops Baking Studio, kami memprioritaskan pendekatan pembelajaran yang menyenangkan dan penuh kreativitas. Filosofi kami adalah menggabungkan teknik-teknik tradisional dengan inovasi terkini dalam dunia baking. Setiap peserta akan diajarkan tidak hanya cara membuat kue, tetapi juga bagaimana mengekspresikan diri melalui kreasi makanan.</p>
-                              <p><strong>Belajar bersama kami adalah tentang mengembangkan passion dan keterampilan dalam membuat kue yang luar biasa.</strong></p>
-                              <ul class="custom pl-0">
-                                 <li>Pengajaran yang praktis dengan fokus pada keterampilan langsung</li>
-                                 <li>Kelas yang dirancang untuk memenuhi kebutuhan semua tingkat kemampuan</li>
-                                 <li>Instruktur berpengalaman yang siap berbagi pengetahuan dan tips</li>
-                              </ul>
+                              <p>{{ $homepage->detail_tab_2 }}</p>
                            </div>
                            <!-- /tab-pane -->
                            <div class="tab-pane fade" id="C">
-                              <h3 class="text-center-sm">Kualitas Pengajaran</h3>
-                              <p>Kami memastikan setiap kelas yang kami tawarkan memiliki standar tinggi dalam pengajaran dan pengalaman belajar. Dengan instruktur yang berpengalaman dan berpengetahuan luas, kami memberikan pelatihan yang sangat praktis dan mudah dipahami. Semua peserta akan mendapat perhatian penuh untuk mengasah keterampilan mereka.</p>
-                              <p><strong>Di SweetTroops, kualitas pengajaran adalah prioritas kami agar setiap peserta dapat belajar dengan percaya diri dan hasil yang maksimal.</strong></p>
-                              <p>Dengan pendekatan hands-on, setiap peserta akan langsung terlibat dalam setiap langkah pembuatan kue, memastikan pemahaman yang mendalam dan keterampilan yang terasah dengan baik.</p>
+                              <h3 class="text-center-sm">{{ $homepage->title_tab_3 }}</h3>
+                              <p>{{ $homepage->detail_tab_3 }}</p>
                            </div>
                            <!-- /tab-pane -->
                         </div>
@@ -152,11 +141,10 @@
                 </div>
                 <!-- alert box -->
                 <div class="alert-bg alert alert-info col-md-12 margin1">
-                     <h5>Tertarik Mengikuti Kelas Baru?</h5>
-                     <p>Apakah Anda ingin belajar langsung dari ahli di bidangnya? Kami menawarkan berbagai kelas membuat kue yang bisa diikuti secara langsung atau online, sesuai dengan kebutuhan Anda.</p>
-                     <p>Jangan ragu untuk menghubungi kami untuk informasi lebih lanjut dan untuk memesan kelas sesuai preferensi Anda.</p>
+                     <h5><p>{{ $homepage->section_title }}</p></h5>
+                     <p>{{ $homepage->section_detail }}</p>
                      <!-- button -->
-                     <a class="btn btn-secondary" href="#">Hubungi Kami</a>
+                     <a class="btn btn-secondary" href="{{ $homepage->section_link }}">{{ $homepage->section_button }}</a>
                   </div>               
                 <!-- /alert -->   
              </div>
@@ -168,8 +156,8 @@
                <!-- row -->
                <div class="row ">
                   <div class="col-md-5">
-                     <h4 class="no-margin-top">Pertanyaan yang Sering Diajukan tentang Kelas</h4>
-                     <p>Berikut adalah beberapa pertanyaan yang sering kami terima terkait dengan kelas baking kami. Jika Anda memiliki pertanyaan lain, jangan ragu untuk menghubungi kami. Kami siap membantu Anda dengan semua kebutuhan terkait kursus dan pelatihan kami!</p>
+                     <h4 class="no-margin-top">{{ $homepage->accord_title }}</h4>
+                     <p>{{ $homepage->accord_detail }}</p>
                   </div>
                   <div class="col-md-7">
                      <!-- Accordions -->
@@ -178,13 +166,13 @@
                         <div class="panel">
                            <div class="panel-heading">
                               <h6 class="panel-title">
-                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Apakah SweetTroops menawarkan kelas baking online?</a>
+                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1">{{ $homepage->accord_tab_1 }}</a>
                               </h6>
                            </div>
                            <!-- /panel-heading -->
                            <div id="collapse1" class="panel-collapse collapse in">
                               <div class="panel-body">
-                                 <p>Ya, kami menawarkan kelas baking online bagi Anda yang ingin belajar di rumah. Anda bisa mengikuti kursus ini dari mana saja dengan instruksi langsung dari instruktur kami yang berpengalaman.</p>
+                                 <p>{{ $homepage->accord_detail_tab_1 }}</p>
                               </div>
                            </div>
                         </div>
@@ -193,13 +181,13 @@
                         <div class="panel">
                            <div class="panel-heading">
                               <h6 class="panel-title">
-                                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse2">Bagaimana cara mendaftar untuk kelas baking di SweetTroops?</a>
+                                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse2">{{ $homepage->accord_tab_2 }}</a>
                               </h6>
                            </div>
                            <!-- /panel-heading -->
                            <div id="collapse2" class="panel-collapse collapse">
                               <div class="panel-body">
-                                 <p>Anda dapat mendaftar untuk kelas baking kami langsung melalui situs web kami. Cukup pilih kelas yang Anda inginkan, pilih jadwal yang sesuai, dan lakukan pembayaran untuk mengamankan tempat Anda.</p>
+                                 <p>{{ $homepage->accord_detail_tab_2 }}</p>
                               </div>
                            </div>
                         </div>
@@ -208,12 +196,12 @@
                         <div class="panel">
                            <div class="panel-heading">
                               <h6 class="panel-title">
-                                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse3">Apakah ada kelas untuk pemula?</a>
+                                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse3">{{ $homepage->accord_tab_3 }}</a>
                               </h6>
                            </div>
                            <div id="collapse3" class="panel-collapse collapse">
                               <div class="panel-body">
-                                 <p>Ya, kami menawarkan kelas untuk pemula yang ingin belajar dasar-dasar baking. Instruktur kami akan memandu Anda langkah demi langkah dalam membuat kue dan hidangan lainnya dengan mudah.</p>
+                                 <p>{{ $homepage->accord_detail_tab_3 }}</p>
                               </div>
                            </div>
                         </div>
@@ -229,9 +217,8 @@
 
           <section id="contact" class="inside-page">
             <div class="inside-wrapper container">
-               <h2>Get in Touch with us</h2>
-               <p> Donec commodo sodales ex, scelerisque laoreet nibh hendrerit id. In aliquet magna nec Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules, Etiam rhoncus leo a dolor placerat, nec elementum ipsum convall.                        </p>
-               <p>Aliquam erat volutpat In id fermentum augue, ut pellentesque leo. Maecenas at arcu risus. Donec commodo sodales ex, scelerisque laoreet nibh hendrerit id. In aliquet magna nec lobortis maximus. Etiam rhoncus leo a dolor placerat, nec elementum ipsum convall.</p>
+               <h2>{{ $homepage->contact_title }}</h2>
+               <p>{{ $homepage->contact_detail }}</p>
                <div class="row contact-boxes text-center margin1">
                   <div class="col-md-3">
                      <div class="box-hover icon p-2">
@@ -240,7 +227,7 @@
                         <!-- contact-icon info-->
                         <div class="contact-icon-info">
                            <h5>Email</h5>
-                           <p>Email address: <a href="mailto:info@sweettroops.com">info@sweettroops.com</a></p>
+                           <p>Email address: <a href="mailto:{{ $homepage->email }}">{{ $homepage->email }}</a></p>
                         </div>
                      </div>
                   </div>
@@ -252,9 +239,7 @@
                         <!-- contact-icon info-->
                         <div class="contact-icon-info">
                            <h5>Hours</h5>
-                           <p>mon - fri: 9am to 6pm
-                              <br/>Weekends - closed
-                           </p>
+                           <p>{{ $homepage->hours }}</p>
                         </div>
                      </div>
                   </div>
@@ -266,7 +251,7 @@
                         <!-- contact-icon info-->
                         <div class="contact-icon-info">
                            <h5>Our Location</h5>
-                           <p>Jakarta, Indonesia</p>
+                           <p>{{ $homepage->location }}</p>
                         </div>
                      </div>
                   </div>
@@ -278,7 +263,7 @@
                         <!-- contact-icon info -->
                         <div class="contact-icon-info">
                            <h5>Call us</h5>
-                           <p>Phone number: <br/>(+62) 8 5311 2323 77</p>
+                           <p>Phone number: <br/>{{ $homepage->phone }}</p>
                         </div>
                      </div>
                      <!-- /contact-icon-->
@@ -330,7 +315,7 @@
                   <!-- /col-md- -->
                   <div class="col-md-5">
                      <!-- map-->
-                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.242063543142!2d106.78583197499047!3d-6.231786793756394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1397d42093b%3A0xf898bb99eb1b70f5!2sSweet%20Troops%20Artisan%20Baking%20Studio!5e0!3m2!1sen!2sid!4v1742887700976!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                     {!! $homepage->map_url !!}
                   </div>
                   <!-- /col-md--->
                </div>
