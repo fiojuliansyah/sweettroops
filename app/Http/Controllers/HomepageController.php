@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\HomePage;
+use App\Models\Homepage;
 
 class HomePageController extends Controller
 {
     public function index()
     {
-        $homepage = HomePage::orderBy('created_at', 'ASC')->first();
+        $homepage = Homepage::orderBy('created_at', 'ASC')->first();
 
         return view('admin.homepages.index', compact('homepage'));
     }
