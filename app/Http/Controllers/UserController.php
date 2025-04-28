@@ -43,6 +43,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'phone' => $validated['phone'],
             'role' => $validated['role'],
             'password' => Hash::make($validated['password']),
         ]);
@@ -86,6 +87,7 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'role' => $request->role,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
         ]);
