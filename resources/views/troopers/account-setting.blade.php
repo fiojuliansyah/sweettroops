@@ -29,14 +29,14 @@
                             <label class="h5 mb-8 fw-semibold font-heading">Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" placeholder="Enter email address">
                         </div>
-                        <div class="col-sm-6">
+                        {{-- <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Password (Leave empty to keep current)</label>
                             <input type="password" name="password" class="form-control" placeholder="Enter new password">
                         </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Confirm Password</label>
                             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm new password">
-                        </div>                                     
+                        </div>                                      --}}
                         <div class="col-sm-12 flex-align justify-content-end gap-8">
                             <a href="{{ route('admin.users.index') }}" class="btn btn-outline-main rounded-pill py-9">Cancel</a>
                             <button type="submit" class="btn btn-main rounded-pill py-9">Update User</button>
