@@ -49,19 +49,22 @@
                             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm new password">
                         </div> --}}
                         <div class="col-sm-12">
-                            <label class="h5 mb-8 fw-semibold font-heading">Assign Courses</label>
-                            <div class="form-check">
+                            <label class="h5 mb-4 fw-semibold font-heading">Assign Courses</label>
+                            <div class="row">
                                 @foreach ($courses as $course)
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="courses[]" value="{{ $course->id }}" 
-                                            {{ $user->competitions->contains('course_id', $course->id) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="course_{{ $course->id }}">
-                                            {{ $course->title }}
-                                        </label>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="courses[]" value="{{ $course->id }}" 
+                                                id="course_{{ $course->id }}" 
+                                                {{ $user->competitions->contains('course_id', $course->id) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="course_{{ $course->id }}">
+                                                {{ $course->title }}
+                                            </label>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
-                        </div>                                          
+                        </div>                                                                 
                         <div class="col-sm-12 flex-align justify-content-end gap-8">
                             <a href="{{ route('admin.users.index') }}" class="btn btn-outline-main rounded-pill py-9">Cancel</a>
                             <button type="submit" class="btn btn-main rounded-pill py-9">Update User</button>
