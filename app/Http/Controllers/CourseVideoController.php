@@ -56,7 +56,7 @@ class CourseVideoController extends Controller
             $courseVideoData['video_url'] = $request->filename;
             $courseVideo = CourseVideo::create($courseVideoData);
     
-            $redirectURL = 'http://localhost:8000/successauth';
+            $redirectURL = 'http://sweettroops.com/successauth';
     
             return redirect()
                 ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
