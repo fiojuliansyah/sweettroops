@@ -37,9 +37,9 @@
        </div>
        <!--/sidebar-nav -->
        <div class="navbar-info hidden-sm hidden-xs hidden-md">
-          <p class="small-text"><i class="fas fa-map-marker-alt margin-icon"></i>Street name 123 - New York</p>
-          <p class="small-text"><i class="fas fa-phone margin-icon"></i>(90) 1234 -5678</p>
-          <p class="small-text"><i class="far fa-clock margin-icon"></i>Mon-Sat: 9am-5pm</p>
+          <p class="small-text"><i class="fas fa-map-marker-alt margin-icon"></i>Jakarta, Indonesia</p>
+          <p class="small-text"><i class="fas fa-phone margin-icon"></i>(+62) 8 5311 2323 77</p>
+          <p class="small-text"><i class="far fa-clock margin-icon"></i>Senin-Sabtu: 9 pagi-5 sore</p>
           <!--Social icons -->
           <div class="social-media ">
              <a href="#" title=""><i class="fas fa-envelope"></i></a>

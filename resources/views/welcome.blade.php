@@ -342,6 +342,7 @@
                    <p><i class="fas fa-map-marker-alt margin-icon"></i>Jakarta, Indonesia</p>
                    <p><i class="fas fa-phone margin-icon"></i>(+62) 8 5311 2323 77</p>
                    <p><i class="far fa-clock margin-icon"></i>Senin-Sabtu: 9 pagi-5 sore</p>
+                   <p><a href="{{ route('privacy.policy') }}">Privacy Policy</a> | <a href="{{ route('terms') }}">Terms</a></p>
                    <!--Social icons -->
                    <div class="social-media ">
                       <a href="#" title=""><i class="fas fa-envelope"></i></a>

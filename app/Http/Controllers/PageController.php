@@ -19,4 +19,18 @@ class PageController extends Controller
         $sliders = Slider::orderBy('created_at', 'ASC')->get();
         return view('welcome', compact('title','homepage','courses','categories','sliders'));
     }
+
+    public function privacyPolicy()
+    {
+        $title = 'Privacy Policy';
+        return view('privacy-policy', compact('title'));
+    }
+
+    public function terms()
+    {
+        $title = 'Terms';
+        return view('terms', compact('title'));
+    }
+
+
 }
