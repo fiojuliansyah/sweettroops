@@ -58,7 +58,7 @@ class CourseVideoController extends Controller
             $courseVideoData['video_url'] = $request->filename;
             $courseVideo = CourseVideo::create($courseVideoData);
             $videoRealPath = storage_path('app/public/videos/' . $courseVideo->video_url);
-            $stream = fopen($videoRealPath, 'r');
+            $stream = fopen($videoRealPath, 'rb');
 
             Storage::disk('google')->put($courseVideo->video_url, $stream);
 

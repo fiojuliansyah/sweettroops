@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Trooper;
 
+use Google_Client;
+use Google_Service_Drive;
 use App\Models\Type;
 use App\Models\Course;
 use App\Models\Category;
-use App\Models\Competition;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 class TCourseController extends Controller
 {
@@ -89,7 +90,31 @@ class TCourseController extends Controller
     {
         $course = Course::with('videos')->where('slug', $slug)->first();
         $title = 'My Courses';
-    
-        return view('troopers.courses.my-detail-course', compact('title', 'course'));
-    }   
+
+        $videoFileId = $this->getFileIdByName($course->videos->first()->video_url);
+
+        return view('troopers.courses.my-detail-course', compact('title', 'course', 'videoFileId'));
+    }  
+
+    public function getFileIdByName($filename)
+    {
+        $client = new Google_Client();
+        $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+        $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+        $client->refreshToken(env('GOOGLE_DRIVE_REFRESH_TOKEN'));
+
+        $service = new Google_Service_Drive($client);
+
+        $files = $service->files->listFiles([
+            'q' => "name = '{$filename}'",
+            'spaces' => 'drive',
+            'fields' => 'files(id, name)'
+        ]);
+
+        if (count($files->files) > 0) {
+            return $files->files[0]->id;
+        }
+
+        return null;
+    }
 }
