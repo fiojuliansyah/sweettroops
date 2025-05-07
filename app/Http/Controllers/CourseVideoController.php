@@ -59,13 +59,14 @@ class CourseVideoController extends Controller
     
             $redirectURL = 'https://sweettroops.com/successauth';
     
+            session([
+                'courseVideo' => $courseVideo,
+                'course_id' => $request->course_id,
+                'redirect_url' => $redirectURL,
+            ]);
+            
             return redirect()
-                ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
-                ->with([
-                    'courseVideo' => $courseVideo,
-                    'course_id' => $request->course_id,
-                    'redirect_url' => $redirectURL,
-                ]);
+                ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl());
         }
     
         // Default redirect if no valid type is provided
