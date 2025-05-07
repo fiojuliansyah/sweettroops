@@ -32,9 +32,15 @@
                     </div>
 
                     <div class="rounded-16 overflow-hidden" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
-                        <iframe src="{{ $course->videos->first()->link_url }}" 
+                        @if ($course->videos->first()->type == 'video')
+                            <iframe src="https://drive.google.com/file/d/{{ $course->videos->first()->video_url }}/preview" 
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
                                 allow="autoplay" frameborder="0"></iframe>
+                        @else 
+                            <iframe src="{{ $course->videos->first()->link_url }}" 
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                                    allow="autoplay" frameborder="0"></iframe>
+                        @endif
                     </div>                                 
                     
                     <div class="mt-24">
