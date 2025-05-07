@@ -57,7 +57,7 @@ class CourseVideoController extends Controller
             $courseVideoData['video_url'] = $request->filename;
             $courseVideo = CourseVideo::create($courseVideoData);
     
-            $redirectURL = 'http://localhost:8000/successauth';
+            $redirectURL = 'https://sweettroops.com/successauth';
     
             session([
                 'courseVideo' => $courseVideo,
