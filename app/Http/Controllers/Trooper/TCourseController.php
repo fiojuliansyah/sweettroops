@@ -101,7 +101,14 @@ class TCourseController extends Controller
         $client = new Google_Client();
         $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
         $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
-        $client->refreshToken(env('GOOGLE_DRIVE_REFRESH_TOKEN'));
+
+        // 2. Set Refresh Token
+        $client->setAccessToken(env('GOOGLE_DRIVE_ACCESS_TOKEN'));  // Jika sudah memiliki token akses, bisa set disini
+
+        if ($client->isAccessTokenExpired()) {
+            // Jika token sudah kadaluarsa, refresh dengan refresh token
+            $client->refreshToken(env('GOOGLE_DRIVE_REFRESH_TOKEN'));
+        }
 
         $service = new Google_Service_Drive($client);
 
