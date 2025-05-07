@@ -54,10 +54,10 @@ class CourseVideoController extends Controller
         }
     
         if ($request->type == 'video') {
-            $courseVideoData['video_url'] = 'videos/' . $request->filename;
+            $courseVideoData['video_url'] = $request->filename;
             $courseVideo = CourseVideo::create($courseVideoData);
     
-            $redirectURL = 'https://sweettroops.com/successauth';
+            $redirectURL = 'http://localhost:8000/successauth';
     
             session([
                 'courseVideo' => $courseVideo,
@@ -80,8 +80,10 @@ class CourseVideoController extends Controller
         $courseId = session('course_id');
         $redirectURL = session('redirect_url');
 
+        $videoRealPath = storage_path('app/public/videos/' . $courseVideo->video_url);
+
         if ($courseVideo && $courseId) {
-            Youtube::setRedirectUrl($redirectURL)->upload('storage/' . $courseVideo->video_url,
+            Youtube::setRedirectUrl($redirectURL)->upload($videoRealPath,
                 [
                     'title' => $courseVideo->title,
                     'description' => $courseVideo->description,
