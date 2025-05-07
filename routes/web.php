@@ -25,8 +25,6 @@ Route::get('/', [PageController::class, 'index'])->name('welcome');
 Route::get('/home', [PageController::class, 'index']);
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
-// Route::get('/test-yt', [CourseVideoController::class, 'testYT']);
-Route::get('/successauth', [CourseVideoController::class, 'callback']);
 
 Route::middleware(['auth','phone.verified'])
 ->prefix('troopers')

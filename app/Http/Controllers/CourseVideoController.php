@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-use App\Jobs\UploadFileJob;
+use File;
 use App\Models\CourseVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\DataTables\CourseVideosDataTable;
-use AymanElmalah\YoutubeUploader\Facades\Youtube;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 
@@ -18,6 +17,8 @@ class CourseVideoController extends Controller
     public function index(CourseVideosDataTable $dataTable, $course_id)
     {
         $course = Course::findOrFail($course_id);
+
+        $dataTable->courseId = $course_id;
 
         return $dataTable->render('admin.videos.index', compact('course'));
     }
@@ -56,48 +57,15 @@ class CourseVideoController extends Controller
         if ($request->type == 'video') {
             $courseVideoData['video_url'] = $request->filename;
             $courseVideo = CourseVideo::create($courseVideoData);
-    
-            $redirectURL = 'https://sweettroops.com/successauth';
-            
-            return redirect()
-                ->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl())
-                ->with([
-                    'courseVideo' => $courseVideo,
-                    'course_id' => $request->course_id,
-                    'redirect_url' => $redirectURL,
-                ]);
+            $videoRealPath = storage_path('app/public/videos/' . $courseVideo->video_url);
+
+            Storage::disk('google')->put($courseVideo->video_url, $videoRealPath);
+
+            return redirect()->route('admin.videos.index', $request->course_id)
+                        ->with('success', 'Video successfully uploaded.');
         }
     
-        // Default redirect if no valid type is provided
         return redirect()->route('errorauth')->with('error', 'Invalid video type');
-    }
-    
-
-    public function callback(Request $request) 
-    {
-        $courseVideo = session('courseVideo');
-        $courseId = session('course_id');
-        $redirectURL = session('redirect_url');
-
-        $videoRealPath = storage_path('app/public/videos/' . $courseVideo->video_url);
-
-        if ($courseVideo && $courseId) {
-            Youtube::setRedirectUrl($redirectURL)->upload($videoRealPath,
-                [
-                    'title' => $courseVideo->title,
-                    'description' => $courseVideo->description,
-                    'tags' => ['cooking', 'cook'],
-                    'category_id' => 1,
-                ]
-            );
-
-            Storage::delete('public/' . $courseVideo->video_url);
-            
-            return redirect()->route('admin.videos.create', $courseId)
-                         ->with('success', 'Video successfully uploaded.');
-        } else {
-            return response()->json(['error' => 'No session data found'], 404);
-        }
     }
     
     public function edit($course_id, $video_id)

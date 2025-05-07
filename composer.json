@@ -20,7 +20,8 @@
         "phpoffice/phpspreadsheet": "^1.29",
         "pion/laravel-chunk-upload": "^1.5",
         "rahulhaque/laravel-filepond": "^12.0",
-        "yajra/laravel-datatables": "^12.0"
+        "yajra/laravel-datatables": "^12.0",
+        "yaza/laravel-google-drive-storage": "^4.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

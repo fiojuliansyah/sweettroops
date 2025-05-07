@@ -3,30 +3,28 @@
 namespace App\DataTables;
 
 use App\Models\CourseVideo;
-use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
+use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
 class CourseVideosDataTable extends DataTable
 {
-    protected $courseId;
+    public $courseId;
 
-    public function __construct($courseId = null)
+    public function __construct($courseId = 0)
     {
         $this->courseId = $courseId;
+
+        Log::info($this->courseId);
     }
 
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('thumbnail', function($query){
-                return '<img src="' . $query->youtubeThumbnail . '" alt="' . $query->title . '" class="w-40 h-40 rounded-8 object-cover">';
-            })
             ->addColumn('action', function($query){
                 return view('admin.videos.action', compact('query'))->render();
             })
@@ -68,11 +66,6 @@ class CourseVideosDataTable extends DataTable
             Column::make('id')
                 ->title('#')
                 ->render('meta.row + meta.settings._iDisplayStart + 1'),
-            Column::make('thumbnail')
-                ->title('Thumbnail')
-                ->addClass('text-center')
-                ->orderable(false)
-                ->searchable(false),
             Column::make('title')
                 ->title('Judul Video')
                 ->addClass('text-gray-300'),
