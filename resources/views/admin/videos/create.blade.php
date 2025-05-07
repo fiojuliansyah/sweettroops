@@ -80,6 +80,8 @@
                                 <div class="card-header text-center">
                                     <h5>Upload File</h5>
                                 </div>
+
+                                <input type="hidden" id="filename" name="filename" />
                         
                                 <div class="card-body">
                                     <div id="upload-container" class="text-center">
@@ -151,9 +153,7 @@
             // Add event listener to handle change in the select dropdown
             selectType.addEventListener('change', toggleSections);
         });
-    </script>    
-    
-    <script>
+        
         let browseFile = $('#browseFile');
 
         let resumable = new Resumable({

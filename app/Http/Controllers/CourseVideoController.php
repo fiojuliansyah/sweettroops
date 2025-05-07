@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Jobs\UploadFileJob;
 use App\Models\CourseVideo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\DataTables\CourseVideosDataTable;
 use AymanElmalah\YoutubeUploader\Facades\Youtube;
@@ -39,7 +40,7 @@ class CourseVideoController extends Controller
             'course_id' => $request->course_id,
             'title' => $request->title,
             'type' => $request->type,
-            'description' => $request->description,
+            'description' => $request->description
         ];
     
         if ($request->type == 'url') {
@@ -53,7 +54,7 @@ class CourseVideoController extends Controller
         }
     
         if ($request->type == 'video') {
-            $courseVideoData['video_url'] = $request->filename;
+            $courseVideoData['video_url'] = 'videos/' . $request->filename;
             $courseVideo = CourseVideo::create($courseVideoData);
     
             $redirectURL = 'https://sweettroops.com/successauth';
@@ -79,10 +80,7 @@ class CourseVideoController extends Controller
         $redirectURL = session('redirect_url');
 
         if ($courseVideo && $courseId) {
-            $videoUrlData = json_decode($courseVideo->video_url, true);
-            $videoPath = $videoUrlData['path'];
-
-            Youtube::setRedirectUrl($redirectURL)->upload('storage/' . $videoPath,
+            Youtube::setRedirectUrl($redirectURL)->upload('storage/' . $courseVideo->video_url,
                 [
                     'title' => $courseVideo->title,
                     'description' => $courseVideo->description,
@@ -91,7 +89,7 @@ class CourseVideoController extends Controller
                 ]
             );
 
-            Storage::delete('public/videos/' . $videoPath);
+            Storage::delete('public/' . $courseVideo->video_url);
             
             return redirect()->route('admin.videos.create', $courseId)
                          ->with('success', 'Video successfully uploaded.');
