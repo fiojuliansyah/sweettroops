@@ -71,6 +71,9 @@ class UserDataTable extends DataTable
             Column::make('email')
                 ->title('Email')
                 ->addClass('text-gray-300'),
+            Column::make('phone')
+                ->title('No Whatsapp')
+                ->addClass('text-gray-300'),
             Column::make('role')
                 ->title('Role')
                 ->addClass('text-gray-300'),
