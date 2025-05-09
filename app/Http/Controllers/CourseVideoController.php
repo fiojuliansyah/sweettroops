@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-use File;
 use App\Models\CourseVideo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\DataTables\CourseVideosDataTable;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
