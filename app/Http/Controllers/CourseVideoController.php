@@ -109,7 +109,7 @@ class CourseVideoController extends Controller
 
         $video->delete();
 
-        return redirect()->route('videos.index', $course->id)->with('success', 'Video successfully deleted.');
+        return redirect()->back()->with('success', 'Video successfully deleted.');
     }
 
     public function upload(Request $request)

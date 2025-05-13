@@ -23,6 +23,7 @@
                             <input type="text" class="form-control py-11 ps-40" id="phone" name="phone" placeholder="Masukan No Handphone" value="{{ old('phone') }}" required autofocus autocomplete="username">
                             <span class="position-absolute top-50 translate-middle-y ms-16 text-gray-600 d-flex"><i class="ph ph-phone"></i></span>
                         </div>
+                        <small>Contoh : 08121213131414 / 628121213131414</small>
                     </div>
                     
                     <button type="submit" class="btn btn-main rounded-pill w-100">Log in</button>
