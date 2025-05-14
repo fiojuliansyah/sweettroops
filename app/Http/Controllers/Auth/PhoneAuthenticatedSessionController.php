@@ -23,40 +23,54 @@ class PhoneAuthenticatedSessionController extends Controller
         ]);
 
         $phone = $request->phone;
-
         $lastSevenDigits = substr($phone, -7);
 
-        $existingUser = User::where('phone', 'like', '%' . $lastSevenDigits)
-                            ->orderBy('created_at', 'asc') 
-                            ->first(); 
+        // Check if there are users with the same last 7 digits of the phone number
+        $existingUsers = User::where('phone', 'like', '%' . $lastSevenDigits)
+                            ->orderBy('created_at', 'desc')
+                            ->get();  // Get all users with the same last 7 digits
 
-        if ($existingUser) {
-            Auth::login($existingUser);
+        // If there's at least one existing user with the same last 7 digits
+        if ($existingUsers->count() > 0) {
+            // If there is only one matching user, no need to delete and create
+            if ($existingUsers->count() == 1) {
+                $existingUser = $existingUsers->first(); // Get the single user
 
-            $user = User::where('phone', $phone)->first();
-            if ($user) {
-                $user->delete();
+                // Log in with the existing user
+                Auth::login($existingUser);
+
+                // If the user is already verified, proceed directly
+                if ($existingUser->phone_verified == 'verified') {
+                    return redirect()->route('login.verified');
+                }
+
+                // Mark the user as unverified and send OTP
+                $otp = rand(100000, 999999);
+                $existingUser->notify(new Otp($phone, $otp));
+
+                // Save OTP data to ModelsOtp
+                ModelsOtp::create([
+                    'number' => $phone,
+                    'otp' => $otp,
+                    'type' => 'verify_phone',
+                    'user_id' => $existingUser->id,
+                    'status' => 'pending',
+                ]);
+
+                return redirect()->route('login.verified');
             }
 
-            $existingUser->phone_verified = 'unverified';
-            $existingUser->save();
-
-            $otp = rand(100000, 999999);
-            $existingUser->notify(new Otp($phone, $otp));
-
-            ModelsOtp::create([
-                'number' => $phone,
-                'otp' => $otp,
-                'type' => 'verify_phone',
-                'user_id' => $existingUser->id,
-                'status' => 'pending',
-            ]);
-
-            
-            return redirect()->route('login.verified');
+            // If there are multiple users with the same last 7 digits, take appropriate action
+            // This part ensures that only one user is found and deleted if needed
+            foreach ($existingUsers as $existingUser) {
+                // Find the user with the matching phone and delete the duplicate
+                if ($existingUser->phone != $phone) {
+                    $existingUser->delete();  // Delete duplicate users
+                }
+            }
         }
 
-        
+        // If no existing users with the same last 7 digits, create a new user
         $user = User::create([
             'phone' => $phone,
             'name' => 'Troopers ' . $phone,
@@ -64,18 +78,16 @@ class PhoneAuthenticatedSessionController extends Controller
             'phone_verified' => 'unverified',
         ]);
 
-        
+        // Log in with the new user
         Auth::login($user);
 
-        
+        // Mark the user as unverified and send OTP
         $user->phone_verified = 'unverified';
         $user->save();
 
-        
         $otp = rand(100000, 999999);
         $user->notify(new Otp($phone, $otp));
 
-        
         ModelsOtp::create([
             'number' => $phone,
             'otp' => $otp,
@@ -84,7 +96,6 @@ class PhoneAuthenticatedSessionController extends Controller
             'status' => 'pending',
         ]);
 
-        
         return redirect()->route('login.verified');
     }
 
