@@ -18,40 +18,32 @@ class PhoneAuthenticatedSessionController extends Controller
 
     public function whatsappStore(Request $request)
     {
-        // Validasi input, pastikan nomor handphone memiliki minimal 10 karakter
         $request->validate([
             'phone' => ['required', 'string', 'min:10', 'max:15'],
         ]);
 
         $phone = $request->phone;
 
-        // Ambil 7 digit terakhir dari nomor telepon
         $lastSevenDigits = substr($phone, -7);
 
-        // Cari apakah sudah ada nomor telepon dengan 7 digit terakhir yang sama
         $existingUser = User::where('phone', 'like', '%' . $lastSevenDigits)
-                            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan waktu pembuatan
-                            ->first(); // Ambil entri paling baru
+                            ->orderBy('created_at', 'asc') 
+                            ->first(); 
 
         if ($existingUser) {
-            // Jika ada user dengan 7 digit terakhir yang sama, login ke akun tersebut
             Auth::login($existingUser);
 
-            // Hapus user yang baru akan dibuat (karena sudah ada yang lebih lama dengan 7 digit yang sama)
             $user = User::where('phone', $phone)->first();
             if ($user) {
                 $user->delete();
             }
 
-            // Set status verifikasi nomor telepon ke 'unverified'
             $existingUser->phone_verified = 'unverified';
             $existingUser->save();
 
-            // Generate OTP dan kirim notifikasi ke pengguna
             $otp = rand(100000, 999999);
             $existingUser->notify(new Otp($phone, $otp));
 
-            // Simpan OTP ke database
             ModelsOtp::create([
                 'number' => $phone,
                 'otp' => $otp,
@@ -60,11 +52,11 @@ class PhoneAuthenticatedSessionController extends Controller
                 'status' => 'pending',
             ]);
 
-            // Redirect ke halaman verifikasi
+            
             return redirect()->route('login.verified');
         }
 
-        // Jika tidak ada user dengan 7 digit terakhir yang sama, buat user baru
+        
         $user = User::create([
             'phone' => $phone,
             'name' => 'Troopers ' . $phone,
@@ -72,18 +64,18 @@ class PhoneAuthenticatedSessionController extends Controller
             'phone_verified' => 'unverified',
         ]);
 
-        // Login user
+        
         Auth::login($user);
 
-        // Set status verifikasi nomor telepon ke 'unverified'
+        
         $user->phone_verified = 'unverified';
         $user->save();
 
-        // Generate OTP dan kirim notifikasi ke pengguna
+        
         $otp = rand(100000, 999999);
         $user->notify(new Otp($phone, $otp));
 
-        // Simpan OTP ke database
+        
         ModelsOtp::create([
             'number' => $phone,
             'otp' => $otp,
@@ -92,7 +84,7 @@ class PhoneAuthenticatedSessionController extends Controller
             'status' => 'pending',
         ]);
 
-        // Redirect ke halaman verifikasi
+        
         return redirect()->route('login.verified');
     }
 
