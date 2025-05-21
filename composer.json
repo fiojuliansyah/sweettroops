@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "aws/aws-sdk-php": "^3.343",
         "ayman-elmalah/laravel-youtube-uploader": "^1.0",
         "google/apiclient": "^2.0",
         "laravel/breeze": "^2.3",
