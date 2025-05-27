@@ -12,11 +12,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CourseVideoController;
-use App\Http\Controllers\TempUploadsController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\YouTubeAuthController;
-use App\Http\Controllers\ChunkedUploadController;
-use App\Http\Controllers\YouTubeUploadController;
 use App\Http\Controllers\Trooper\TCourseController;
 use App\Http\Controllers\Trooper\TDiscussController;
 use App\Http\Controllers\Trooper\TDashboardController;
@@ -25,6 +21,9 @@ Route::get('/', [PageController::class, 'index'])->name('welcome');
 Route::get('/home', [PageController::class, 'index']);
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
+Route::get('/successauth', [PageController::class, 'successAuth']);
+Route::get('/youtube-redirect', [CourseVideoController::class, 'calback']);
+Route::post('/s3/presigned-url', [CourseVideoController::class, 'generatePresignedUrl']);
 
 Route::middleware(['auth','phone.verified'])
 ->prefix('troopers')
@@ -88,6 +87,8 @@ Route::middleware(['auth','admin'])
     Route::delete('/videos/{id}', [CourseVideoController::class, 'destroy'])->name('videos.destroy');
     Route::post('/videos', [CourseVideoController::class, 'store'])->name('videos.store');
     Route::post('/video-upload/large', [CourseVideoController::class, 'upload'])->name('videos.upload')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
+    Route::get('/test-aws', [CourseVideoController::class, 'tesAWS'])->name('test-aws');
 });
 
 require __DIR__.'/auth.php';

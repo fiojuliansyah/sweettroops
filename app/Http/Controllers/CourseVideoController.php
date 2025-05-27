@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Aws\S3\S3Client;
 use App\Models\Course;
 use App\Models\CourseVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\DataTables\CourseVideosDataTable;
+use AymanElmalah\YoutubeUploader\Facades\Youtube;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 
@@ -34,41 +36,147 @@ class CourseVideoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
-    
-        $courseVideoData = [
+
+        return match ($request->type) {
+            'url' => $this->handleUrlUpload($request),
+            'video' => $this->handleVideoUpload($request),
+            default => abort(400, 'Invalid type selected'),
+        };
+    }
+
+    private function handleUrlUpload(Request $request)
+    {
+        $courseVideo = CourseVideo::create([
             'course_id' => $request->course_id,
             'title' => $request->title,
-            'type' => $request->type,
-            'description' => $request->description
-        ];
-    
-        if ($request->type == 'url') {
-            $courseVideoData['link_url'] = $request->link_url;
-            $courseVideo = CourseVideo::create($courseVideoData);
-    
-            return redirect()->route('admin.videos.index', $request->course_id)->with([
-                'courseVideo' => $courseVideo,
-                'course_id' => $request->course_id,
-            ]);
-        }
-    
-        if ($request->type == 'video') {
-            $courseVideoData['video_url'] = $request->filename;
-            $courseVideo = CourseVideo::create($courseVideoData);
-            $videoRealPath = storage_path('app/public/videos/' . $courseVideo->video_url);
-            $stream = fopen($videoRealPath, 'rb');
+            'type' => 'url',
+            'description' => $request->description,
+            'link_url' => $request->link_url,
+        ]);
 
-            Storage::disk('google')->put($courseVideo->video_url, $stream);
-
-            fclose($stream);
-
-            return redirect()->route('admin.videos.index', $request->course_id)
-                        ->with('success', 'Video successfully uploaded.');
-        }
-    
-        return redirect()->route('errorauth')->with('error', 'Invalid video type');
+        return redirect()->route('admin.videos.index', $request->course_id)
+            ->with(compact('courseVideo'))
+            ->with('course_id', $request->course_id);
     }
-    
+
+    private function handleVideoUpload(Request $request)
+    {
+        return match ($request->storage) {
+            'youtube' => $this->handleYouTubeUpload($request),
+            'aws' => $this->handleAwsUpload($request),
+            default => abort(400, 'Invalid storage option'),
+        };
+    }
+
+    private function handleYouTubeUpload(Request $request)
+    {
+        $file = $request->file('video_file');
+
+        if (!$file || !$file->isValid()) {
+            return back()->withErrors(['video_file' => 'Invalid video file']);
+        }
+
+        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+        $localPath = $file->storeAs('public/videos', $fileName);
+
+        $courseVideo = CourseVideo::create([
+            'course_id' => $request->course_id,
+            'title' => $request->title,
+            'type' => 'video',
+            'description' => $request->description,
+            'video_url' => $fileName,
+        ]);
+
+        $redirectURL = route('admin.videos.callback');
+
+        session([
+            'courseVideo' => $courseVideo,
+            'course_id' => $request->course_id,
+            'redirect_url' => $redirectURL,
+            'local_video_path' => storage_path('app/' . $localPath),
+        ]);
+
+        return redirect()->to(Youtube::setRedirectUrl($redirectURL)->AuthUrl());
+    }
+
+    private function handleAwsUpload(Request $request)
+    {
+        $request->validate([
+            'filename' => 'required|string',
+        ]);
+
+        $courseVideo = CourseVideo::create([
+            'course_id' => $request->course_id,
+            'title' => $request->title,
+            'type' => 'video',
+            'description' => $request->description,
+            'video_url' => $request->filename,
+        ]);
+
+        return redirect()->route('admin.videos.index', $request->course_id)
+            ->with(compact('courseVideo'))
+            ->with('course_id', $request->course_id);
+    }
+
+    public function callback(Request $request)
+    {
+        $courseVideo = session('courseVideo');
+        $courseId = session('course_id');
+        $redirectURL = session('redirect_url');
+        $localPath = session('local_video_path');
+
+        if (!$courseVideo || !$courseId || !$localPath || !file_exists($localPath)) {
+            return response()->json(['error' => 'Tidak ada sesi login google'], 404);
+        }
+
+        Youtube::setRedirectUrl($redirectURL)->upload($localPath, [
+            'title' => $courseVideo->title,
+            'description' => $courseVideo->description,
+            'tags' => ['cooking', 'cook'],
+            'category_id' => 1,
+        ]);
+
+        unlink($localPath);
+
+        Storage::delete('public/videos/' . $courseVideo->video_url);
+
+        return redirect()
+                    ->route('admin.videos.create', $courseId)
+                    ->with('success', 'Video successfully uploaded to YouTube.');
+    }
+
+    public function generatePresignedUrl(Request $request)
+    {
+        $request->validate([
+            'filename' => 'required|string',
+            'content_type' => 'required|string',
+            'folder' => 'required|string',
+        ]);
+
+        $filename = $request->filename;
+        $contentType = $request->content_type;
+        $folder = $request->folder;
+
+        $disk = Storage::disk('s3');
+        $client = $disk->getClient();
+        $bucket = config('filesystems.disks.s3.bucket');
+        $key = $folder . '/' . uniqid() . '_' . $filename;
+
+        $cmd = $client->getCommand('PutObject', [
+            'Bucket' => $bucket,
+            'Key' => $key,
+            'ACL' => 'public-read',
+            'ContentType' => $contentType,
+        ]);
+
+        $signedRequest = $client->createPresignedRequest($cmd, '+30 minutes');
+
+        return response()->json([
+            'url' => (string) $signedRequest->getUri(),
+            'key' => $key,
+        ]);
+    }
+
     public function edit($course_id, $video_id)
     {
         $course = Course::findOrFail($course_id);
@@ -104,7 +212,6 @@ class CourseVideoController extends Controller
 
     public function destroy($id)
     {
-
         $video = CourseVideo::findOrFail($id);
 
         $video->delete();
@@ -112,34 +219,9 @@ class CourseVideoController extends Controller
         return redirect()->back()->with('success', 'Video successfully deleted.');
     }
 
-    public function upload(Request $request)
+    // AWS TES
+    public function tesAWS(Request $request)
     {
-        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
-
-        $fileReceived = $receiver->receive();
-
-        if ($fileReceived->isFinished()) {
-            $file = $fileReceived->getFile();
-            $extension = $file->getClientOriginalExtension();
-            $fileName = str_replace('.'.$extension, '', $file->getClientOriginalName());
-            $fileName .= '_' . md5(time()) . '.' . $extension;
-
-            $disk = Storage::disk(config('filesystems.default'));
-            $path = $disk->putFileAs('videos', $file, $fileName);
-
-            unlink($file->getPathname());
-
-            return [
-                'path' => asset('storage/' . $path),
-                'filename' => $fileName
-            ];
-        }
-
-        $handler = $fileReceived->handler();
-
-        return [
-            'done' => $handler->getPercentageDone(),
-            'status' => true
-        ];
+        return view('admin.tesaws');
     }
 }

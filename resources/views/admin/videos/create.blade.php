@@ -5,211 +5,229 @@
         <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
             <div class="breadcrumb mb-24">
                 <ul class="flex-align gap-4">
-                    <li><a href="{{ route('admin.dashboard') }}"
-                            class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
-                    <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                    <li><a href="{{ route('admin.courses.index') }}"
-                            class="text-gray-200 fw-normal text-15 hover-text-main-600">Courses</a></li>
-                    <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                    <li><a href="{{ route('admin.videos.index', $course->id) }}"
-                            class="text-gray-200 fw-normal text-15 hover-text-main-600">{{ $course->title }}</a></li>
-                    <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                    <li><span class="text-main-600 fw-normal text-15">Upload Video</span></li>
+                    <li><a href="{{ route('admin.dashboard') }}" class="text-gray-200 text-15 hover-text-main-600">Home</a></li>
+                    <li><i class="ph ph-caret-right text-gray-500"></i></li>
+                    <li><a href="{{ route('admin.courses.index') }}" class="text-gray-200 text-15 hover-text-main-600">Courses</a></li>
+                    <li><i class="ph ph-caret-right text-gray-500"></i></li>
+                    <li><a href="{{ route('admin.videos.index', $course->id) }}" class="text-gray-200 text-15 hover-text-main-600">{{ $course->title }}</a></li>
+                    <li><i class="ph ph-caret-right text-gray-500"></i></li>
+                    <li><span class="text-main-600 text-15">Upload Video</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header border-bottom border-gray-100 flex-align gap-8">
-                <h5 class="mb-0">Upload Video to YouTube</h5>
+                <h5 class="mb-0">Upload Video</h5>
             </div>
             <div class="card-body">
                 @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
+                    <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
 
-                <form id="upload-form" action="{{ route('admin.videos.store') }}" method="POST">
+                <form id="upload-form" action="{{ route('admin.videos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="course_id" value="{{ $course->id }}">
+                    <input type="hidden" id="filename" name="filename" />
 
                     <div class="row gy-20">
+                        <!-- Title -->
                         <div class="col-sm-12">
-                            <label class="h5 mb-8 fw-semibold font-heading">Video Title <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                required placeholder="Enter video title" value="{{ old('title') }}">
-                            @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label class="fw-semibold">Video Title <span class="text-danger">*</span></label>
+                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" required value="{{ old('title') }}">
+                            @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
+                        <!-- Description -->
                         <div class="col-sm-12">
-                            <label class="h5 mb-8 fw-semibold font-heading">Description <span
-                                    class="text-danger">*</span></label>
-                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="4" required
-                                placeholder="Enter video description">{{ old('description') }}</textarea>
-                            @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label class="fw-semibold">Description <span class="text-danger">*</span></label>
+                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" required rows="4">{{ old('description') }}</textarea>
+                            @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
+                        <!-- Tipe Upload -->
                         <div class="col-sm-12">
-                            <label class="h5 mb-8 fw-semibold font-heading">Tipe Upload<span class="text-danger">*</span></label>
-                            <select name="type" id="uploadType" class="form-control">
-                                <option value="">Pilih</option>
-                                <option value="url">Url</option>
+                            <label class="fw-semibold">Tipe Upload <span class="text-danger">*</span></label>
+                            <select name="type" id="uploadType" class="form-control" required>
+                                <option value="">-- Pilih</option>
+                                <option value="url">URL</option>
                                 <option value="video">Video</option>
                             </select>
                         </div>
-                        
-                        {{-- URL --}}
-                        <div class="col-sm-12" id="urlSection" style="display: none;">
-                            <label class="h5 mb-8 fw-semibold font-heading">URL Video<span class="text-danger">*</span></label>
-                            <input type="text" name="link_url" id="link_url" class="form-control @error('link_url') is-invalid @enderror"
-                                placeholder="Enter video Link URL" value="{{ old('link_url') }}">
-                            @error('link_url')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+
+                        <!-- Penyimpanan -->
+                        <div class="col-sm-12" id="storageSection" style="display: none;">
+                            <label class="fw-semibold">Penyimpanan <span class="text-danger">*</span></label>
+                            <select name="storage" id="storage" class="form-control">
+                                <option value="">-- Pilih</option>
+                                <option value="youtube">Upload YouTube</option>
+                                <option value="aws">Storage AWS</option>
+                            </select>
                         </div>
-                        
-                        {{-- VIDEO UPLOAD --}}
+
+                        <!-- URL -->
+                        <div class="col-sm-12" id="urlSection" style="display: none;">
+                            <label class="fw-semibold">URL Video <span class="text-danger">*</span></label>
+                            <input type="text" name="link_url" id="link_url" class="form-control @error('link_url') is-invalid @enderror" value="{{ old('link_url') }}">
+                            @error('link_url') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <!-- Upload Video -->
                         <div class="col-sm-12" id="videoSection" style="display: none;">
                             <div class="card">
-                                <div class="card-header text-center">
-                                    <h5>Upload File</h5>
-                                </div>
-
-                                <input type="hidden" id="filename" name="filename" />
-                        
-                                <div class="card-body">
-                                    <div id="upload-container" class="text-center">
-                                        <span id="browseFile" class="btn btn-primary">Browse File</span>
-                                    </div>
-                                    <div style="display: none" class="progress mt-3" style="height: 25px">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%; height: 100%">75%</div>
+                                <div class="card-header text-center"><h5>Upload File</h5></div>
+                                <div class="card-body text-center">
+                                    <span id="browseFile" class="btn btn-primary" style="cursor: pointer;">Browse File</span>
+                                    <input type="file" id="fileInput" name="video_file" accept="video/*" style="display: none;">
+                                    <div class="progress mt-3" style="height: 25px; display: none;">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;">0%</div>
                                     </div>
                                 </div>
-                        
-                                <div class="card-footer p-4" style="display: none">
-                                    <video id="videoPreview" src="" controls style="width: 100%; height: auto"></video>
+                                <div class="card-footer p-4" style="display: none;">
+                                    <video id="videoPreview" controls style="width: 100%; height: auto;"></video>
                                 </div>
                             </div>
                         </div>
-                        
-                        
 
-                        <!-- Submit Button -->
-                        <div class="col-sm-12 flex-align justify-content-end gap-8">
-                            <a href="{{ route('admin.videos.index', $course->id) }}"
-                                class="btn btn-outline-main rounded-pill py-9">Cancel</a>
-                            <button type="submit" class="btn btn-main rounded-pill py-9">
+                        <!-- Action -->
+                        <div class="col-sm-12 flex-align justify-content-end gap-8 mt-3">
+                            <a href="{{ route('admin.videos.index', $course->id) }}" class="btn btn-outline-main rounded-pill">Cancel</a>
+                            <button type="submit" class="btn btn-main rounded-pill">
                                 <i class="ph ph-cloud-arrow-up me-2"></i> Upload Video
                             </button>
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 @endsection
 
-@push('css')
-    <link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
-@endpush
-
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get the select dropdown and sections by id
+        document.addEventListener('DOMContentLoaded', () => {
             const selectType = document.getElementById('uploadType');
             const urlSection = document.getElementById('urlSection');
             const videoSection = document.getElementById('videoSection');
-    
-            // Function to toggle sections based on selected type
+            const storageSection = document.getElementById('storageSection');
+            const storageSelect = document.getElementById('storage');
+            const fileInput = document.getElementById('fileInput');
+            const browseFileBtn = document.getElementById('browseFile');
+            const progressBar = videoSection.querySelector('.progress');
+            const progressBarInner = progressBar.querySelector('.progress-bar');
+            const videoPreview = document.getElementById('videoPreview');
+            const cardFooter = videoSection.querySelector('.card-footer');
+            const filenameInput = document.getElementById('filename');
+
             function toggleSections() {
                 const selectedType = selectType.value;
-    
-                // Show/hide sections based on selection
-                if (selectedType === 'url') {
-                    urlSection.style.display = 'block';
-                    videoSection.style.display = 'none';
-                } else if (selectedType === 'video') {
-                    urlSection.style.display = 'none';
-                    videoSection.style.display = 'block';
-                } else {
-                    urlSection.style.display = 'none';
-                    videoSection.style.display = 'none';
-                }
+                urlSection.style.display = selectedType === 'url' ? 'block' : 'none';
+                videoSection.style.display = selectedType === 'video' ? 'block' : 'none';
+                storageSection.style.display = selectedType === 'video' ? 'block' : 'none';
+                resetVideoSection();
             }
-    
-            // Initialize the form visibility based on the current selection
-            toggleSections();
-    
-            // Add event listener to handle change in the select dropdown
+
+            function resetVideoSection() {
+                progressBar.style.display = 'none';
+                progressBarInner.style.width = '0%';
+                progressBarInner.textContent = '0%';
+                videoPreview.src = '';
+                videoPreview.style.display = 'none';
+                cardFooter.style.display = 'none';
+                fileInput.value = '';
+                filenameInput.value = '';
+            }
+
+            browseFileBtn.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', async () => {
+                const file = fileInput.files[0];
+                if (!file) return;
+
+                // Tampilkan preview video
+                const videoUrl = URL.createObjectURL(file);
+                videoPreview.src = videoUrl;
+                videoPreview.style.display = 'block';
+                cardFooter.style.display = 'block';
+
+                // Reset progress
+                progressBar.style.display = 'block';
+                progressBarInner.style.width = '0%';
+                progressBarInner.textContent = '0%';
+
+                const storage = storageSelect.value;
+
+                if (storage === 'aws') {
+                    try {
+                        const uploadedUrl = await uploadFileToS3(file, progress => {
+                            progressBarInner.style.width = progress + '%';
+                            progressBarInner.textContent = progress + '%';
+                        });
+                        alert('Upload ke S3 berhasil!');
+                    } catch (error) {
+                        alert('Upload ke S3 gagal: ' + error.message);
+                        resetVideoSection();
+                    }
+                } else if (storage === 'youtube') {
+                    alert('File akan diupload ke YouTube saat form disubmit.');
+                } else {
+                    alert('Silakan pilih penyimpanan.');
+                }
+            });
+
+            async function uploadFileToS3(file, onProgress) {
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const response = await fetch('/s3/presigned-url', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    body: JSON.stringify({
+                        filename: file.name,
+                        content_type: file.type,
+                        folder: 'videos',
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Gagal mendapatkan presigned URL dari server.');
+                }
+
+                const data = await response.json();
+
+                return new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', e => {
+                        if (e.lengthComputable && typeof onProgress === 'function') {
+                            const percent = Math.round((e.loaded / e.total) * 100);
+                            onProgress(percent);
+                        }
+                    });
+
+                    xhr.onload = () => {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            filenameInput.value = data.key;
+                            resolve(data.url); // optional: public_url if available
+                        } else {
+                            reject(new Error('Upload gagal dengan status ' + xhr.status));
+                        }
+                    };
+
+                    xhr.onerror = () => reject(new Error('Upload gagal (network error)'));
+                    xhr.open('PUT', data.url, true);
+                    xhr.setRequestHeader('Content-Type', file.type);
+                    xhr.send(file);
+                });
+            }
+
             selectType.addEventListener('change', toggleSections);
+            storageSelect.addEventListener('change', () => {
+                const inputName = (storageSelect.value === 'youtube') ? 'youtube_video_file' : 'video_file';
+                fileInput.setAttribute('name', inputName);
+            });
+
+            toggleSections(); // Inisialisasi awal
         });
-        
-        let browseFile = $('#browseFile');
-
-        let resumable = new Resumable({
-            target: '/manage/video-upload/large',
-            query: {
-                _token:'{{ csrf_token() }}'
-            },
-            fileType: ['mp4'],
-            chunkSize: 10 * 1024 * 1024,
-            headers: {
-                'Accept' : 'application/json'
-            },
-            testChunks: false,
-            throttleProgressCallbacks: 1,
-        });
-
-        resumable.assignBrowse(browseFile[0]);
-
-        resumable.on('fileAdded', function (file) {
-            showProgress();
-            resumable.upload()
-        });
-
-        resumable.on('fileProgress', function (file) {
-            updateProgress(Math.floor(file.progress() * 100));
-        });
-
-        resumable.on('fileSuccess', function (file, response) {
-            response = JSON.parse(response)
-
-            $('#videoPreview').attr('src', response.path);
-            $('.card-footer').show();
-
-            $('#filename').attr('value', response.filename);
-        });
-
-        resumable.on('fileError', function (file, response) {
-            alert('file uploading error.')
-        });
-
-
-        let progress = $('.progress');
-        function showProgress() {
-            progress.find('.progress-bar').css('width', '0%');
-            progress.find('.progress-bar').html('0%');
-            progress.find('.progress-bar').removeClass('bg-success');
-            progress.show();
-        }
-
-        function updateProgress(value) {
-            progress.find('.progress-bar').css('width', `${value}%`)
-            progress.find('.progress-bar').html(`${value}%`)
-        }
-
-        function hideProgress() {
-            progress.hide();
-        }
     </script>
 @endpush
