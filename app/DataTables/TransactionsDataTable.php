@@ -25,6 +25,9 @@ class TransactionsDataTable extends DataTable
             ->addColumn('user_name', function ($transaction) {
                 return $transaction->user ? $transaction->user->name : '-';
             })
+            ->addColumn('user_phone', function ($transaction) {
+                return $transaction->user ? $transaction->user->phone : '-';
+            })
             ->addColumn('course_title', function ($transaction) {
                 return $transaction->course ? $transaction->course->title : '-';
             })
@@ -75,6 +78,9 @@ class TransactionsDataTable extends DataTable
                 ->addClass('text-gray-300'),
             Column::make('user_name')
                 ->title('Troopers')
+                ->addClass('text-gray-300'),
+            Column::make('user_phone')
+                ->title('Phone')
                 ->addClass('text-gray-300'),
             Column::make('course_title')
                 ->title('Course')
