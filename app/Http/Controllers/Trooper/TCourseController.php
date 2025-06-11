@@ -88,13 +88,35 @@ class TCourseController extends Controller
 
     public function myDetailCourse($slug)
     {
+        
         $course = Course::with('videos')->where('slug', $slug)->first();
         $title = 'My Courses';
 
-        $videoFileId = $this->getFileIdByName($course->videos->first()->video_url);
+        
+        $video = $course->videos->first();
 
-        return view('troopers.courses.my-detail-course', compact('title', 'course', 'videoFileId'));
-    }  
+        
+        $videoFileId = $this->getFileIdByName($video->video_url);
+
+        return view('troopers.courses.my-detail-course', compact('title', 'course', 'videoFileId', 'video'));
+    }
+
+    public function changeVideo($slug, $videoId)
+    {
+        
+        $course = Course::with('videos')->where('slug', $slug)->first();
+        $title = 'My Courses';
+
+        
+        $video = $course->videos->find($videoId);
+
+        
+        $videoFileId = $this->getFileIdByName($video->video_url);
+
+        
+        return view('troopers.courses.my-detail-course', compact('title', 'course', 'videoFileId', 'video'));
+    }
+
 
     public function getFileIdByName($filename)
     {
