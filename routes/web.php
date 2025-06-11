@@ -38,6 +38,7 @@ Route::middleware(['auth','phone.verified'])
     Route::get('/course/{slug}/detail', [TCourseController::class, 'detailCourse'])->name('detail-course');
     Route::get('/my-course', [TCourseController::class, 'myCourse'])->name('my-course');
     Route::get('/my-course/{slug}/detail', [TCourseController::class, 'myDetailCourse'])->name('my-detail-course');
+    Route::get('/my-course/{slug}/video/{videoId}', [CourseController::class, 'changeVideo'])->name('change-video');
     Route::get('/my-transactions', [TDashboardController::class, 'myTransactions'])->name('my-transactions');
     Route::delete('/transaction/{transactionId}', [TDashboardController::class, 'deleteTransaction'])->name('transaction.delete');
 
