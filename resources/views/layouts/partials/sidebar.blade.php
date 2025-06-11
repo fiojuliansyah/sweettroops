@@ -37,9 +37,9 @@
        </div>
        <!--/sidebar-nav -->
        <div class="navbar-info hidden-sm hidden-xs hidden-md">
-          <p class="small-text"><i class="fas fa-map-marker-alt margin-icon"></i>Jakarta, Indonesia</p>
-          <p class="small-text"><i class="fas fa-phone margin-icon"></i>(+62) 8 5311 2323 77</p>
-          <p class="small-text"><i class="far fa-clock margin-icon"></i>Senin-Sabtu: 9 pagi-5 sore</p>
+          <p class="small-text"><i class="fas fa-map-marker-alt margin-icon"></i>{{ $homepage->location }}</p>
+          <p class="small-text"><i class="fas fa-phone margin-icon"></i>{{ $homepage->phone }}</p>
+          <p class="small-text"><i class="far fa-clock margin-icon"></i>{{ $homepage->hours }}</p>
           <!--Social icons -->
           <div class="social-media ">
              <a href="#" title=""><i class="fas fa-envelope"></i></a>
