@@ -40,7 +40,7 @@
                                     @foreach ($courses as $course)   
                                         <div class="menu-item">
                                         <div class="menu-item-pic lightbox">
-                                            <a href="{{ route('all-course') }}">
+                                            <a href="{{ route('troopers.all-course') }}">
                                                 @php
                                                     $thumbnails = json_decode($course->thumbnail, true);
                                                     $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
