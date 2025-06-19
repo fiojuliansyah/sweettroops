@@ -42,18 +42,19 @@
                 <!-- owl-carousel -->
                 <div id="owl-services" class="owl-carousel owl-theme text-center res-margin">
                    <!-- service 1  -->
-                   @foreach ($categories as $category)  
+                  @foreach ($categories as $category)  
                      <div class="col-lg-12 p-1">
                         <div class="box-hover icon p-3">
-                           <!-- service icon -->
-                          <img src="{{ asset('storage/' . $category->image) }}" alt="" width="30%">
-                           <!-- service content -->
-                           <div class="service-content">
-                              <h5>{{ $category->name }}</h5>
-                           </div>
+                              <img src="{{ asset('storage/' . $category->image) }}" alt="" width="30%">
+                              <div class="service-content">
+                                 {{-- Link to courses based on category slug --}}
+                                 <a href="{{ route('courses.byCategory', $category->slug) }}">
+                                    <h5>{{ $category->name }}</h5>
+                                 </a>
+                              </div>
                         </div>
                      </div>
-                   @endforeach
+                  @endforeach
                 </div>
                 <!-- /owl-carousel -->
              </div>
@@ -115,7 +116,11 @@
                            <div class="post-img">
                               <a href="blog-single.html">
                                  <!-- Image -->
-                                 <img class="img-responsive" src="{{ asset('storage/' . $course->thumbnail) }}" alt="">
+                                 @php
+                                       $thumbnails = json_decode($course->thumbnail, true);
+                                       $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                                 @endphp
+                                 <img class="img-responsive" src="{{ asset('storage/' . $firstThumbnail) }}" alt="">
                                  <!--date -->
                                  <div class="post-date">
                                     <span class="date">{{ $course->created_at->format('d') }}</span>
@@ -339,9 +344,9 @@
                 </div>
                 <div class="col-md-4 margin-footer text-center-sm">
                    <!-- Logo -->
-                   <p><i class="fas fa-map-marker-alt margin-icon"></i>Jakarta, Indonesia</p>
-                   <p><i class="fas fa-phone margin-icon"></i>(+62) 8 5311 2323 77</p>
-                   <p><i class="far fa-clock margin-icon"></i>Senin-Sabtu: 9 pagi-5 sore</p>
+                   <p><i class="fas fa-map-marker-alt margin-icon"></i>{{ $homepage->location }}</p>
+                   <p><i class="fas fa-phone margin-icon"></i>{{ $homepage->phone }}</p>
+                   <p><i class="far fa-clock margin-icon"></i>{{ $homepage->hours }}</p>
                    <p><a href="{{ route('privacy.policy') }}">Privacy Policy</a> | <a href="{{ route('terms') }}">Terms</a></p>
                    <!--Social icons -->
                    <div class="social-media ">

@@ -18,6 +18,7 @@ use App\Http\Controllers\Trooper\TDiscussController;
 use App\Http\Controllers\Trooper\TDashboardController;
 
 Route::get('/', [PageController::class, 'index'])->name('welcome');
+Route::get('/courses/{slug}', [PageController::class, 'courses'])->name('courses.byCategory');
 Route::get('/home', [PageController::class, 'index']);
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');

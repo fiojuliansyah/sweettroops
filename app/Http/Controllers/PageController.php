@@ -32,5 +32,13 @@ class PageController extends Controller
         return view('terms', compact('title'));
     }
 
+    public function courses($slug)
+    {
+        $homepage = Homepage::orderBy('created_at', 'ASC')->first();
+        $category = Category::where('slug', $slug)->firstOrFail();
+        $courses = $category->courses()->get(); 
+        return view('courses', compact('category', 'courses', 'homepage'));
+    }
+
 
 }
