@@ -39,25 +39,26 @@
                                  <div class="menu-section">
                                     @foreach ($courses as $course)   
                                         <div class="menu-item">
-                                        <div class="menu-item-pic lightbox">
-                                            <a href="{{ route('troopers.all-course') }}">
-                                                @php
-                                                    $thumbnails = json_decode($course->thumbnail, true);
-                                                    $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
-                                                @endphp
-                                                <img class="img-responsive img-circle img-price" src="{{ asset('storage/' . $firstThumbnail) }}" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="menu-item-name">
-                                            {{ $course->name }}
-                                        </div>
-                                        <div class="menu-item-price">
-                                            Rp. {{ number_format($course->price) }}
-                                        </div>
-                                        <div class="menu-item-description">
-                                            <p>{!! \Illuminate\Support\Str::limit($course->description, 200) !!} ...</p>
-                                        </div>
-                                        </div>                                       
+                                            <div class="menu-item-pic lightbox">
+                                                <a href="{{ route('troopers.all-course') }}">
+                                                    @php
+                                                        $thumbnails = json_decode($course->thumbnail, true);
+                                                        $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                                                    @endphp
+                                                    <img class="img-responsive img-circle img-price" src="{{ asset('storage/' . $firstThumbnail) }}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="menu-item-name">
+                                                {{ $course->title }}
+                                            </div>
+                                            <div class="menu-item-price">
+                                                Rp. {{ number_format($course->price) }}
+                                            </div>
+                                            <div class="menu-item-description">
+                                                <p>{!! \Illuminate\Support\Str::limit($course->description, 200) !!} ...</p>
+                                            </div>
+                                        </div> 
+                                        <br>                                      
                                     @endforeach
                                  </div>
                                  <!--/ menu section -->
