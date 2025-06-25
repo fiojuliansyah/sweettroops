@@ -26,7 +26,14 @@ Route::get('/successauth', [PageController::class, 'successAuth']);
 Route::get('/youtube-redirect', [CourseVideoController::class, 'calback']);
 Route::post('/s3/presigned-url', [CourseVideoController::class, 'generatePresignedUrl']);
 
-Route::middleware(['auth','phone.verified'])
+Route::prefix('troopers')
+->name('troopers.')
+->group(function () {
+Route::get('/course/all', [TCourseController::class, 'allCourse'])->name('all-course');
+});
+
+
+Route::middleware(['phone.verified'])
 ->prefix('troopers')
 ->name('troopers.')
 ->group(function () {
@@ -35,7 +42,6 @@ Route::middleware(['auth','phone.verified'])
     Route::put('/account', [TDashboardController::class, 'updateAccount'])->name('account.update');
     Route::put('/account/modal', [TDashboardController::class, 'updateModal'])->name('account.modal');
 
-    Route::get('/course/all', [TCourseController::class, 'allCourse'])->name('all-course');
     Route::get('/course/{slug}/detail', [TCourseController::class, 'detailCourse'])->name('detail-course');
     Route::get('/my-course', [TCourseController::class, 'myCourse'])->name('my-course');
     Route::get('/my-course/{slug}/detail', [TCourseController::class, 'myDetailCourse'])->name('my-detail-course');

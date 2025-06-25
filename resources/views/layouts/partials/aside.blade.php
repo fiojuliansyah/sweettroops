@@ -38,59 +38,61 @@
                         <span class="text">Transaksi Saya</span>
                     </a>
                 </li>   
-                @if (Auth::user()->role == 'admin')  
-                    <li><span>Manage</span></li>
-                    <br>
-                    <li class="sidebar-menu__item {{ Route::is(['admin.discuss-course']) ? 'activePage' : '' }}">
-                        <a href="{{ route('admin.discuss-course') }}" class="sidebar-menu__link">
-                            <span class="icon"><i class="ph ph-chats-teardrop"></i></span>
-                            <span class="text">Admin Discuss</span>
-                        </a>
-                    </li>                
-                    <li class="sidebar-menu__item {{ Route::is(['admin.transactions.index']) ? 'activePage' : '' }}">
-                        <a href="{{ route('admin.transactions.index') }}" class="sidebar-menu__link">
-                            <span class="icon"><i class="ph ph-coins"></i></span>
-                            <span class="text">Transaksi</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-menu__item has-dropdown {{ Route::is(['admin.types.index','admin.types.create'.'admin.types.edit','admin.categories.index','admin.categories.create','admin.categories.edit','admin.courses.index','admin.videos.index','admin.videos.create','admin.videos.edit']) ? 'activePage' : '' }}">
-                        <a href="javascript:void(0)" class="sidebar-menu__link">
-                            <span class="icon"><i class="ph ph-graduation-cap"></i></span>
-                            <span class="text">Kursus</span>
-                        </a>
-                        <!-- Submenu start -->
-                        <ul class="sidebar-submenu">
-                            <li class="sidebar-submenu__item {{ Route::is(['admin.types.index','admin.types.create'.'admin.types.edit']) ? 'activePage' : '' }}">
-                                <a href="{{ route('admin.types.index') }}" class="sidebar-submenu__link"> Tipe </a>
-                            </li>
-                            <li class="sidebar-submenu__item {{ Route::is(['admin.categories.index','admin.categories.create','admin.categories.edit']) ? 'activePage' : '' }}">
-                                <a href="{{ route('admin.categories.index') }}" class="sidebar-submenu__link"> Kategori </a>
-                            </li>
-                            <li class="sidebar-submenu__item {{ Route::is(['admin.courses.index','admin.videos.index','admin.videos.create','admin.videos.edit']) ? 'activePage' : '' }}">
-                                <a href="{{ route('admin.courses.index') }}" class="sidebar-submenu__link"> Buat Kursus </a>
-                            </li>
-                        </ul>
-                        <!-- Submenu End -->
-                    </li>
-                    <li class="sidebar-menu__item {{ Route::is(['admin.users.index']) ? 'activePage' : '' }}">
-                        <a href="{{ route('admin.users.index') }}" class="sidebar-menu__link">
-                            <span class="icon"><i class="ph ph-users-three"></i></span>
-                            <span class="text">User</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-menu__item">
-                        <a href="{{ route('admin.homepages.index') }}" class="sidebar-menu__link">
-                            <span class="icon"><i class="ph ph-squares-four"></i></span>
-                            <span class="text">Home Setting</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-menu__item">
-                        <a href="{{ route('admin.sliders.index') }}" class="sidebar-menu__link">
-                            <span class="icon"><i class="ph ph-books"></i></span>
-                            <span class="text">Slider</span>
-                        </a>
-                    </li>
-                @endif        
+                @auth 
+                    @if (Auth::user()->role == 'admin')  
+                        <li><span>Manage</span></li>
+                        <br>
+                        <li class="sidebar-menu__item {{ Route::is(['admin.discuss-course']) ? 'activePage' : '' }}">
+                            <a href="{{ route('admin.discuss-course') }}" class="sidebar-menu__link">
+                                <span class="icon"><i class="ph ph-chats-teardrop"></i></span>
+                                <span class="text">Admin Discuss</span>
+                            </a>
+                        </li>                
+                        <li class="sidebar-menu__item {{ Route::is(['admin.transactions.index']) ? 'activePage' : '' }}">
+                            <a href="{{ route('admin.transactions.index') }}" class="sidebar-menu__link">
+                                <span class="icon"><i class="ph ph-coins"></i></span>
+                                <span class="text">Transaksi</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu__item has-dropdown {{ Route::is(['admin.types.index','admin.types.create'.'admin.types.edit','admin.categories.index','admin.categories.create','admin.categories.edit','admin.courses.index','admin.videos.index','admin.videos.create','admin.videos.edit']) ? 'activePage' : '' }}">
+                            <a href="javascript:void(0)" class="sidebar-menu__link">
+                                <span class="icon"><i class="ph ph-graduation-cap"></i></span>
+                                <span class="text">Kursus</span>
+                            </a>
+                            <!-- Submenu start -->
+                            <ul class="sidebar-submenu">
+                                <li class="sidebar-submenu__item {{ Route::is(['admin.types.index','admin.types.create'.'admin.types.edit']) ? 'activePage' : '' }}">
+                                    <a href="{{ route('admin.types.index') }}" class="sidebar-submenu__link"> Tipe </a>
+                                </li>
+                                <li class="sidebar-submenu__item {{ Route::is(['admin.categories.index','admin.categories.create','admin.categories.edit']) ? 'activePage' : '' }}">
+                                    <a href="{{ route('admin.categories.index') }}" class="sidebar-submenu__link"> Kategori </a>
+                                </li>
+                                <li class="sidebar-submenu__item {{ Route::is(['admin.courses.index','admin.videos.index','admin.videos.create','admin.videos.edit']) ? 'activePage' : '' }}">
+                                    <a href="{{ route('admin.courses.index') }}" class="sidebar-submenu__link"> Buat Kursus </a>
+                                </li>
+                            </ul>
+                            <!-- Submenu End -->
+                        </li>
+                        <li class="sidebar-menu__item {{ Route::is(['admin.users.index']) ? 'activePage' : '' }}">
+                            <a href="{{ route('admin.users.index') }}" class="sidebar-menu__link">
+                                <span class="icon"><i class="ph ph-users-three"></i></span>
+                                <span class="text">User</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu__item">
+                            <a href="{{ route('admin.homepages.index') }}" class="sidebar-menu__link">
+                                <span class="icon"><i class="ph ph-squares-four"></i></span>
+                                <span class="text">Home Setting</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu__item">
+                            <a href="{{ route('admin.sliders.index') }}" class="sidebar-menu__link">
+                                <span class="icon"><i class="ph ph-books"></i></span>
+                                <span class="text">Slider</span>
+                            </a>
+                        </li>
+                    @endif        
+                @endauth
             </ul>
         </div>
         <div class="p-20 pt-80">

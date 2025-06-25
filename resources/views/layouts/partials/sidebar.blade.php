@@ -27,7 +27,14 @@
                    <li><a href="#class">Kelas Terbaru</a></li>
                    <li><a href="#faq">FAQ</a></li>
                    <li><a href="#contact">Kontak</a></li>
-                   <a class="btn btn-secondary" href="{{ route('login-phone') }}">Login</a>
+                  @guest
+                  <a class="btn btn-secondary" href="{{ route('login-phone') }}">Login</a>
+                  @endguest
+
+                  @auth
+                  <a class="btn btn-primary" href="{{ route('troopers.dashboard') }}">class</a>
+                  @endauth
+
                 </ul>
                 <!-- navbar-nav -->
              </div>

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('otps', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
+            $table->string('number')->nullable();
+            $table->string('email')->nullable();
             $table->string('otp');
             $table->string('status')->default('pending');
             $table->string('type');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use App\Notifications\Otp;
 use Illuminate\Http\Request;
+use App\Notifications\OtpEmail;
 use App\Models\Otp as ModelsOtp;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -105,7 +106,6 @@ class PhoneAuthenticatedSessionController extends Controller
         return redirect()->route('login.verified');
     }
 
-
     public function sendOTPNew(Request $request)
     {
         $user = Auth::user();
@@ -168,4 +168,114 @@ class PhoneAuthenticatedSessionController extends Controller
                 ->withErrors(['otp' => 'The OTP is invalid or has expired.']);
         }
     }
+
+    public function emailLogin()
+    {
+        return view('auth.login-email');
+    }
+
+    public function emailStore(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'string'],
+        ]);
+
+        $email = $request->email;
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Email tidak terdaftar']);
+        }
+
+        $otp = rand(100000, 999999);
+        Log::info('Generated OTP for verified user: ' . $otp);
+
+        $user->notify(new Otp($otp));
+
+        ModelsOtp::create([
+            'email' => $email,
+            'otp' => $otp,
+            'type' => 'verify_phone',
+            'user_id' => $user->id,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('login.verified.email');
+    }
+
+    public function sendOTPNewEmail(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login-email');
+        }
+
+        $email = $user->email;
+        $otp = rand(100000, 999999);
+
+        // Kirim OTP ke email
+        $user->notify(new OtpEmail($otp));
+
+        // Simpan ke database
+        ModelsOtp::create([
+            'number' => $email,
+            'otp' => $otp,
+            'type' => 'verify_phone',
+            'user_id' => $user->id,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'OTP email berhasil dikirim')
+            ->with('status', 'verification-link-sent');
+    }
+
+    public function emailVerified()
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login-email');
+        }
+
+        return view('auth.verify-email', compact('user'));
+    }
+
+    public function verifyOTPEmail(Request $request)
+    {
+        $request->validate([
+            'otp' => ['required', 'digits:6'],
+        ]);
+
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login-email');
+        }
+
+        $otpRecord = ModelsOtp::where('user_id', $user->id)
+            ->where('otp', $request->input('otp'))
+            ->where('type', 'verify_phone')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        if ($otpRecord && $otpRecord->created_at->addMinutes(2) > now()) {
+            $otpRecord->status = 'verified';
+            $otpRecord->save();
+
+            $user->phone_verified = 'verified';
+            $user->save();
+
+            return redirect()->route('troopers.dashboard');
+        } else {
+            return redirect()
+                ->back()
+                ->withErrors(['otp' => 'OTP tidak valid atau sudah kedaluwarsa.']);
+        }
+    }
+
+
+
 }

@@ -18,12 +18,12 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <div class="mb-24">
-                        <label for="phone" class="form-label mb-8 h6">No Handphone</label>
+                        <label for="phone" class="form-label mb-8 h6">Email</label>
                         <div class="position-relative">
-                            <input type="text" class="form-control py-11 ps-40" id="phone" name="phone" placeholder="Masukan No Handphone" value="{{ old('phone') }}" required autofocus autocomplete="username">
+                            <input type="text" class="form-control py-11 ps-40" id="phone" name="phone" placeholder="Masukan Email value="{{ old('phone') }}" required autofocus autocomplete="username">
                             <span class="position-absolute top-50 translate-middle-y ms-16 text-gray-600 d-flex"><i class="ph ph-phone"></i></span>
                         </div>
-                        <small>Contoh : 08121213131414 / 628121213131414</small>
+                        <small>Contoh : jhondoe@gmail.com</small>
                     </div>
                     
                     <button type="submit" class="btn btn-main rounded-pill w-100">Log in</button>
@@ -32,9 +32,9 @@
                         <span class="divider__text text-gray-600 text-13 fw-medium px-26 bg-white">or</span>
                     </div>
 
-                    <a href="{{ route('login-email') }}" class="btn btn-outline-main rounded-pill w-100">
+                    <a href="{{ route('login-phone') }}" class="btn btn-outline-main rounded-pill w-100">
                         <i class="ph ph-google-logo"></i>
-                        Login dengan email
+                        Login dengan No Whatsapp
                     </a>
                     {{-- 
                     <ul class="flex-align gap-10 flex-wrap justify-content-center">
