@@ -88,18 +88,19 @@ class TCourseController extends Controller
 
     public function myDetailCourse($slug)
     {
-        
         $course = Course::with('videos')->where('slug', $slug)->first();
         $title = 'My Courses';
 
-        
-        $video = $course->videos->first();
+        if (!$course || $course->videos->isEmpty()) {
+            return redirect()->route('troopers.my-course')->with('error', 'Course tidak memiliki video.');
+        }
 
-        
+        $video = $course->videos->first();
         $videoFileId = $this->getFileIdByName($video->video_url);
 
         return view('troopers.courses.my-detail-course', compact('title', 'course', 'videoFileId', 'video'));
     }
+
 
     public function changeVideo($slug, $videoId)
     {
