@@ -62,7 +62,7 @@ Route::middleware(['phone.verified'])
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+Route::post('/api/midtrans-callback', [PaymentController::class, 'callback']);
 
 Route::middleware(['auth','admin'])
 ->prefix('manage')
