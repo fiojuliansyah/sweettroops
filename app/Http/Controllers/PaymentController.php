@@ -79,41 +79,64 @@ class PaymentController extends Controller
     {
         $serverKey = config('midtrans.server_key');
         $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
-    
-        if ($hashed == $request->signature_key) {
-            $transaction = Transaction::where('order_id', $request->order_id)->first();
-    
-            if ($transaction) {
-                if ($request->transaction_status == 'settlement') {
+
+        if ($hashed != $request->signature_key) {
+            \Log::warning('Signature tidak valid', [
+                'expected' => $hashed,
+                'actual' => $request->signature_key,
+            ]);
+            return response()->json(['message' => 'Invalid signature'], 403);
+        }
+
+        $transaction = Transaction::where('order_id', $request->order_id)->first();
+
+        if (!$transaction) {
+            \Log::warning('Transaksi tidak ditemukan', ['order_id' => $request->order_id]);
+            return response()->json(['message' => 'Transaction not found'], 404);
+        }
+
+        try {
+            switch ($request->transaction_status) {
+                case 'settlement':
                     $transaction->payment_status = 'paid';
                     $transaction->status = 'completed';
                     $transaction->save();
-    
-                    
+
                     Competition::create([
                         'user_id' => $transaction->user_id,
                         'course_id' => $transaction->course_id,
                     ]);
-    
-                    
+
                     $admin = (object) ['phone' => env('ADMIN_WHATSAPP_NUMBER'), 'name' => 'Admin'];
-                    Notification::send($admin, new CoursePurchasedNotification($transaction->user, $transaction->course, $transaction));
-                } elseif ($request->transaction_status == 'pending') {
+
+                    if ($transaction->user && $transaction->course) {
+                        Notification::send($admin, new CoursePurchasedNotification($transaction->user, $transaction->course, $transaction));
+                    } else {
+                        \Log::warning('User atau Course null saat kirim notifikasi.');
+                    }
+
+                    break;
+
+                case 'pending':
                     $transaction->payment_status = 'pending';
                     $transaction->status = 'waiting_payment';
-                } elseif ($request->transaction_status == 'expire') {
-                    $transaction->payment_status = 'expired';
-                    $transaction->status = 'failed';
-                } elseif ($request->transaction_status == 'cancel') {
-                    $transaction->payment_status = 'canceled';
-                    $transaction->status = 'failed';
-                } elseif ($request->transaction_status == 'failure') {
+                    $transaction->save();
+                    break;
+
+                case 'expire':
+                case 'cancel':
+                case 'failure':
                     $transaction->payment_status = 'failed';
                     $transaction->status = 'failed';
-                }
-    
-                $transaction->save();
+                    $transaction->save();
+                    break;
             }
+        } catch (\Exception $e) {
+            \Log::error('Callback error:', ['error' => $e->getMessage()]);
+            return response()->json(['message' => 'Internal server error'], 500);
         }
+
+        return response()->json(['message' => 'Callback handled'], 200);
     }
+
 }
