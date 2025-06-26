@@ -42,6 +42,7 @@ class CoursePurchasedNotification extends Notification
         $userName = $this->user->name;
         $courseTitle = $this->course->title;
         $orderId = $this->transaction->order_id;
+        $status = $this->transaction->payment_status;
         $amount = number_format($this->transaction->amount);
     
         return [
@@ -51,6 +52,7 @@ class CoursePurchasedNotification extends Notification
                       . "📚 Course: *$courseTitle*\n"
                       . "🛒 Order ID: *$orderId*\n"
                       . "💰 Harga: *Rp. $amount*\n\n"
+                      . "Status: *$status*\n\n"
                       . "Silakan cek dashboard admin untuk detail lebih lanjut.",
         ];
     }
