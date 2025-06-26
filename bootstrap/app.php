@@ -13,13 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            // 'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'phone.verified' => \App\Http\Middleware\PhoneVerified::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
-            // 'seller.buyer' => \App\Http\Middleware\CheckSellerOrBuyer::class,
-            // 'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
-            // 'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-            // 'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class
+        ]);
+        
+        $middleware->validateCsrfTokens(except: [
+            'api/midtrans-callback',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
