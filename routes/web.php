@@ -26,6 +26,7 @@ Route::get('/successauth', [PageController::class, 'successAuth']);
 Route::get('/youtube-redirect', [CourseVideoController::class, 'calback']);
 Route::post('/s3/presigned-url', [CourseVideoController::class, 'generatePresignedUrl']);
 
+
 Route::prefix('troopers')
 ->name('troopers.')
 ->group(function () {
@@ -53,15 +54,15 @@ Route::middleware(['phone.verified'])
     Route::post('/discussion/{courseId}/comment', [TDiscussController::class, 'postComment'])->name('discussion.comment');
 
     Route::post('/buy-course/{id}', [PaymentController::class, 'buyCourse'])->name('buy.course');
-    Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
     Route::post('/retry-payment/{order_id}', [PaymentController::class, 'retryPayment'])->name('troopers.retry-payment');
-
-
+    
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
 Route::middleware(['auth','admin'])
 ->prefix('manage')

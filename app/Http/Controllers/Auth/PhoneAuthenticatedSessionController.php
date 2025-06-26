@@ -191,7 +191,7 @@ class PhoneAuthenticatedSessionController extends Controller
         $otp = rand(100000, 999999);
         Log::info('Generated OTP for verified user: ' . $otp);
 
-        $user->notify(new Otp($otp));
+        $user->notify(new OtpEmail($otp));
 
         ModelsOtp::create([
             'email' => $email,
@@ -275,7 +275,5 @@ class PhoneAuthenticatedSessionController extends Controller
                 ->withErrors(['otp' => 'OTP tidak valid atau sudah kedaluwarsa.']);
         }
     }
-
-
 
 }
