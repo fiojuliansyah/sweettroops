@@ -24,7 +24,7 @@
                    <li><a href="#home">Home</a></li>
                    <li><a href="#about">Tentang</a></li>
                    <li><a href="#why">Kenapa Pilih Kami?</a></li>
-                   <li><a href="#class">Kelas Terbaru</a></li>
+                   <li><a href="{{ route('troopers.all-course') }}">Kelas</a></li>
                    <li><a href="#faq">FAQ</a></li>
                    <li><a href="#contact">Kontak</a></li>
                   @guest
