@@ -24,6 +24,7 @@ Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('p
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 Route::get('/successauth', [PageController::class, 'successAuth']);
 Route::get('/youtube-redirect', [CourseVideoController::class, 'calback']);
+Route::post('/api/midtrans-callback', [PaymentController::class, 'callback']);
 Route::post('/s3/presigned-url', [CourseVideoController::class, 'generatePresignedUrl']);
 
 
@@ -61,8 +62,6 @@ Route::middleware(['phone.verified'])
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::post('/api/midtrans-callback', [PaymentController::class, 'callback']);
 
 Route::middleware(['auth','admin'])
 ->prefix('manage')
