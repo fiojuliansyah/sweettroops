@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'manage/videos/upload', // Add this line to exclude your upload endpoint
+        'manage/videos/upload',
+        'api/midtrans-callback',
     ];
 }
