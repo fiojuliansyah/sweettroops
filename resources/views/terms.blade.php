@@ -1,119 +1,89 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Terms and Conditions - SWEETTROOPS Course Baking</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 15px 0;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #333;
-        }
-        p {
-            font-size: 1rem;
-            color: #555;
-        }
-        ul {
-            margin: 10px 0;
-        }
-        li {
-            margin: 5px 0;
-        }
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background-color: #333;
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
+@extends('layouts.guest')
 
-<header>
-    <h1>Terms and Conditions - SWEETTROOPS Course Baking</h1>
-</header>
-
-<div class="container">
-    <h2>1. Introduction</h2>
-    <p>Selamat datang di SWEETTROOPS! Dengan mengakses dan menggunakan layanan yang kami tawarkan melalui situs ini, Anda setuju untuk mematuhi syarat dan ketentuan yang tercantum dalam dokumen ini. Jika Anda tidak setuju dengan syarat dan ketentuan ini, harap tidak menggunakan situs kami atau mendaftar untuk kursus kami.</p>
-
-    <h2>2. Kursus dan Layanan</h2>
-    <p>SWEETTROOPS menyediakan berbagai kursus online terkait seni memanggang. Dengan mendaftar untuk kursus kami, Anda setuju untuk mengikuti instruksi yang diberikan oleh instruktur kursus dan mematuhi pedoman yang berlaku dalam kursus yang Anda pilih.</p>
-
-    <h2>3. Pendaftaran dan Akun Pengguna</h2>
-    <p>Untuk mendaftar dalam kursus kami, Anda harus membuat akun dengan memberikan informasi yang benar dan akurat. Anda bertanggung jawab penuh untuk menjaga kerahasiaan akun Anda dan kata sandi yang digunakan. Anda juga bertanggung jawab atas semua aktivitas yang dilakukan melalui akun Anda.</p>
-
-    <h2>4. Pembayaran dan Harga</h2>
-    <p>Untuk mengikuti kursus kami, Anda diwajibkan membayar biaya yang tercantum di situs kami. Pembayaran dapat dilakukan melalui metode pembayaran yang tersedia di situs kami. Kami berhak untuk mengubah harga atau menawarkan diskon kapan saja tanpa pemberitahuan sebelumnya.</p>
-    <p>Semua pembayaran dilakukan melalui sistem pembayaran pihak ketiga yang aman dan kami tidak menyimpan informasi kartu kredit atau metode pembayaran Anda secara langsung.</p>
-
-    <h2>5. Hak Cipta dan Kepemilikan Konten</h2>
-    <p>Semua materi yang diberikan dalam kursus, termasuk tetapi tidak terbatas pada video, teks, gambar, dan materi lainnya, adalah milik SWEETTROOPS dan dilindungi oleh hak cipta. Anda hanya diizinkan untuk mengakses dan menggunakan materi ini untuk tujuan pribadi dan non-komersial. Anda tidak diperbolehkan untuk mendistribusikan, menjual, atau menggandakan materi tersebut tanpa izin tertulis dari kami.</p>
-
-    <h2>6. Penggunaan yang Dilarang</h2>
-    <p>Dengan menggunakan situs ini dan mendaftar untuk kursus, Anda setuju untuk tidak melakukan hal-hal berikut:</p>
-    <ul>
-        <li>Melakukan penipuan atau memberikan informasi yang tidak akurat saat pendaftaran.</li>
-        <li>Melakukan tindakan yang dapat merusak atau mengganggu operasional situs kami.</li>
-        <li>Menggunakan materi yang diberikan dalam kursus untuk tujuan komersial tanpa izin.</li>
-        <li>Mengakses kursus atau materi tanpa izin yang sah.</li>
-        <li>Melakukan pelanggaran hak cipta atau pelanggaran hukum lainnya.</li>
-    </ul>
-
-    <h2>7. Pembatalan dan Pengembalian Dana</h2>
-    <p>Kami tidak menawarkan pengembalian dana untuk biaya kursus setelah pendaftaran dilakukan, kecuali dalam kasus tertentu yang diatur oleh kebijakan pengembalian dana kami. Jika Anda merasa kursus yang Anda pilih tidak memenuhi ekspektasi atau ada masalah dengan materi, Anda dapat menghubungi tim dukungan pelanggan kami untuk mendapatkan bantuan.</p>
-
-    <h2>8. Perubahan Layanan</h2>
-    <p>Kami berhak untuk memperbarui, mengubah, atau menghentikan kursus atau layanan apa pun yang disediakan melalui situs kami kapan saja tanpa pemberitahuan terlebih dahulu. Kami tidak bertanggung jawab atas kerugian yang timbul dari perubahan tersebut.</p>
-
-    <h2>9. Tanggung Jawab Pengguna</h2>
-    <p>Anda setuju untuk menggunakan situs dan layanan kami sesuai dengan hukum yang berlaku dan tidak akan menggunakan situs atau layanan untuk tujuan yang ilegal atau melanggar hak orang lain. Anda bertanggung jawab sepenuhnya atas kegiatan yang Anda lakukan melalui akun Anda.</p>
-
-    <h2>10. Pembatasan Tanggung Jawab</h2>
-    <p>SWEETTROOPS tidak bertanggung jawab atas kerugian atau kerusakan yang timbul akibat penggunaan atau ketidakmampuan untuk menggunakan situs atau kursus yang kami tawarkan. Kami tidak menjamin bahwa situs atau materi yang disediakan bebas dari kesalahan atau gangguan.</p>
-
-    <h2>11. Modifikasi Syarat dan Ketentuan</h2>
-    <p>Kami dapat mengubah syarat dan ketentuan ini dari waktu ke waktu. Setiap perubahan akan diposting di halaman ini dengan tanggal pembaruan yang tertera di bagian atas. Anda bertanggung jawab untuk meninjau syarat dan ketentuan ini secara berkala agar tetap terinformasi mengenai perubahan yang mungkin terjadi.</p>
-
-    <h2>12. Hukum yang Berlaku</h2>
-    <p>Syarat dan ketentuan ini diatur oleh hukum yang berlaku di Indonesia. Setiap perselisihan yang timbul sehubungan dengan syarat dan ketentuan ini akan diselesaikan di pengadilan yang memiliki yurisdiksi di Indonesia.</p>
-
-    <h2>13. Kontak Kami</h2>
-    <p>Jika Anda memiliki pertanyaan mengenai syarat dan ketentuan ini atau ingin menghubungi kami mengenai masalah lainnya, silakan hubungi kami melalui informasi kontak di bawah ini:</p>
-    <ul>
-        <li><strong>Email:</strong> its.sweettroops@gmail.com</li>
-        <li><strong>Telepon:</strong> (+62) 8 5311 2323 77</li>
-        <li><strong>Alamat:</strong> Jakarta, Indonesia</li>
-    </ul>
-
-</div>
-
-<div class="footer">
-    <p>&copy; 2025 SWEETTROOPS | All Rights Reserved</p>
-</div>
-
-</body>
-</html>
+@section('content')
+    <section class="sec-title">
+        <div class="w-layout-blockcontainer cont-title w-container">
+            <h1 class="heading-title">The Not-So-Sweet Legal Stuff</h1>
+        </div>
+    </section>
+    <section class="section-16">
+        <div class="w-layout-blockcontainer container-13 w-container">
+            <p class="paragraph-13">We believe in transparency, trust, and a sprinkle of clarity.<br>These Terms
+                &amp; Conditions outline the rules, responsibilities, and guidelines for using SweetTroops&#x27; website,
+                purchasing our courses or classes, and interacting with our content and services.<br><br>By accessing our
+                site or enrolling in any of our baking classes or short courses, you agree to follow these
+                terms.<br>They&#x27;re here to protect you, us and the sweet experience we aim to provide for every
+                student.<br></p>
+        </div>
+    </section>
+    <section class="section-17">
+        <div class="w-layout-blockcontainer container-14 w-container">
+            <h1 class="heading-9">Terms &amp; Conditions</h1>
+            <div class="div-block-8">
+                <p class="paragraph-14">Welcome to SweetTroops.com!<br>Thanks for visiting our little corner of the
+                    internet, where flour and dreams come together.<br>By using our website, signing up for classes, or
+                    purchasing any of our products, you agree to these Terms &amp; Conditions.<br>Please read them carefully
+                    (maybe with a cupcake in hand).<br></p>
+                <div class="div-block-9">
+                    <h1 class="head-tc">🧁 Use of Content</h1>
+                    <p class="par-tc">∘ All the baking goodness you see here is for your personal, non-commercial use
+                        only.<br>∘ Please don&#x27;t copy, share, resell, or republish our content without getting our
+                        written permission first. Sharing is caring, but respecting copyrights is caring, too!<br>∘ You must
+                        be at least 18 years old or have permission from a grown-up to use our services.</p>
+                </div>
+                <div class="div-block-9">
+                    <h1 class="head-tc">🛒 Orders, Payments &amp; Refunds</h1>
+                    <p class="par-tc">∘ All prices are in Indonesian Rupiah unless we say otherwise.<br>∘ Payment is due
+                        upfront - no flour IOUs.<br>∘ Because our classes and materials are digital, we don&#x27;t offer
+                        refunds once you&#x27;ve received access. But if something goes wrong, please contact us and
+                        we&#x27;ll help sort it out.</p>
+                </div>
+                <div class="div-block-9">
+                    <h1 class="head-tc">🔐 Accounts &amp; Security</h1>
+                    <p class="par-tc">∘ You&#x27;re responsible for keeping your login details safe and secure. Don&#x27;t
+                        share your password with your neighbour (unless they&#x27;re also your baking buddy).<br>∘ If you
+                        suspect someone is sneaking into your account, tell us right away.</p>
+                </div>
+                <div class="div-block-9">
+                    <h1 class="head-tc">⚠️ Liability Stuff</h1>
+                    <p class="par-tc">∘ We work hard to keep everything accurate, helpful, and up to date - but we
+                        can&#x27;t promise everything is always perfect.<br>∘ <em>SweetTroops</em> isn&#x27;t liable for any
+                        damages, losses, or unexpected baking disasters resulting from using our website or materials. Use
+                        your best judgement, and always preheat your oven.</p>
+                </div>
+                <div class="div-block-9">
+                    <h1 class="head-tc">🔄 Changes to These Terms</h1>
+                    <p class="par-tc">∘ We may update these Terms occasionally. If we make big changes, we&#x27;ll let you
+                        know.<br>∘ By continuing to use our website, you agree to any updated Terms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-18">
+        <div class="w-layout-blockcontainer container-15 w-container">
+            <h1 class="heading-10">Copyright &amp; Disclosure Notice</h1>
+            <p class="paragraph-16">Because every recipe has an origin story.</p>
+            <div class="div-block-8">
+                <div class="div-block-9">
+                    <h1 class="head-tc">✨Ownership &amp; Copyright</h1>
+                    <p class="par-tc">∘ All content on this website - recipes, photos, videos, logos, words - is owned by
+                        <em>SweetTroops</em>.<br>∘ Please don&#x27;t copy, modify, or share any materials without our
+                        written permission.<br>∘ If you&#x27;d like to feature or reference our content, just ask - we love
+                        collaborations (with proper credit).</p>
+                </div>
+                <div class="div-block-9">
+                    <h1 class="head-tc">📣Affiliate Links &amp; Promotions</h1>
+                    <p class="par-tc">If we ever share affiliate links or sponsored content, we&#x27;ll always be
+                        transparent about it. You&#x27;ll know when something is an ad or a paid partnership.</p>
+                </div>
+                <div class="div-block-9">
+                    <h1 class="head-tc">❤️Our Promise</h1>
+                    <p class="par-tc">∘ We built <em>SweetTroops</em> to inspire and support bakers everywhere.<br>∘
+                        Everything we create is meant to help you learn and have fun.</p>
+                </div>
+                <p class="paragraph-17"><strong>Thank you for respecting our work and being part of our baking
+                        family!</strong></p>
+            </div>
+        </div>
+    </section>
+@endsection

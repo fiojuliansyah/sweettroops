@@ -20,6 +20,30 @@ class PageController extends Controller
         return view('welcome', compact('title','homepage','courses','categories','sliders'));
     }
 
+    public function about()
+    {
+        $title = 'About Us';
+        return view('about', compact('title'));
+    }
+
+    public function contact()
+    {
+        $title = 'Contact';
+        return view('contact', compact('title'));
+    }
+
+    public function faq()
+    {
+        $title = 'FAQs';
+        return view('faq', compact('title'));
+    }
+
+    public function loginFirst()
+    {
+        $title = 'Login First';
+        return view('auth.login-first', compact('title'));
+    }
+
     public function privacyPolicy()
     {
         $title = 'Privacy Policy';
@@ -32,12 +56,11 @@ class PageController extends Controller
         return view('terms', compact('title'));
     }
 
-    public function courses($slug)
+    public function courses()
     {
         $homepage = Homepage::orderBy('created_at', 'ASC')->first();
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $courses = $category->courses()->get(); 
-        return view('courses', compact('category', 'courses', 'homepage'));
+        $courses = Course::all(); 
+        return view('courses', compact('courses', 'homepage'));
     }
 
 
