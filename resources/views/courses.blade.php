@@ -19,53 +19,23 @@
         <div class="container-21">
             <div class="collection-list-wrapper-2 w-dyn-list">
                 <div role="list" class="collection-list-2 w-dyn-items w-row">
-                    <div role="listitem" class="collection-item-2 w-dyn-item w-col w-col-4"><img
-                            src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg"
-                            loading="lazy" id="w-node-a0986e99-da9f-4b86-822c-f527d14b120e-18607b69" alt=""
-                            class="image-10 w-dyn-bind-empty">
-                        <a href="#" class="link-4"></a>
-                    </div>
-                </div>
-                <section class="inside-page">
-                    <div class="inside-wrapper container">
-                        <div class="col-lg-9">
-                            <!-- Price tabs Start -->
-                            <div class="col-md-12">
-                                <!-- menu body -->
-                                <div class="menu-body">
-                                    <div class="menu-section">
-                                        @foreach ($courses as $course)
-                                            <div class="menu-item">
-                                                <div class="menu-item-pic lightbox">
-                                                    <a href="{{ route('troopers.all-course') }}">
-                                                        @php
-                                                            $thumbnails = json_decode($course->thumbnail, true);
-                                                            $firstThumbnail = isset($thumbnails[0])
-                                                                ? $thumbnails[0]
-                                                                : 'default-thumbnail.jpg';
-                                                        @endphp
-                                                        <img class="img-responsive img-circle img-price"
-                                                            src="{{ asset('storage/' . $firstThumbnail) }}"
-                                                            alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="menu-item-name">
-                                                    {{ $course->title }}
-                                                </div>
-                                            </div>
-                                            <br>
-                                        @endforeach
-                                    </div>
-                                    <!--/ menu section -->
-                                </div>
-                                <!-- / menu body -->
-                            </div>
-                            <!--/tababble-->
+                    @forelse ($courses as $course)
+                        <div role="listitem" class="collection-item-2 w-dyn-item w-col w-col-4">
+                            @php
+                                $thumbnails = json_decode($course->thumbnail, true);
+                                $firstThumbnail = isset($thumbnails[0])
+                                    ? $thumbnails[0]
+                                    : 'https://cdn.prod.website-files.com/6863dbc5c3cb25eebe6ab6ce/68666cf3de7c05db6b6a495a_Blackforest%20PC.png';
+                            @endphp
+                            <img
+                                src="{{ asset('storage/' . $firstThumbnail) }}"
+                                loading="lazy"
+                                id="w-node-a0986e99-da9f-4b86-822c-f527d14b120e-18607b69" class="image-10"><a href="/online-classes/blackforest" class="link-4">{{ $course->title }}</a>
                         </div>
-                        <!--/col-lg-9-->
-                    </div>
-                    <!--/ inside-wrapper  -->
-                </section>
+                    @empty
+
+                    @endforelse
+                </div>
             </div>
         </div>
     </section>
