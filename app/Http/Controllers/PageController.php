@@ -66,7 +66,7 @@ class PageController extends Controller
     public function courseDetail($slug)
     {
         $homepage = Homepage::orderBy('created_at', 'ASC')->first();
-        $course = Course::findorFail('slug', $slug); 
+        $course = Course::findOrFail('slug', $slug); 
         return view('course-detail', compact('course', 'homepage'));
     }
 
