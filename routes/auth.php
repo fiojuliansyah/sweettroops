@@ -15,6 +15,21 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 Route::middleware('guest')
     ->prefix('manage')
     ->group(function () {
+    
+});
+
+Route::middleware('guest')
+    ->group(function () {
+        Route::get('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappLogin'])
+            ->name('login-phone');
+
+        Route::post('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappStore']);
+
+        Route::get('login/email', [PhoneAuthenticatedSessionController::class, 'emailLogin'])
+            ->name('login-email');
+
+        Route::post('login/email', [PhoneAuthenticatedSessionController::class, 'emailStore']);
+
         Route::get('register', [RegisteredUserController::class, 'create'])
             ->name('register');
 
@@ -36,19 +51,6 @@ Route::middleware('guest')
 
         Route::post('reset-password', [NewPasswordController::class, 'store'])
             ->name('password.store');
-});
-
-Route::middleware('guest')
-    ->group(function () {
-        Route::get('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappLogin'])
-            ->name('login-phone');
-
-        Route::post('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappStore']);
-
-        Route::get('login/email', [PhoneAuthenticatedSessionController::class, 'emailLogin'])
-            ->name('login-email');
-
-        Route::post('login/email', [PhoneAuthenticatedSessionController::class, 'emailStore']);
 });
 
 Route::middleware('auth')->group(function () {

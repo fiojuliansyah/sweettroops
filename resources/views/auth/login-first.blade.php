@@ -25,7 +25,7 @@
     <div class="div-block-17">
         <h1 id="w-node-_803d5886-e670-2807-d25c-ebd36aea8283-93918ce5" class="heading-13">Be Part of SweetTroops</h1>
         <div id="w-node-_183be123-2e6e-a3f4-9515-ad2d10d9731d-93918ce5" class="text-block-4">Welcome to SweetTroops, your new baking home!<br>We&#x27;re so excited to have you join our big, flour-dusted family.<br>Unlock step-by-step classes, secret recipes, and a sprinkle of inspiration in every lesson. Here, every recipe comes with a smile, every class feels like baking with friends, and there&#x27;s always room at the table for you.<br>Let&#x27;s roll up our sleeves and make something sweet together!</div>
-        <a id="w-node-d254ce7d-e13d-e853-35ff-71a56911d398-93918ce5" href="signup.html" class="button w-button">COUNT ME IN!</a>
+        <a id="w-node-d254ce7d-e13d-e853-35ff-71a56911d398-93918ce5" href="{{ route('register') }}" class="button w-button">COUNT ME IN!</a>
     </div>
     </div>
 </div>
