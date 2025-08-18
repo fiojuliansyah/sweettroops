@@ -48,11 +48,13 @@
             <div class="team-grid-2">
                @forelse ($courses as $course)
                   <div id="w-node-ca84af2a-9836-8afa-9f74-52860d2bdefe-05a7959e" class="pc-card">
-                  <img
-                        src="https://cdn.prod.website-files.com/685911588c01846905a79595/685a4390543c7874399a8516_Livi%27s%20Favourite%20PC.png"
-                        loading="lazy" sizes="(max-width: 1536px) 100vw, 1536px"
-                        srcset="https://cdn.prod.website-files.com/685911588c01846905a79595/685a4390543c7874399a8516_Livi%27s%20Favourite%20PC-p-500.png 500w, https://cdn.prod.website-files.com/685911588c01846905a79595/685a4390543c7874399a8516_Livi%27s%20Favourite%20PC-p-800.png 800w, https://cdn.prod.website-files.com/685911588c01846905a79595/685a4390543c7874399a8516_Livi%27s%20Favourite%20PC-p-1080.png 1080w, https://cdn.prod.website-files.com/685911588c01846905a79595/685a4390543c7874399a8516_Livi%27s%20Favourite%20PC.png 1536w"
-                        alt="" class="pc-image"><a href="#" class="pc-link">Livi's Favourite</a>
+                    @php
+                        $thumbnails = json_decode($course->thumbnail, true);
+                        $firstThumbnail = isset($thumbnails[0])
+                            ? $thumbnails[0]
+                            : 'default-thumbnail.jpg';
+                    @endphp
+                  <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a href="#" class="pc-link">{{ $course->name }}</a>
                   </div> 
                @empty
                    
