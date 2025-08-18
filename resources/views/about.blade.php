@@ -9,7 +9,7 @@
   <section class="section-8">
     <div class="w-layout-blockcontainer container-6 au1 w-container">
       <div class="div-block-3 au1">
-        <img src="/frontend/assets/images/001.jpg">
+        <img src="/frontend/assets/images/001.JPG">
         <p id="w-node-c494c91b-1052-d68d-16e4-7fd03f0d463e-f485420d" class="paragraph-4">From Home Kitchen to Global Classroom<br>Founded in 2016, <em>SweetTroops</em> began with nothing more than a whisk, a dream, and a deep love for baking. What started as a self-taught journey quickly grew into a professional pursuit, leading to a formal training and certification at a pastry school in Australia.<br><br>Today, <em>SweetTroops</em> is more than just a baking studio - it&#x27;s a movement.<br><br>We combine artisan techniques with a warm, approachable style - so that every class feels like coming home.</p>
       </div>
     </div>
@@ -18,14 +18,14 @@
     <div class="w-layout-blockcontainer container-6 au2 w-container">
       <div class="div-block-3 au2">
         <p id="w-node-_18241920-fb5f-2405-954d-488e576e8361-f485420d" class="paragraph-5">To make baking feel possible - for everyone.<br><br>We&#x27;re here to guide, inspire, and support bakers of all levels with trusted recipes, clear teaching, and a whole lot of heart.<br><br>Whether you&#x27;re doing it for joy, for your family, or to build a professional career, <em>SweetTroops</em> is here to sweeten up your journey.</p>
-        <img src="/frontend/assets/images/002.jpg">
+        <img src="/frontend/assets/images/002.JPG">
     </div>
     </div>
   </section>
   <section class="section-10">
     <div class="w-layout-blockcontainer container-6 au3 w-container">
       <div class="div-block-3 au3">
-        <img src="/frontend/assets/images/003.jpg">
+        <img src="/frontend/assets/images/003.JPG">
         <p id="w-node-_41e7b790-e1cc-9a56-4a8b-1dec32eef937-f485420d" class="paragraph-3">Every <em>SweetTroops</em> recipe is more than technique - it&#x27;s a philosophy in flavour. Here&#x27;s what we bake into everything we make:<br><br><strong>🧈 Butter </strong>- <em>Authenticity</em><br>We start rich and real. No shortcuts, no pretenses. Just honest ingredients and honest intentions.<br><br><strong>🥚 Eggs</strong> - <em>Structure</em><br>Strong foundations matter. Every class, every recipe, every flavour is carefully tested, so you can build your confidence layer by layer.<br><br><strong>🍭 Sugar</strong> - <em>Joy</em><br>We believe baking should spark joy - whether you&#x27;re seasoned pro or a first-time whisker<br><br><strong>🌾 Flour</strong> - <em>Possibility</em><br>Flour is humble - but powerful. So are you. In the right hands, any ingredient can rise.<br><br><strong>🔥 Heat</strong> - <em>Resilience</em><br>Mistakes? Good. They&#x27;re part of the process. In our kitchen, nothing is wasted - not even failure.</p>
       </div>
     </div>
@@ -37,7 +37,7 @@
         <p class="paragraph-7">Meet the hearts and hands that bring every SweetTroops recipe to life - from our founders to our furry morale boosters.</p>
         <div class="team-human">
           <div id="w-node-c7a296f5-d5ca-85ee-e62d-50175dd7b96f-f485420d" class="tc-human-card">
-            <img src="/frontend/assets/images/PP.jpg" width=40%">
+            <img src="/frontend/assets/images/PP.jpg" width=40%" class="team-member-image">
             <div class="team-member-name-3">LIVIANCA</div>
             <div class="team-member-position-4"><strong>Chief Whisk Whisperer</strong></div>
             <p class="paragraph-9">The face of SweetTroops and the smiling face behind the counter and your personal baking cheerleader.<br>She&#x27;s here to teach, inspire, and sprinkle magic, one recipe at a time.<br>Turning flour, butter, and a dash of confidence into unforgettable creations.</p>
@@ -133,7 +133,7 @@
   </section>
   <section class="section-11">
     <div class="w-layout-blockcontainer container-6 au4 w-container">
-      <div class="div-block-3 au4"><img src="/frontend/assets/images/004.jpg" loading="lazy" id="w-node-ee831596-4228-43e8-80c6-bac060e88d6b-f485420d" class="image-6">
+      <div class="div-block-3 au4"><img src="/frontend/assets/images/004.JPG" loading="lazy" id="w-node-ee831596-4228-43e8-80c6-bac060e88d6b-f485420d" class="image-6">
         <p id="w-node-ee831596-4228-43e8-80c6-bac060e88d6c-f485420d" class="paragraph-6"><em>SweetTroops</em> is flour on your phone screen.<br>A laugh between sisters at midnight.<br>A late-night scroll that turns into your first bake.<br>A quiet triumph when your layers comes out even.<br>A perfect swirl on a bad day.<br>A memory shared, a mistake laughed over, a slice of courage.<br>And maybe-just maybe-your next big dream.</p>
       </div>
     </div>
