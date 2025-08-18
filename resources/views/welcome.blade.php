@@ -54,7 +54,7 @@
                             ? $thumbnails[0]
                             : 'default-thumbnail.jpg';
                     @endphp
-                  <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a href="#" class="pc-link">{{ $course->name }}</a>
+                  <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a href="#" class="pc-link">{{ $course->title }}</a>
                   </div> 
                @empty
                    
