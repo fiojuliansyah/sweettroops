@@ -63,5 +63,12 @@ class PageController extends Controller
         return view('courses', compact('courses', 'homepage'));
     }
 
+    public function courseDetail($slug)
+    {
+        $homepage = Homepage::orderBy('created_at', 'ASC')->first();
+        $course = Course::findorFail('slug', $slug); 
+        return view('course-detail', compact('course', 'homepage'));
+    }
+
 
 }
