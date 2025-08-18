@@ -52,12 +52,6 @@
                                                 <div class="menu-item-name">
                                                     {{ $course->title }}
                                                 </div>
-                                                <div class="menu-item-price">
-                                                    Rp. {{ number_format($course->price) }}
-                                                </div>
-                                                <div class="menu-item-description">
-                                                    <p>{!! \Illuminate\Support\Str::limit($course->description, 200) !!} ...</p>
-                                                </div>
                                             </div>
                                             <br>
                                         @endforeach
