@@ -56,10 +56,26 @@ class PageController extends Controller
         return view('terms', compact('title'));
     }
 
-    public function courses()
+    public function courses(Request $request)
     {
         $homepage = Homepage::orderBy('created_at', 'ASC')->first();
-        $courses = Course::all(); 
+
+        $query = Course::where('is_active', 1);
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $sort = $request->input('sort', 'newest');
+
+        if ($sort === 'alphabetical') {
+            $query->orderBy('title', 'ASC');
+        } else {
+            $query->orderBy('created_at', 'DESC');
+        }
+
+        $courses = $query->get();
+
         return view('courses', compact('courses', 'homepage'));
     }
 

@@ -40,10 +40,9 @@
     <section class="footer-dark">
         <div class="container-5">
             <div class="footer-wrapper"><a href="#" class="footer-brand w-inline-block"><img
-                        src="https://cdn.prod.website-files.com/685911588c01846905a79595/685a5ffd69f256c4413840dc_Logo%20ST%20Pink.png"
+                        src="/frontend/assets/images/Logo-ST.png"
                         loading="lazy" sizes="(max-width: 668px) 100vw, 668px"
-                        srcset="https://cdn.prod.website-files.com/685911588c01846905a79595/685a5ffd69f256c4413840dc_Logo%20ST%20Pink-p-500.png 500w, https://cdn.prod.website-files.com/685911588c01846905a79595/685a5ffd69f256c4413840dc_Logo%20ST%20Pink.png 668w"
-                        alt="" class="image-3"></a>
+                         class="image-3"></a>
                 <div class="footer-content">
                     <div id="w-node-_1428390e-f8f5-6e62-91c7-677b0b167cc9-0b167cc3" class="footer-block">
                         <div class="title-small">Company</div><a href="{{ route('about') }}" class="footer-link">About
