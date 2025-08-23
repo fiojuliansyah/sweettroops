@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="section-44">
-    <div class="w-layout-blockcontainer container-43 w-container"><a href="/online-classes"
+    <div class="w-layout-blockcontainer container-43 w-container"><a href="{{ route('courses') }}"
             class="button-4 w-button">&lt; BACK</a></div>
 </section>
 <section class="section-43">

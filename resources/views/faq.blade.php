@@ -17,7 +17,7 @@
           </div>
           <div class="spark-button-text">Who are these classes for?</div>
         </div>
-        <nav style="height:0px" class="spark-faq-dropdown w-dropdown-list">
+        <nav class="spark-faq-dropdown w-dropdown-list">
           <p class="spark-dropdown-text"><em>SweetTroops</em> classes are designed for everyone - from complete beginners to experienced bakers.<br>Whether you&#x27;re baking for fun, your family, or a future business, you&#x27;re in the right place.</p>
         </nav>
       </div>
@@ -29,7 +29,7 @@
           </div>
           <div class="spark-button-text">What tools or ingredients will I need?</div>
         </div>
-        <nav style="height:0px" class="spark-faq-dropdown w-dropdown-list">
+        <nav class="spark-faq-dropdown w-dropdown-list">
           <p class="spark-dropdown-text">Every class includes a complete list of ingredients and tools.<br>We always aim to use materials that are easy to find, especially for our students in Indonesia.</p>
         </nav>
       </div>
@@ -41,7 +41,7 @@
           </div>
           <div class="spark-button-text">How can I contact SweetTroops?</div>
         </div>
-        <nav style="height:0px" class="spark-faq-dropdown w-dropdown-list">
+        <nav class="spark-faq-dropdown w-dropdown-list">
           <p class="spark-dropdown-text">For the fastest response, feel free to reach us through WhatsApp.<br>You can also contact us via email, and we&#x27;ll get back to you as soon as possible.<br>Please do refer to our &#x27;Contacts&#x27; page for our contact details.</p>
         </nav>
       </div>
@@ -53,7 +53,7 @@
           </div>
           <div class="spark-button-text">How do I access the class after purchase?</div>
         </div>
-        <nav style="height:0px" class="spark-faq-dropdown w-dropdown-list">
+        <nav class="spark-faq-dropdown w-dropdown-list">
           <p class="spark-dropdown-text">Once you complete your purchase, the class will automatically appear in your personal account on our website.<br>All video lessons will be accessible there. Recipes will be delivered directly to you via email or WhatsApp for easy reference.</p>
         </nav>
       </div>
@@ -65,7 +65,7 @@
           </div>
           <div class="spark-button-text">Are your classes live or pre-recorded?</div>
         </div>
-        <nav style="height:0px" class="spark-faq-dropdown w-dropdown-list">
+        <nav class="spark-faq-dropdown w-dropdown-list">
           <p class="spark-dropdown-text">Our online classes are held live during scheduled sessions.<br>However, some baking steps may be pre-recorded for clarity or timing.<br>All videos - both live and recorded - will be available in your account for replay at any time.</p>
         </nav>
       </div>
@@ -77,7 +77,7 @@
           </div>
           <div class="spark-button-text">Can I use the recipes to bake and sell products?</div>
         </div>
-        <nav style="height:0px" class="spark-faq-dropdown w-dropdown-list">
+        <nav class="spark-faq-dropdown w-dropdown-list">
           <p class="spark-dropdown-text">Absolutely - our goal is to support your baking journey. You&#x27;re welcome to use our recipes to create and sell your baked goods.<br>However, republishing or selling the recipes themselves, either digitally or as part of another course, is not permitted unless you have written permission from us.</p>
         </nav>
       </div>
@@ -89,7 +89,7 @@
           </div>
           <div class="spark-button-text">Can I use SweetTroops&#x27; videos, photos, or class materials?</div>
         </div>
-        <nav style="height:0px" class="spark-faq-dropdown w-dropdown-list">
+        <nav class="spark-faq-dropdown w-dropdown-list">
           <p class="spark-dropdown-text">Our visual and class content is copyrighted. For commercial use, republishing or redistributing our materials (videos, photos, documents) is <strong>NOT ALLOWED</strong>.<br>If you&#x27;d like to share or repost for personal or educational use (e.g. social media, personal blog), we ask that you kindly give clear credit to <em>SweetTroops</em> and link back to our official website as the original source.</p>
         </nav>
       </div>
@@ -101,10 +101,55 @@
           </div>
           <div class="spark-button-text">What language are the class videos &amp; materials in?</div>
         </div>
-        <nav style="height:0px" class="spark-faq-dropdown w-dropdown-list">
+        <nav class="spark-faq-dropdown w-dropdown-list">
           <p class="spark-dropdown-text">All of our video lessons are currently presented in <strong>Indonesian</strong>. We&#x27;re planning to add English subtitles in the near future soon so we can share our recipes with even more baking enthusiasts around the world.<br>Our recipe guides and class notes are also provided in <strong>Indonesian</strong> by default. If you&#x27;d like them in English, just let us know - we&#x27;ll be happy to prepare and English version for you.</p>
         </nav>
       </div>
     </div>
   </div>
 @endsection
+
+@push('styles')
+<style>
+    .spark-faq-dropdown {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s ease-in-out;
+    }
+    
+    .spark-faq-expander.open .spark-faq-dropdown {
+        max-height: 500px;
+    }
+
+    .spark-faq-expander .spark-vertical-line {
+        transition: transform 0.3s ease;
+    }
+    
+    .spark-faq-expander.open .spark-vertical-line {
+        transform: rotate(90deg);
+    }
+</style>
+@endpush
+
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const faqToggles = document.querySelectorAll('.spark-faq-button.w-dropdown-toggle');
+
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const parent = toggle.parentElement;
+                const isAlreadyOpen = parent.classList.contains('open');
+
+                document.querySelectorAll('.spark-faq-expander.w-dropdown.open').forEach(openDropdown => {
+                    openDropdown.classList.remove('open');
+                });
+
+                if (!isAlreadyOpen) {
+                    parent.classList.add('open');
+                }
+            });
+        });
+    });
+</script>
+@endpush

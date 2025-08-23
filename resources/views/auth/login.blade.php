@@ -40,7 +40,7 @@
 
                         {{-- Link Alternatif --}}
                         <div style="text-align: center; margin-top: 24px; font-size: 14px;">
-                            <a href="{{ route('login-phone') }}" style="color: #ff85a2; text-decoration: underline;">Login dengan No Handphone</a>
+                            <a href="{{ route('login-phone') }}" style="color: #ff85a2; text-decoration: underline;">Login dengan No Handphone / Email OTP</a>
                         </div>
                     </form>
                 </div>

@@ -40,9 +40,16 @@
                                     <li>
                                         <div class="nav-divider"></div>
                                     </li>
-                                    <li class="mobile-margin-top-10">
-                                        <a href="{{ route('login-first') }}" class="button-primary w-button">LOG IN</a>
-                                    </li>
+                                    @guest   
+                                        <li class="mobile-margin-top-10">
+                                            <a href="{{ route('login-first') }}" class="button-primary w-button">LOG IN</a>
+                                        </li>
+                                    @endguest
+                                    @auth 
+                                        <li class="mobile-margin-top-10">
+                                            <a href="{{ route('troopers.dashboard') }}" class="button-primary w-button">DASHBOARD</a>
+                                        </li>
+                                    @endauth
                                 </ul>
                             </nav>
                             <div class="menu-button w-nav-button">

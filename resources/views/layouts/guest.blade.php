@@ -30,6 +30,8 @@
     </script>
     <link href="/frontend/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/frontend/assets/images/webclip.png" rel="apple-touch-icon">
+
+    @stack('styles')
 </head>
 
 <body class="body">
@@ -44,17 +46,17 @@
                         alt="" class="image-3"></a>
                 <div class="footer-content">
                     <div id="w-node-_1428390e-f8f5-6e62-91c7-677b0b167cc9-0b167cc3" class="footer-block">
-                        <div class="title-small">Company</div><a href="{{ route('about') }}" class="footer-link">About us</a><a
-                            href="{{route('contacts') }}" class="footer-link">Contacts</a><a href="{{ route('faqs') }}"
-                            class="footer-link">FAQs</a>
+                        <div class="title-small">Company</div><a href="{{ route('about') }}" class="footer-link">About
+                            us</a><a href="{{ route('contacts') }}" class="footer-link">Contacts</a><a
+                            href="{{ route('faqs') }}" class="footer-link">FAQs</a>
                     </div>
                     <div id="w-node-_1428390e-f8f5-6e62-91c7-677b0b167cd2-0b167cc3" class="footer-block">
-                        <div class="title-small">CATEGORIES</div><a href="#" class="footer-link">Cake</a><a
-                            href="#" class="footer-link">Bread</a><a href="#"
-                            class="footer-link">Cookie</a><a href="#" class="footer-link">Pastry</a>
+                        <div class="title-small">COURSES</div><a href="{{ route('courses') }}" class="footer-link">Online Class</a><a
+                            href="#" class="footer-link">Hands-On Class</a>
                     </div>
                     <div id="w-node-_1428390e-f8f5-6e62-91c7-677b0b167cdd-0b167cc3" class="footer-block">
-                        <div class="title-small">About</div><a href="{{ route('terms') }}" class="footer-link">Terms &amp;
+                        <div class="title-small">About</div><a href="{{ route('terms') }}" class="footer-link">Terms
+                            &amp;
                             Conditions</a><a href="{{ route('privacy.policy') }}" class="footer-link">Privacy policy</a>
                         <div class="footer-social-block"><a href="#"
                                 class="footer-social-link w-inline-block"><img

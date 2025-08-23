@@ -3,6 +3,7 @@
 @section('content')
 <div class="spark-section spark-hero-background-image-with-centered-content">
         <div class="spark-container spark-centered-content w-container">
+            <img src="/frontend/assets/images/Logo-ST-Pink.png" width="40%">
             <h1>SWEET TROOPS</h1>
             <p class="spark-hero-sub-paragraph">Start your sweet journey here...</p>
         </div>
