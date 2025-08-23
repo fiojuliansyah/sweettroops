@@ -40,16 +40,40 @@
                                     <li>
                                         <div class="nav-divider"></div>
                                     </li>
-                                    @guest   
+                                    @guest
                                         <li class="mobile-margin-top-10">
                                             <a href="{{ route('login-first') }}" class="button-primary w-button">LOG IN</a>
                                         </li>
                                     @endguest
-                                    @auth 
-                                        <li class="mobile-margin-top-10">
-                                            <a href="{{ route('troopers.dashboard') }}" class="button-primary w-button">DASHBOARD</a>
+
+                                    @auth
+                                        <li class="nav-item dropdown">
+                                            <a href="#" class="dropdown-toggle button-primary w-button">
+                                                {{ Auth::user()->name }} ▾
+                                            </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="#">Account Setting</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">My Classes</a>
+                                                </li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li>
+                                                    <form method="POST" action="{{ route('logout') }}">
+                                                        @csrf
+                                                        <a href="{{ route('logout') }}"
+                                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                                            Log Out
+                                                        </a>
+                                                    </form>
+                                                </li>
+                                            </ul>
                                         </li>
-                                    @endauth
+                                    @endauth                                    
                                 </ul>
                             </nav>
                             <div class="menu-button w-nav-button">

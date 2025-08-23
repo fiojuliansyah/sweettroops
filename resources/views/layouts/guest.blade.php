@@ -32,6 +32,58 @@
     <link href="/frontend/assets/images/webclip.png" rel="apple-touch-icon">
 
     @stack('styles')
+
+    <style>
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .dropdown-menu {
+        display: none; 
+        position: absolute;
+        right: 0;
+        background-color: #f9f9f9;
+        min-width: 180px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        list-style: none;
+        padding: 10px 0;
+        border-radius: 8px;
+        margin-top: 5px;
+    }
+
+    .dropdown-menu li a,
+    .dropdown-menu li form a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    .dropdown-menu li a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown-menu.show {
+        display: block;
+    }
+    
+    .dropdown-divider {
+        height: 1px;
+        margin: 8px 0;
+        overflow: hidden;
+        background-color: #e5e5e5;
+        border: 0;
+    }
+</style>
 </head>
 
 <body class="body">
@@ -82,6 +134,33 @@
     <script src="/frontend/assets/js/webflow.js" type="text/javascript"></script>
 
     @stack('js')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+            dropdownToggles.forEach(function (toggle) {
+                toggle.addEventListener('click', function (event) {
+                    event.preventDefault(); 
+                    
+                    const dropdownMenu = this.nextElementSibling;
+                    
+                    dropdownMenu.classList.toggle('show');
+                });
+            });
+
+            window.addEventListener('click', function (event) {
+                if (!event.target.matches('.dropdown-toggle')) {
+                    const dropdowns = document.querySelectorAll('.dropdown-menu');
+                    dropdowns.forEach(function (menu) {
+                        if (menu.classList.contains('show')) {
+                            menu.classList.remove('show');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
