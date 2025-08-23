@@ -14,10 +14,16 @@ class PageController extends Controller
     {
         $title = 'Beranda';
         $homepage = Homepage::orderBy('created_at', 'ASC')->first();
-        $courses = Course::orderBy('created_at', 'ASC')->paginate(5);
+        $upcomings = Course::orderBy('created_at', 'ASC')
+                    ->where('is_upcoming', 1)
+                    ->paginate(5);
+
+        $courses = Course::orderBy('created_at', 'ASC')
+                    ->where('is_newest', 1)
+                    ->paginate(5);
         $categories = Category::orderBy('created_at', 'ASC')->paginate(5);
         $sliders = Slider::orderBy('created_at', 'ASC')->get();
-        return view('welcome', compact('title','homepage','courses','categories','sliders'));
+        return view('welcome', compact('title','homepage','courses','categories','sliders','upcomings'));
     }
 
     public function about()

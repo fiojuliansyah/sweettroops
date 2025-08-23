@@ -55,6 +55,8 @@ class CourseController extends Controller
             'point' => 'nullable|integer',
             'is_featured' => 'boolean',
             'is_recommend' => 'boolean',
+            'is_upcoming' => 'boolean',
+            'is_newest' => 'boolean',
             'is_active' => 'boolean',
         ]);
     
@@ -86,6 +88,8 @@ class CourseController extends Controller
             'point' => $request->point,
             'is_featured' => $request->is_featured ?? 0,
             'is_recommend' => $request->is_recommend ?? 0,
+            'is_upcoming' => $request->is_featured ?? 0,
+            'is_newest' => $request->is_recommend ?? 0,
             'is_active' => $request->is_active ?? 1,
         ]);
     
@@ -125,6 +129,8 @@ class CourseController extends Controller
             'point' => 'nullable|integer',
             'is_featured' => 'boolean',
             'is_recommend' => 'boolean',
+            'is_upcoming' => 'boolean',
+            'is_newest' => 'boolean',
             'is_active' => 'boolean',
         ]);
     

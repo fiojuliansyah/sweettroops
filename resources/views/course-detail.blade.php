@@ -15,7 +15,7 @@
                     ? $thumbnails[0]
                     : 'https://cdn.prod.website-files.com/6863dbc5c3cb25eebe6ab6ce/68666cf3de7c05db6b6a495a_Blackforest%20PC.png';
             @endphp
-            <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy"class="image-21">
+            <img src="{{ asset('storage/' . $firstThumbnail) }}" width="479px" height="355" loading="lazy" class="image-21">
         </a>
     </div>
 </section>

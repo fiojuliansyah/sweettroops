@@ -91,6 +91,21 @@
                                 <option value="1" {{ $course->is_recommend == 1 ? 'selected' : '' }}>Yes</option>
                             </select>
                         </div>
+
+                         <div class="col-sm-6">
+                            <label class="h5 mb-8 fw-semibold font-heading">Upcoming Course</label>
+                            <select name="is_upcoming" class="form-select">
+                                <option value="0" {{ $course->is_upcoming == 0 ? 'selected' : '' }}>No</option>
+                                <option value="1" {{ $course->is_upcoming == 1 ? 'selected' : '' }}>Yes</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="h5 mb-8 fw-semibold font-heading">Newest Course</label>
+                            <select name="is_newest" class="form-select">
+                                <option value="0" {{ $course->is_newest == 0 ? 'selected' : '' }}>No</option>
+                                <option value="1" {{ $course->is_newest == 1 ? 'selected' : '' }}>Yes</option>
+                            </select>
+                        </div>
                         <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Active Status</label>
                             <select name="is_active" class="form-select">

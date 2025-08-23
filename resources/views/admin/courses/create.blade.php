@@ -85,6 +85,20 @@
                             </select>
                         </div>
                         <div class="col-sm-6">
+                            <label class="h5 mb-8 fw-semibold font-heading">Upcoming Course</label>
+                            <select name="is_upcoming" class="form-select">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="h5 mb-8 fw-semibold font-heading">Newest Course</label>
+                            <select name="is_newest" class="form-select">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
                             <label class="h5 mb-8 fw-semibold font-heading">Active Status</label>
                             <select name="is_active" class="form-select">
                                 <option value="1">Active</option>
