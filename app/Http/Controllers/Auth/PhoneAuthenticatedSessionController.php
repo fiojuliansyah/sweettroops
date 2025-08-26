@@ -169,5 +169,4 @@ class PhoneAuthenticatedSessionController extends Controller
         }
     }
 
-
 }

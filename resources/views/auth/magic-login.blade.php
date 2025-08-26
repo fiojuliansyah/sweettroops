@@ -7,14 +7,14 @@
             <div class="div-block-16">
                 <h1 id="w-node-cf091dca-a881-c9a0-6eb9-366c4b218767-61f5beb9" class="heading-11">Hello Again! 👋</h1>
                 <h1 id="w-node-eec3016b-5f0f-4237-22b2-c223bfc79e36-61f5beb9" class="heading-12">Your Kitchen Awaits!</h1>
-                <div class="text-block-5">Please check your email for password Reset</div>
+                <div class="text-block-5">Please check your email for Sign in and get password Link</div>
                 @if (session('status'))
                     <div class="alert-success" style="padding: 10px; margin-bottom: 20px; border-radius: 5px; color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; text-align: center;">
                         We have emailed your create password link.
                     </div>
                 @endif
                 <div class="form-block-3 w-form">
-                    <form method="POST" action="{{ route('password.email') }}" class="form">
+                    <form method="POST" action="{{ route('request.email') }}" class="form">
                     @csrf
 
                         <input class="text-field-3 w-input" type="email" name="email" placeholder="Your Email Address" value="{{ old('email') }}" required autofocus autocomplete="username">

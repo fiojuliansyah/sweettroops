@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\MagicLoginController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -35,10 +36,10 @@ Route::middleware('guest')
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-        Route::get('get-email-password', [PasswordResetLinkController::class, 'create'])
+        Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
             ->name('password.request');
 
-        Route::post('get-email-password', [PasswordResetLinkController::class, 'store'])
+        Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
             ->name('password.email');
 
         Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
@@ -46,6 +47,16 @@ Route::middleware('guest')
 
         Route::post('reset-password', [NewPasswordController::class, 'store'])
             ->name('password.store');
+
+        //magic login
+
+        Route::get('magic-login', [MagicLoginController::class, 'showLoginForm'])->name('magic-login');
+
+        Route::post('magic-login', [MagicLoginController::class, 'sendLoginLink'])->name('request.email');
+
+        Route::get('magic-login/verify/{user}', [MagicLoginController::class, 'loginWithLink'])
+            ->middleware('signed')
+            ->name('magic-login.verify');
 });
 
 Route::middleware('auth')->group(function () {

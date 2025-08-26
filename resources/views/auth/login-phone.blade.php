@@ -24,7 +24,7 @@
                             <button type="submit" class="button-7 w-button">OTP CODE REQUEST</button>
 
                             <div style="text-align: center; margin-top: 24px; font-size: 14px;">
-                                <a href="{{ route('password.request') }}" style="color: #ff85a2; text-decoration: underline;">Login Email LINK</a>
+                                <a href="{{ route('magic-login') }}" style="color: #ff85a2; text-decoration: underline;">Login Email LINK</a>
                             </div>
                             
                         </form>
