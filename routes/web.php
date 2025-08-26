@@ -41,8 +41,7 @@ Route::get('/course/all', [TCourseController::class, 'allCourse'])->name('all-co
 });
 
 
-Route::middleware(['phone.verified'])
-->prefix('troopers')
+Route::prefix('troopers')
 ->name('troopers.')
 ->group(function () {
     Route::get('/dashboard', [TDashboardController::class, 'index'])->name('dashboard');
