@@ -94,5 +94,9 @@ class PageController extends Controller
         return view('course-detail', compact('course', 'homepage'));
     }
 
-
+    public function galleries()
+    {
+        $title = 'Hands-On Classes';
+        return view('galleries', compact('title'));
+    }
 }

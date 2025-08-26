@@ -30,7 +30,7 @@
     </script>
     <link href="/frontend/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/frontend/assets/images/webclip.png" rel="apple-touch-icon">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     @stack('styles')
 
     <style>
@@ -132,7 +132,7 @@
         type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous">
     </script>
     <script src="/frontend/assets/js/webflow.js" type="text/javascript"></script>
-
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
     @stack('js')
 
     <script>

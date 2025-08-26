@@ -1,4 +1,31 @@
-@extends('layouts.master')
+@extends('layouts.guest')
+
+@section('content')
+<section class="section-44">
+    <div class="w-layout-blockcontainer container-43 w-container"><a href="{{ route('troopers.my-course') }}"
+            class="button-4 w-button">&lt; BACK</a></div>
+</section>
+<section class="section-43">
+    <div class="w-layout-blockcontainer container-41 w-container">
+        <iframe src="{{ $video->link_url }}" 
+        allow="autoplay; fullscreen" 
+        allowfullscreen 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+        frameborder="0"
+        sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+    </div>
+</section>
+<section class="section-43">
+    <div class="w-layout-blockcontainer container-41 w-container">
+        <div class="rich-text-block-3 w-richtext">
+            {!! $course->description !!}
+        </div>
+    </div>
+</section>
+
+@endsection
+
+{{-- @extends('layouts.master')
 
 @section('content')
 <div class="dashboard-body">
@@ -84,7 +111,6 @@
                                 @foreach ($course->videos as $video)
                                     <li class="course-list__item flex-align gap-8 mb-16">
                                         <div class="w-100">
-                                            <!-- Update link to pass the video ID -->
                                             <a href="{{ route('troopers.change-video', [$course->slug, $video->id]) }}" class="text-gray-300 fw-medium d-block hover-text-main-600 d-lg-block">
                                                 {{ $video->title }}
                                                 <span class="text-gray-300 fw-normal d-block">{{ $video->duration ?? '-' }} min</span>
@@ -101,4 +127,4 @@
     </div>
 </div>
 
-@endsection
+@endsection --}}

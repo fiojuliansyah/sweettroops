@@ -1,77 +1,53 @@
-@extends('layouts.master')
+@extends('layouts.guest')
 
 @section('content')
-    <div class="dashboard-body">
-        <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
-            <div class="breadcrumb mb-24">
-                <ul class="flex-align gap-4">
-                    <li><a href="{{ route('admin.dashboard') }}" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
-                    <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                    <li><span class="text-main-600 fw-normal text-15">Edit User</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header border-bottom border-gray-100 flex-align gap-8">
-                <h5 class="mb-0">Edit User Details</h5>
-            </div>
-            <div class="card-body">
+    <section class="sec-title">
+    <div class="w-layout-blockcontainer w-container">
+    <h1 class="heading-title">Edit User</h1>
+    </div>
+    </section>
+    <section class="section-40">
+        <div class="w-layout-blockcontainer container-38 w-container">
+            <div class="div-block-34">
                 <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="row gy-20">
-                        <div class="col-sm-6">
-                            <label class="h5 mb-8 fw-semibold font-heading">Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" required placeholder="Enter user name">
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="h5 mb-8 fw-semibold font-heading">Email <span class="text-danger">*</span></label>
-                            <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" placeholder="Enter email address">
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="h5 mb-8 fw-semibold font-heading">Phone <span class="text-danger">*</span></label>
-                            <input type="phone" name="phone" class="form-control" value="{{ old('phone', $user->phone) }}" placeholder="Enter Phone Number">
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="h5 mb-8 fw-semibold font-heading">Role <span class="text-danger">*</span></label>
-                            <select name="role" class="form-select" required>
-                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                    <div class="form-block-4 w-form">
+                        <label for="name" class="field-label-14">Name</label>
+                        <input class="text-field-10 w-input" name="name" value="{{ $user->name }}" type="text">
+
+                        <label for="email" class="field-label-15">Email Address</label>
+                        <input class="text-field-11 w-input" name="email"  value="{{ $user->email }}" type="email">
+
+                        <label for="phone" class="field-label-16">Phone Number</label>
+                        <input class="text-field-12 w-input" name="phone" value="{{ $user->phone }}" type="text">
+
+
+                        <select id="Role" name="role" required="" class="select-field w-select">
+                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                                 <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
-                            </select>
-                        </div>
-                        {{-- <div class="col-sm-6">
-                            <label class="h5 mb-8 fw-semibold font-heading">Password (Leave empty to keep current)</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter new password">
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="h5 mb-8 fw-semibold font-heading">Confirm Password</label>
-                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm new password">
-                        </div> --}}
-                        <div class="col-sm-12">
-                            <label class="h5 mb-4 fw-semibold font-heading">Assign Courses</label>
-                            <div class="row">
-                                @foreach ($courses as $course)
-                                    <div class="col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="courses[]" value="{{ $course->id }}" 
-                                                id="course_{{ $course->id }}" 
-                                                {{ $user->competitions->contains('course_id', $course->id) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="course_{{ $course->id }}">
-                                                {{ $course->title }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                @endforeach
+                        </select>
+                    </div>
+                    <div class="w-dyn-list">
+                        <div role="list" class="w-dyn-items">
+                            <div role="listitem" class="w-dyn-item">
+                                <div class="w-form">
+                                    @foreach ($courses as $course)
+                                    <label class="form-check-label" for="course_{{ $course->id }}">
+                                        <input class="form-check-input" type="checkbox" name="courses[]" value="{{ $course->id }}" 
+                                        id="course_{{ $course->id }}" 
+                                        {{ $user->competitions->contains('course_id', $course->id) ? 'checked' : '' }}>
+                                        {{ $course->title }}
+                                    </label>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>                                                                 
-                        <div class="col-sm-12 flex-align justify-content-end gap-8">
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-outline-main rounded-pill py-9">Cancel</a>
-                            <button type="submit" class="btn btn-main rounded-pill py-9">Update User</button>
                         </div>
                     </div>
+                    <button type="submit" class="submit-button-4 w-button">Update</button>
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 @endsection
+

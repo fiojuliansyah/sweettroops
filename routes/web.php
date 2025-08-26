@@ -24,6 +24,7 @@ Route::get('/faqs', [PageController::class, 'faq'])->name('faqs');
 Route::get('/login-first', [PageController::class, 'loginFirst'])->name('login-first');
 Route::get('/courses', [PageController::class, 'courses'])->name('courses');
 Route::get('/course/{slug}', [PageController::class, 'courseDetail'])->name('course.detail');
+Route::get('/hands-on-classes', [PageController::class, 'galleries'])->name('handson');
 Route::get('/home', [PageController::class, 'index']);
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');

@@ -1,123 +1,48 @@
-@extends('layouts.master')
+@extends('layouts.guest')
 
 @section('content')
-<div class="dashboard-body">
-    <!-- Breadcrumb Start -->
-<div class="breadcrumb mb-24">
-<ul class="flex-align gap-4">
-<li><a href="#" class="text-gray-200 fw-normal text-15 hover-text-main-600">Kursus</a></li>
-<li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
-<li><span class="text-main-600 fw-normal text-15">Kursus Saya</span></li>
-</ul>
-</div>
-<!-- Breadcrumb End -->
-
-    <div class="card">
-        <div class="card-body">
-            <form action="{{ route('troopers.all-course') }}" method="GET" class="search-input-form">
-                <div class="search-input">
-                    <select name="category_id" class="form-control form-select h6 rounded-4 mb-0 py-6 px-8">
-                        <option value="" selected disabled>Kategori</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="search-input">
-                    <select name="type_id" class="form-control form-select h6 rounded-4 mb-0 py-6 px-8">
-                        <option value="" selected disabled>Tipe Kelas</option>
-                        @foreach($types as $type)
-                            <option value="{{ $type->id }}" {{ request('type_id') == $type->id ? 'selected' : '' }}>
-                                {{ $type->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="search-input">
-                    <button type="submit" class="btn btn-main rounded-pill py-9 w-100">Search</button>
-                </div>
-            </form>                    
+    <section class="sec-title">
+        <div class="w-layout-blockcontainer container-34 w-container">
+        <h1 class="heading-title">My Class</h1>
         </div>
-    </div>
-    <div class="card mt-14">
-        <div class="card-body">
-            
-            <div class="row g-20">
-                @foreach ($courses as $course)   
-                    <div class="col-xxl-3 col-lg-4 col-sm-6">
-                        <div class="card border border-gray-100">
-                            <div class="card-body p-8">
-                                <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="rounded-20 overflow-hidden text-center mb-8 flex-center p-8">
-                                    @php
-                                        $thumbnails = json_decode($course->thumbnail, true);
-                                        $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
-                                    @endphp
-                                    <img src="{{ asset('storage/' . $firstThumbnail) }}" alt="Course Image" width="500">
-                                </a>
-                                <div class="p-8">
-                                    <span class="text-13 py-2 px-10 rounded-pill bg-success-50 text-success-600 mb-16">{{ $course->category->name }}</span>
-                                    @if ($course->is_recommend == 1)  
-                                        <span class="text-13 py-2 px-10 rounded-pill bg-info-50 text-info-600 mb-16">Recommended</span>
-                                    @endif
-                                    @if ($course->is_featured == 1)  
-                                        <span class="text-13 py-2 px-10 rounded-pill bg-warning-50 text-warning-600 mb-16">Featured</span>
-                                    @endif
-                                    <h5 class="mb-0"><a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="hover-text-main-600">{{ $course->title }}</a></h5>
+    </section>
 
-                                    <div class="flex-align gap-8 flex-wrap mt-16">
-                                        <div>
-                                            <span class="text-gray-600 text-13">Tipe Kelas <a href="profile.html" class="fw-semibold text-gray-700 hover-text-main-600 hover-text-decoration-underline">{{ $course->type->name }}</a> </span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="flex-between gap-4 flex-wrap mt-24">
-                                        <a href="{{ route('troopers.discuss-course', $course->slug) }}" class="btn btn-main rounded-pill py-9">Forum Diskusi</a>
-                                        <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="btn btn-outline-main rounded-pill py-9">Detail Course</a>
-                                    </div>
-                                </div>
-                            </div>
+    <section class="section-filter" style="padding: 20px 0;">
+        <div class="container-21">
+            <form action="{{ route('courses') }}" method="GET" style="display: flex; gap: 15px; align-items: center; margin-bottom: 30px;">
+                
+                <input type="text" name="search" placeholder="Search courses..." value="{{ request('search') }}" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 300px;">
+                
+                <button type="submit" style="padding: 10px 20px; background-color: #E0BFB4; color: white; border: none; border-radius: 5px; cursor: pointer;">Search</button>
+                <a href="{{ route('courses') }}" style="padding: 10px 20px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">Reset</a>
+            </form>
+        </div>
+    </section>
+
+
+    <section class="team-circles">
+        <div class="container-21">
+            <div class="collection-list-wrapper-2 w-dyn-list">
+                <div role="list" class="collection-list-2 w-dyn-items w-row">
+                    @forelse ($courses as $course)
+                        <div role="listitem" class="collection-item-2 w-dyn-item w-col w-col-4">
+                            @php
+                                $thumbnails = json_decode($course->thumbnail, true);
+                                $firstThumbnail = $thumbnails[0] ?? 'path/to/default/image.png';
+                            @endphp
+                            <img
+                                src="{{ asset('storage/' . $firstThumbnail) }}"
+                                loading="lazy"
+                                id="w-node-a0986e99-da9f-4b86-822c-f527d14b120e-18607b69" width="479px" height="355" class="image-10">
+                            <a href="{{ route('course.detail', $course->slug) }}" class="link-4">{{ $course->title }}</a>
                         </div>
-                    </div>
-                @endforeach
+                    @empty
+                        <div style="text-align: center; width: 100%; padding: 40px 0;">
+                            <p class="paragraph-20">No courses found matching your criteria.</p>
+                        </div>
+                    @endforelse
+                </div>
             </div>
-
-            <div class="flex-between flex-wrap gap-8 mt-20">
-                <!-- Tombol Previous -->
-                @if ($courses->onFirstPage())
-                    <span class="btn btn-outline-gray rounded-pill py-9 flex-align gap-4 disabled">
-                        <i class="ph ph-arrow-left"></i> Previous
-                    </span>
-                @else
-                    <a href="{{ $courses->previousPageUrl() }}" class="btn btn-outline-gray rounded-pill py-9 flex-align gap-4">
-                        <i class="ph ph-arrow-left"></i> Previous
-                    </a>
-                @endif
-            
-                <!-- Pagination Number -->
-                <ul class="pagination flex-align flex-wrap">
-                    @foreach ($courses->getUrlRange(1, $courses->lastPage()) as $page => $url)
-                        <li class="page-item {{ $page == $courses->currentPage() ? 'active' : '' }}">
-                            <a class="page-link h-44 w-44 flex-center text-15 rounded-8 fw-medium" href="{{ $url }}">{{ $page }}</a>
-                        </li>
-                    @endforeach
-                </ul>
-            
-                <!-- Tombol Next -->
-                @if ($courses->hasMorePages())
-                    <a href="{{ $courses->nextPageUrl() }}" class="btn btn-outline-main rounded-pill py-9 flex-align gap-4">
-                        Next <i class="ph ph-arrow-right"></i>
-                    </a>
-                @else
-                    <span class="btn btn-outline-gray rounded-pill py-9 flex-align gap-4 disabled">
-                        Next <i class="ph ph-arrow-right"></i>
-                    </span>
-                @endif
-            </div>
-            
-            
         </div>
-    </div>
-</div>
+    </section>
 @endsection

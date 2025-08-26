@@ -47,7 +47,7 @@
                             <img
                                 src="{{ asset('storage/' . $firstThumbnail) }}"
                                 loading="lazy"
-                                id="w-node-a0986e99-da9f-4b86-822c-f527d14b120e-18607b69" width="479px" height="355" class="image-10">
+                                id="w-node-a0986e99-da9f-4b86-822c-f527d14b120e-18607b69" width="479px" height="355px" class="image-10">
                             <a href="{{ route('course.detail', $course->slug) }}" class="link-4">{{ $course->title }}</a>
                         </div>
                     @empty

@@ -161,7 +161,7 @@ class PhoneAuthenticatedSessionController extends Controller
             $user->phone_verified = 'verified';
             $user->save();
 
-            return redirect()->route('troopers.dashboard');
+            return redirect()->route('troopers.my-course');
         } else {
             return redirect()
                 ->back()

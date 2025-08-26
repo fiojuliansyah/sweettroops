@@ -26,7 +26,7 @@
                                                 class="nav-dropdown-list shadow-three mobile-shadow-hide w-dropdown-list">
                                                 <a href="{{ route('courses') }}"
                                                     class="nav-dropdown-link w-dropdown-link">Online Classes</a>
-                                                <a href="hands-on-classes.html"
+                                                <a href="{{ route('handson') }}"
                                                     class="nav-dropdown-link w-dropdown-link">Hands-On Classes</a>
                                             </nav>
                                         </div>
@@ -53,11 +53,22 @@
                                             </a>
 
                                             <ul class="dropdown-menu">
+                                                @if (Auth::user()->role === 'admin')
                                                 <li>
-                                                    <a href="#">Account Setting</a>
+                                                    <a href="{{ route('troopers.profile.edit') }}">CMS</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">My Classes</a>
+                                                    <a href="{{ route('admin.users.index') }}">Users Lists</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('admin.transactions.index') }}">Transactions Lists</a>
+                                                </li>
+                                                @endif
+                                                <li>
+                                                    <a href="{{ route('troopers.profile.edit') }}">Account Setting</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('troopers.my-course') }}">My Classes</a>
                                                 </li>
                                                 <li>
                                                     <hr class="dropdown-divider">

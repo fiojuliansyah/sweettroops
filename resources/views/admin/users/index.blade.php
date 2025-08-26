@@ -1,59 +1,21 @@
-@extends('layouts.master')
+@extends('layouts.guest')
 
 @section('content')
-<div class="dashboard-body">
-    <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
-        <!-- Breadcrumb Start -->
-        <div class="breadcrumb mb-24">
-            <ul class="flex-align gap-4">
-                <li><a href="{{ route('admin.dashboard') }}" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
-                <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                <li><span class="text-main-600 fw-normal text-15">Users</span></li>
-            </ul>
+    <section class="sec-title">
+        <div class="w-layout-blockcontainer w-container">
+            <h1 class="heading-title">Users Lists</h1>
         </div>
-
-        <!-- Tombol Import Users -->
-        <div class="flex-align gap-8 flex-wrap">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#importUserModal" class="btn btn-outline-main">
-                <i class="ph ph-upload-simple me-2"></i> Import Excel
-            </a>
+    </section>
+    <section class="section-40">
+        <div class="w-layout-blockcontainer container-38 w-container">
+            <a href="{{ route('admin.users.create') }}" class="button-3 w-button">Add User</a>
         </div>
-
-    </div>
-
-    <div class="card">
-        <div class="card-body">
+    </section>
+    <section class="section-39">
+        <div class="w-layout-blockcontainer container-38 w-container">
             {{ $dataTable->table() }}
         </div>
-    </div>
-</div>
-
-<!-- Modal Import Users -->
-<div class="modal fade" id="importUserModal" tabindex="-1" aria-labelledby="importUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <form action="{{ route('admin.users.import') }}" method="POST" enctype="multipart/form-data" class="modal-content">
-            @csrf
-            <div class="modal-header">
-                <h5 class="modal-title" id="importUserModalLabel">Import Users dari Excel</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-            </div>
-            <div class="modal-body">
-                @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
-                <div class="mb-3">
-                    <label for="file" class="form-label">Upload file Excel (.xlsx, .xls)</label>
-                    <input class="form-control" type="file" name="file" id="file" accept=".xlsx,.xls" required>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-main">Import</button>
-            </div>
-        </form>
-    </div>
-</div>
-
+    </section>
 @endsection
 
 @push('js')
