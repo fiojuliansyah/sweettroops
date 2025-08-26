@@ -95,8 +95,12 @@
     </div>
 </section>
 <section class="section-44">
-    <div class="w-layout-blockcontainer container-42 w-container"><a href="javascript:void(0)"
-            class="button-5 w-button" data-course-id="{{ $course->id }}">ENROLL</a></div>
+    <section class="section-44">
+    <div class="w-layout-blockcontainer container-42 w-container">
+        <a href="javascript:void(0)"
+           class="button-5 w-button buy-course"
+           data-course-id="{{ $course->id }}">ENROLL</a>
+    </div>
 </section>
 <section class="section-43">
     <div class="w-layout-blockcontainer container-41 w-container">
