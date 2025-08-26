@@ -5,17 +5,30 @@
     <div class="w-layout-blockcontainer container-43 w-container"><a href="{{ route('troopers.my-course') }}"
             class="button-4 w-button">&lt; BACK</a></div>
 </section>
-<section class="section-43">
-    <div class="w-layout-blockcontainer container-41 w-container">
-        
-        <div class="video-responsive-wrapper">
-            <iframe src="{{ $video->link_url }}" 
+<section class="section-47">
+    <div class="w-layout-blockcontainer container-44 w-container">
+        <div id="w-node-_8e5052ec-8ecd-1126-ef66-b2b7acd7b277-2e3d46b7" class="w-layout-layout wf-layout-layout">
+            <div class="w-layout-cell cell-12">
+                <div class="video-responsive-wrapper">
+                <iframe src="{{ $video->link_url }}" 
                     allow="autoplay; fullscreen" 
                     allowfullscreen 
                     frameborder="0"
                     sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
                     </div>
+            </div>
+            <div class="w-layout-cell cell-13">
+            <p class="paragraph-21">List of Videos:</p>
+            
+            @foreach($course->videos as $listVideo)
+                <a href="{{ route('change-video', ['slug' => $course->slug, 'videoId' => $listVideo->id]) }}" 
+                class="link-8 {{ $listVideo->id == $video->id ? 'active' : '' }}">
+                    {{ sprintf('%02d', $loop->iteration) }}. {{ $listVideo->title }}
+                </a>
+            @endforeach
 
+        </div>
+        </div>
     </div>
 </section>
 <section class="section-43">
@@ -34,7 +47,7 @@
         position: relative;
         overflow: hidden;
         width: 100%;
-        padding-top: 56.25%; /* 9 / 16 = 0.5625 atau 56.25% (untuk rasio 16:9) */
+        padding-top: 56.25%;
     }
 
     .video-responsive-wrapper iframe {
@@ -45,6 +58,22 @@
         right: 0;
         width: 100%;
         height: 100%;
+    }
+
+    .link-8.active {
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .cell-13 a {
+        display: block;
+        margin-bottom: 10px;
+        text-decoration: none;
+        color: #333;
+    }
+    .cell-13 a:hover {
+        text-decoration: underline;
     }
 </style>
 @endpush

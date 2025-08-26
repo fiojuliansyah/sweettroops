@@ -4,7 +4,6 @@
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 <style>
-    /* CSS untuk Modal */
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -44,7 +43,6 @@
         font-weight: bold;
     }
 
-    /* Styling untuk Swiper di dalam modal */
     .swiper-container {
         width: 100%;
         height: auto;
@@ -57,12 +55,10 @@
         max-height: 70vh; /* Batasi tinggi gambar agar pas di layar */
     }
 
-    /* Mengubah warna panah navigasi Swiper */
     .swiper-button-next, .swiper-button-prev {
         color: #007bff; /* Ganti dengan warna tema Anda */
     }
 
-    /* Cursor pointer untuk gambar trigger */
     #course-thumbnail {
         cursor: pointer;
     }
@@ -78,19 +74,16 @@
     <div class="w-layout-blockcontainer container-41 w-container">
         <h1 class="heading-21">{{ $course->title }}</h1>
         @php
-            // Pastikan thumbnail adalah array, jika tidak, buat array kosong
             $thumbnails = json_decode($course->thumbnail, true);
             if (!is_array($thumbnails)) {
                 $thumbnails = [];
             }
             
-            // Tentukan gambar utama
             $firstThumbnail = !empty($thumbnails)
                 ? $thumbnails[0]
                 : 'https://cdn.prod.website-files.com/6863dbc5c3cb25eebe6ab6ce/68666cf3de7c05db6b6a495a_Blackforest%20PC.png';
         @endphp
 
-        {{-- Gambar utama yang akan menjadi trigger untuk membuka modal --}}
         <img src="{{ asset('storage/' . $firstThumbnail) }}" width="479px" loading="lazy" id="course-thumbnail" alt="{{ $course->title }}">
     </div>
 </section>
@@ -130,7 +123,6 @@
                         </div>
                     @endforeach
                 @else
-                    {{-- Tampilkan gambar default jika tidak ada thumbnail sama sekali --}}
                     <div class="swiper-slide">
                         <img src="{{ $firstThumbnail }}" alt="Default course image">
                     </div>
