@@ -75,5 +75,28 @@
     .cell-13 a:hover {
         text-decoration: underline;
     }
+
+        #w-node-_8e5052ec-8ecd-1126-ef66-b2b7acd7b277-2e3d46b7 {
+        display: flex;
+        align-items: flex-start; /* Konten dimulai dari atas */
+        gap: 24px; /* Jarak antara video dan daftar video */
+    }
+
+    /* 2. Atur lebar untuk kolom video dan kolom daftar */
+    .cell-12 {
+        flex: 3; /* Kolom video mengambil 3 bagian ruang */
+        min-width: 0; /* Diperlukan untuk flexbox agar tidak meluap */
+    }
+    .cell-13 {
+        flex: 1; /* Kolom daftar mengambil 1 bagian ruang */
+        min-width: 0;
+    }
+
+    /* 3. Buat layout kembali vertikal di layar kecil (Responsif) */
+    @media (max-width: 767px) {
+        #w-node-_8e5052ec-8ecd-1126-ef66-b2b7acd7b277-2e3d46b7 {
+            flex-direction: column; /* Ubah arah flex menjadi vertikal */
+        }
+    }
 </style>
 @endpush
