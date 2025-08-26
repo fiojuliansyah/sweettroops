@@ -51,7 +51,7 @@
                         {{-- Link ke halaman Login --}}
                         <p style="text-align: center; margin-top: 24px; font-size: 14px;">
                             Already have an account? 
-                            <a href="{{ route('login') }}" style="color: #ff85a2; text-decoration: underline;">Log In</a>
+                            <a href="{{ route('login-first') }}" style="color: #ff85a2; text-decoration: underline;">Log In</a>
                         </p>
                     </form>
                     

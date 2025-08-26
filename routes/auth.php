@@ -25,11 +25,6 @@ Route::middleware('guest')
 
         Route::post('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappStore']);
 
-        Route::get('login/email', [PhoneAuthenticatedSessionController::class, 'emailLogin'])
-            ->name('login-email');
-
-        Route::post('login/email', [PhoneAuthenticatedSessionController::class, 'emailStore']);
-
         Route::get('register', [RegisteredUserController::class, 'create'])
             ->name('register');
 
@@ -63,15 +58,6 @@ Route::middleware('auth')->group(function () {
         
     Route::post('/resend-otp', [PhoneAuthenticatedSessionController::class, 'sendOTPNew'])
         ->name('resend.otp');
-
-    Route::get('login/verified/email', [PhoneAuthenticatedSessionController::class, 'emailVerified'])
-        ->name('login.verified.email');
-
-    Route::post('/verify-otp/email', [PhoneAuthenticatedSessionController::class, 'verifyOTPEmail'])
-        ->name('verify.otp.email');
-        
-    Route::post('/resend-otp/email', [PhoneAuthenticatedSessionController::class, 'sendOTPNewEmail'])
-        ->name('resend.otp.email');
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
