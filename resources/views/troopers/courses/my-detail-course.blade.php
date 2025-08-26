@@ -21,7 +21,7 @@
             <p class="paragraph-21">List of Videos:</p>
             
             @foreach($course->videos as $listVideo)
-                <a href="{{ route('change-video', ['slug' => $course->slug, 'videoId' => $listVideo->id]) }}" 
+                <a href="{{ route('troopers.change-video', ['slug' => $course->slug, 'videoId' => $listVideo->id]) }}" 
                 class="link-8 {{ $listVideo->id == $video->id ? 'active' : '' }}">
                     {{ sprintf('%02d', $loop->iteration) }}. {{ $listVideo->title }}
                 </a>
