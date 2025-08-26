@@ -34,7 +34,7 @@
                                 src="{{ asset('storage/' . $firstThumbnail) }}"
                                 loading="lazy"
                                 id="w-node-a0986e99-da9f-4b86-822c-f527d14b120e-18607b69" width="479px" height="355" class="image-10">
-                            <a href="{{ route('course.detail', $course->slug) }}" class="link-4">{{ $course->title }}</a>
+                            <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="link-4">{{ $course->title }}</a>
                         </div>
                     @empty
                         <div style="text-align: center; width: 100%; padding: 40px 0;">
