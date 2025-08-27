@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="content-wrapper blank-page">
+<div class="content-wrapper">
     <div class="content-wrapper">
         <div class="page-header d-flex justify-content-between align-items-center">
             <h3 class="page-title"> Courses </h3>
