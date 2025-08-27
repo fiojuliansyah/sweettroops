@@ -97,6 +97,7 @@ class PageController extends Controller
     public function galleries()
     {
         $title = 'Hands-On Classes';
-        return view('galleries', compact('title'));
+        $galleries = Gallery::latest()->get();
+        return view('galleries', compact('title','galleries'));
     }
 }
