@@ -31,7 +31,7 @@
                                class="w-inline-block w-lightbox"
                                aria-label="open lightbox" aria-haspopup="dialog">
                                 <img src="{{ asset('storage/'.$gallery->image) }}"
-                                     loading="lazy" alt="{{ $gallery->title }}"
+                                     loading="lazy" alt="{{ $gallery->name }}"
                                      class="image-14">
 
                                 {{-- lightbox data --}}
@@ -47,8 +47,8 @@
                                 }
                                 </script>
                             </a>
-                            <a href="#" class="link-5">{{ $gallery->title }}</a>
-                            <div class="text-block-8">{{ $gallery->created_at->format('d M Y') }}</div>
+                            <a href="#" class="link-5">{{ $gallery->name }}</a>
+                            <div class="text-block-8">{{ $gallery->date->format('d M Y') }}</div>
                         </div>
                     @endforeach
 
