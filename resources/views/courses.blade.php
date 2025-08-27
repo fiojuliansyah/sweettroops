@@ -48,23 +48,27 @@
         <div class="container-21">
             <div class="collection-list-wrapper-2 w-dyn-list">
                 <div role="list" class="collection-list-2 w-dyn-items w-row">
-                    @forelse ($courses as $course)
-                        <div role="listitem" class="collection-item-2 w-dyn-item w-col w-col-4">
-                            @php
-                                $thumbnails = json_decode($course->thumbnail, true);
-                                $firstThumbnail = $thumbnails[0] ?? 'path/to/default/image.png';
-                            @endphp
-                            <img
-                                src="{{ asset('storage/' . $firstThumbnail) }}"
-                                loading="lazy"
-                                class="image-10 course-thumbnail">
-                            <a href="{{ route('course.detail', $course->slug) }}" class="link-4">{{ $course->title }}</a>
-                        </div>
-                    @empty
-                        <div style="text-align: center; width: 100%; padding: 40px 0;">
-                            <p class="paragraph-20">No courses found matching your criteria.</p>
-                        </div>
-                    @endforelse
+                    <div class="courses-grid">
+                        @forelse ($courses as $course)
+                            <div class="course-item">
+                                @php
+                                    $thumbnails = json_decode($course->thumbnail, true);
+                                    $firstThumbnail = $thumbnails[0] ?? 'images/default-course.png';
+                                @endphp
+
+                                <img 
+                                    src="{{ asset('storage/' . $firstThumbnail) }}" 
+                                    alt="{{ $course->title }}" 
+                                    class="course-thumbnail">
+                                <a href="{{ route('course.detail', $course->slug) }}" class="link-4">
+                                    {{ $course->title }}
+                                </a>
+                            </div>
+                        @empty
+                            <p>No courses found</p>
+                        @endforelse
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -72,13 +76,26 @@
 @endsection
 
 @push('styles')
-    <style>
+<style>
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* otomatis isi kolom */
+    gap: 20px;
+}
+
+.course-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 .course-thumbnail {
     width: 100%;
-    height: auto;          /* biar proporsional */
-    max-height: 355px;     /* kalau mau tetap batas tinggi mirip desain lama */
-    object-fit: cover;     /* crop biar tetap rapi */
-    display: block;
+    max-height: 220px;
+    object-fit: cover; /* biar rapi proporsional */
+    border-radius: 8px;
 }
 
 </style>
