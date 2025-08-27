@@ -134,20 +134,22 @@ class CourseController extends Controller
             'is_active' => 'boolean',
         ]);
     
+        $data = $request->except('thumbnail', 'trailer');
+
         if ($request->hasFile('thumbnail')) {
             $thumbnailPaths = [];
             foreach ($request->file('thumbnail') as $file) {
                 $thumbnailPaths[] = $file->store('thumbnails', 'public');
             }
-            $course->thumbnail = json_encode($thumbnailPaths);
+            $data['thumbnail'] = json_encode($thumbnailPaths);
         }
-    
+
         if ($request->hasFile('trailer')) {
-            $trailerPath = $request->file('trailer')->store('trailers', 'public');
-            $course->trailer = $trailerPath;
+            $data['trailer'] = $request->file('trailer')->store('trailers', 'public');
         }
-    
-        $course->update($request->except('thumbnail', 'trailer'));
+
+        $course->update($data);
+
     
         return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully.');
     }

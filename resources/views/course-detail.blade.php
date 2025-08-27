@@ -78,13 +78,29 @@
             if (!is_array($thumbnails)) {
                 $thumbnails = [];
             }
-            
+
             $firstThumbnail = !empty($thumbnails)
                 ? $thumbnails[0]
                 : 'https://cdn.prod.website-files.com/6863dbc5c3cb25eebe6ab6ce/68666cf3de7c05db6b6a495a_Blackforest%20PC.png';
         @endphp
+        <a href="#" class="lightbox-link-3 w-inline-block w-lightbox" aria-label="open lightbox" aria-haspopup="dialog">
+            <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" alt="" class="image-21">
 
-        <img src="{{ asset('storage/' . $firstThumbnail) }}" width="479px" loading="lazy" id="course-thumbnail" alt="{{ $course->title }}">
+            <script type="application/json" class="w-json">
+                {
+                    "items": [
+                        @foreach($thumbnails as $index => $img)
+                            {
+                                "url": "{{ asset('storage/' . $img) }}",
+                                "type": "image"
+                            }@if(!$loop->last),@endif
+                        @endforeach
+                    ],
+                    "group": ""
+                }
+            </script>
+        </a>
+
     </div>
 </section>
 <section class="section-44">
@@ -110,29 +126,6 @@
         </div>
     </div>
 </section>
-
-<div id="image-slider-modal" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close-modal" id="close-modal-btn">&times;</span>
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                @if(!empty($thumbnails))
-                    @foreach($thumbnails as $thumbnail)
-                        <div class="swiper-slide">
-                            <img src="{{ asset('storage/' . $thumbnail) }}" alt="Course image">
-                        </div>
-                    @endforeach
-                @else
-                    <div class="swiper-slide">
-                        <img src="{{ $firstThumbnail }}" alt="Default course image">
-                    </div>
-                @endif
-            </div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>
-</div>
 
 @endsection
 
@@ -162,7 +155,7 @@
         });
     });
 </script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+{{-- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Inisialisasi Swiper
@@ -215,5 +208,5 @@
             }
         });
     });
-</script>
+</script> --}}
 @endpush

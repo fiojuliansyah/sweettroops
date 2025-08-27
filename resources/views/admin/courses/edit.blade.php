@@ -41,9 +41,9 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-sm-12 mt-3">
+                   <div class="col-sm-12 mt-3">
                         <label class="h5 mb-8 fw-semibold font-heading">Description</label>
-                        <textarea name="description" class="form-control" rows="4" placeholder="Enter course description">{{ old('description', $course->description) }}</textarea>
+                        <textarea id="summernote" name="description" class="form-control" rows="6" placeholder="Enter course description">{{ old('description', $course->description) }}</textarea>
                     </div>
                     <div class="col-sm-6 mt-3">
                         <label class="h5 mb-8 fw-semibold font-heading">Normal Price</label>
@@ -56,13 +56,20 @@
                     <div class="col-sm-12 mt-3">
                         <label class="h5 mb-8 fw-semibold font-heading">Thumbnail</label>
                         @if($course->thumbnail)
-                            <div>
-                                <img src="{{ asset('storage/' . json_decode($course->thumbnail)[0]) }}" alt="Current Thumbnail" style="max-width: 100px;">
-                                <p>Current Thumbnail</p>
+                            <div class="d-flex gap-2 flex-wrap">
+                                @foreach (json_decode($course->thumbnail, true) as $thumb)
+                                    <div>
+                                        <img src="{{ asset('storage/' . $thumb) }}" 
+                                            alt="Course Thumbnail" 
+                                            style="max-width: 100px; border:1px solid #ddd; border-radius:5px; margin:5px;">
+                                    </div>
+                                @endforeach
                             </div>
+                            <p>Current Thumbnails</p>
                         @endif
-                        <input type="file" name="thumbnail[]" class="form-control" multiple>
+                        <input type="file" name="thumbnail[]" class="form-control mt-2" multiple>
                     </div>
+
                     <div class="col-sm-12 mt-3">
                         <label class="h5 mb-8 fw-semibold font-heading">Course Points</label>
                         <input type="number" name="point" class="form-control" placeholder="Enter course points" value="{{ old('point', $course->point) }}">
@@ -113,3 +120,28 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Summernote CSS/JS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
+    <style>
+        /* Paksa board editor putih */
+        .note-editor.note-frame .note-editing-area .note-editable {
+            background-color: #ffffff !important;
+            color: #000000; /* biar teks tetap jelas */
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                placeholder: 'Enter course description...',
+                tabsize: 2,
+                height: 200
+            });
+        });
+    </script>
+@endpush
