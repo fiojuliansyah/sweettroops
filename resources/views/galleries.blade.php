@@ -26,29 +26,39 @@
                 <div role="list" class="collection-list-3 w-dyn-items w-row">
                     
                     @foreach($galleries as $gallery)
-                        <div role="listitem" class="collection-item-3 w-dyn-item w-col w-col-6">
-                            <a href="{{ asset('storage/'.$gallery->image) }}"
-                               class="w-inline-block w-lightbox"
-                               aria-label="open lightbox" aria-haspopup="dialog">
-                                <img src="{{ asset('storage/'.$gallery->image) }}"
-                                     loading="lazy" alt="{{ $gallery->name }}"
-                                     class="image-14">
+                        @php
+                            // convert string JSON ke array PHP
+                            $images = json_decode($gallery->image, true);
+                        @endphp
 
-                                {{-- lightbox data --}}
+                        <div role="listitem" class="collection-item-3 w-dyn-item w-col w-col-6">
+                            <a href="{{ asset('storage/'.$images[0]) }}"
+                            class="w-inline-block w-lightbox"
+                            aria-label="open lightbox" aria-haspopup="dialog">
+
+                                <img src="{{ asset('storage/'.$images[0]) }}"
+                                    loading="lazy" alt="{{ $gallery->name }}"
+                                    class="image-14">
+
                                 <script type="application/json" class="w-json">
                                 {
                                     "items": [
-                                        {
-                                            "url": "{{ asset('storage/'.$gallery->image) }}",
-                                            "type": "image"
-                                        }
+                                        @foreach($images as $img)
+                                            {
+                                                "url": "{{ asset('storage/'.$img) }}",
+                                                "type": "image"
+                                            } @if(!$loop->last),@endif
+                                        @endforeach
                                     ],
-                                    "group": ""
+                                    "group": "gallery-{{ $gallery->id }}"
                                 }
                                 </script>
                             </a>
+
                             <a href="#" class="link-5">{{ $gallery->name }}</a>
-                            <div class="text-block-8">{{ $gallery->date->format('d M Y') }}</div>
+                            <div class="text-block-8">
+                                {{ \Carbon\Carbon::parse($gallery->date)->format('d M Y') }}
+                            </div>
                         </div>
                     @endforeach
 
