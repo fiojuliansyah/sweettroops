@@ -24,6 +24,14 @@
 
 @endsection
 
+@push('css')
+<style>
+.dataTables_wrapper {
+    overflow-x: auto;
+}
+</style>
+@endpush
+
 @push('js')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 @endpush
