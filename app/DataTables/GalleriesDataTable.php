@@ -55,6 +55,7 @@ class GalleriesDataTable extends DataTable
                     ->minifiedAjax()
                     ->orderBy(1)
                     ->selectStyleSingle()
+                    ->scrollX(true)
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),

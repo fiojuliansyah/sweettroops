@@ -24,7 +24,7 @@
         <div class="card mt-3">
             <div class="card-body">
                 <div class="table-responsive">
-                    {{ $dataTable->table(['class' => 'table table-bordered table-striped table-hover w-100']) }}
+                    {{ $dataTable->table() }}
                 </div>
             </div>
         </div>
