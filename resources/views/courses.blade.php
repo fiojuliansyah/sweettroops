@@ -60,7 +60,7 @@
                                     src="{{ asset('storage/' . $firstThumbnail) }}" 
                                     alt="{{ $course->title }}" 
                                     class="course-thumbnail">
-                                <a href="{{ route('course.detail', $course->slug) }}" class="link-4">
+                                <a href="{{ route('course.detail', $course->slug) }}" class="link-4" style="margin-top: 15px">
                                     {{ $course->title }}
                                 </a>
                             </div>
