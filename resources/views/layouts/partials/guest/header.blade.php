@@ -55,7 +55,7 @@
                                             <ul class="dropdown-menu">
                                                 @if (Auth::user()->role === 'admin')
                                                 <li>
-                                                    <a href="{{ route('troopers.profile.edit') }}">CMS</a>
+                                                    <a href="{{ route('admin.dashboard') }}">CMS</a>
                                                 </li>
                                                 <li>
                                                     <a href="{{ route('admin.users.index') }}">Users Lists</a>

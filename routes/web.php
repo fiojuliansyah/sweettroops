@@ -6,6 +6,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
@@ -69,7 +70,7 @@ Route::prefix('troopers')
 });
 
 Route::middleware(['auth','admin'])
-->prefix('manage')
+->prefix('cms')
 ->name('admin.')
 ->group(function () {
 
@@ -79,6 +80,7 @@ Route::middleware(['auth','admin'])
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('categories', CategoryController::class);
+    Route::resource('hands-on-class', GalleryController::class)->names('galleries')->parameters(['hands-on-class' => 'gallery']);
     Route::resource('transactions', TransactionController::class);
     Route::resource('types', TypeController::class);
     Route::resource('sliders', SliderController::class);

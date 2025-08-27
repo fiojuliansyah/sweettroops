@@ -1,25 +1,14 @@
-@extends('layouts.master')
+@extends('layouts.main')
 
 @section('content')
-<div class="dashboard-body">
-    <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
-        <!-- Breadcrumb Start -->
-        <div class="breadcrumb mb-24">
-            <ul class="flex-align gap-4">
-                <li><a href="{{ route('admin.dashboard') }}" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
-                <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                <li><a href="{{ route('admin.categories.index') }}" class="text-gray-200 fw-normal text-15 hover-text-main-600">Categories</a></li>
-                <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                <li><span class="text-main-600 fw-normal text-15">Create Category</span></li>
-            </ul>
+<div class="content-wrapper blank-page">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <div class="page-header d-flex justify-content-between align-items-center">
+            <h3 class="page-title"> Create Category </h3>
         </div>
-        <!-- Breadcrumb End -->
     </div>
-
     <div class="card">
-        <div class="card-header">
-            <h5 class="mb-0">Create New Category</h5>
-        </div>
         <div class="card-body">
             @if($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -68,18 +57,16 @@
                 </div>
                 
                 <div class="d-flex gap-2 mt-4">
-                    <button type="submit" class="btn btn-main">
-                        <i class="ph ph-check-circle me-2"></i> Save Category
+                    <button type="submit" class="btn btn-primary">Save Category
                     </button>
-                    <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-secondary">
-                        <i class="ph ph-x-circle me-2"></i> Cancel
+                    <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Cancel
                     </a>
                 </div>
             </form>
         </div>
     </div>
-</div>
 
+</div>
 <script>
     // Image preview functionality
     document.getElementById('image').addEventListener('change', function(event) {

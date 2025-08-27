@@ -1,12 +1,12 @@
 {{-- resources/views/admin/courses/action.blade.php --}}
 <div>
-    <a href="{{ route('admin.videos.index', $query->id) }}" class="bg-info-50 text-info-600 py-2 px-14 rounded-pill hover-bg-info-600 hover-text-white">
+    <a href="{{ route('admin.videos.index', $query->id) }}" class="btn btn-success rounded-pill">
         Tambah Video
     </a>
-    <a href="{{ route('admin.courses.edit', $query->id) }}" class="bg-warning-50 text-warning-600 py-2 px-14 rounded-pill hover-bg-warning-600 hover-text-white">
+    <a href="{{ route('admin.courses.edit', $query->id) }}" class="btn btn-warning rounded-pill">
         Edit
     </a>
-    <button type="button" class="bg-danger-50 text-danger-600 py-2 px-14 rounded-pill hover-bg-danger-600 hover-text-white" 
+    <button type="button" class="btn btn-danger rounded-pill" 
             data-bs-toggle="modal" data-bs-target="#deleteModal{{ $query->id }}">
         Hapus
     </button>
