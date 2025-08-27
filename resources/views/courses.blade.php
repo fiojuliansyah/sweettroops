@@ -93,7 +93,6 @@
 
 .course-thumbnail {
     width: 100%;
-    max-height: 220px;
     object-fit: cover;
     border-radius: 8px;
 }
