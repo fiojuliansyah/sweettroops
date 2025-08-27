@@ -80,7 +80,7 @@
 
 .courses-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* otomatis isi kolom */
+    grid-template-columns: repeat(3, 1fr); /* default desktop: 3 kolom */
     gap: 20px;
 }
 
@@ -94,8 +94,22 @@
 .course-thumbnail {
     width: 100%;
     max-height: 220px;
-    object-fit: cover; /* biar rapi proporsional */
+    object-fit: cover;
     border-radius: 8px;
+}
+
+/* Tablet (max 1024px) → 2 kolom */
+@media (max-width: 1024px) {
+    .courses-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile (max 640px) → 1 kolom */
+@media (max-width: 640px) {
+    .courses-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 </style>
