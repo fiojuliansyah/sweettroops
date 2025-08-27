@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Slider;
+use App\Models\Gallery;
 use App\Models\Category;
 use App\Models\Homepage;
 use Illuminate\Http\Request;
