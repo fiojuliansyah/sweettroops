@@ -142,6 +142,7 @@
             dropdownToggles.forEach(function (toggle) {
                 toggle.addEventListener('click', function (event) {
                     event.preventDefault(); 
+                    event.stopPropagation()
                     
                     const dropdownMenu = this.nextElementSibling;
                     
@@ -150,7 +151,6 @@
             });
 
             window.addEventListener('click', function (event) {
-                // Cek jika yang diklik BUKAN toggle DAN BUKAN bagian dari menu dropdown
                 if (!event.target.matches('.dropdown-toggle') && !event.target.closest('.dropdown-menu')) {
                     const dropdowns = document.querySelectorAll('.dropdown-menu');
                     dropdowns.forEach(function (menu) {

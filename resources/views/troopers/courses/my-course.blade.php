@@ -18,7 +18,7 @@
 
     <section class="section-filter" style="padding: 20px 0;">
         <div class="container-21">
-            <form action="{{ route('courses') }}" method="GET"
+            <form action="{{ route('troopers.my-course') }}" method="GET"
                   style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center; margin-bottom: 30px;">
                 
                 <input type="text" name="search" placeholder="Search courses..."
@@ -35,7 +35,7 @@
                         style="padding: 10px 20px; background-color: #E0BFB4; color: white; border: none; border-radius: 5px; cursor: pointer;">
                         Apply
                 </button>
-                <a href="{{ route('courses') }}"
+                <a href="{{ route('troopers.my-detail-course') }}"
                    style="padding: 10px 20px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">
                    Reset
                 </a>
