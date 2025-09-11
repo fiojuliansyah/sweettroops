@@ -150,7 +150,8 @@
             });
 
             window.addEventListener('click', function (event) {
-                if (!event.target.matches('.dropdown-toggle')) {
+                // Cek jika yang diklik BUKAN toggle DAN BUKAN bagian dari menu dropdown
+                if (!event.target.matches('.dropdown-toggle') && !event.target.closest('.dropdown-menu')) {
                     const dropdowns = document.querySelectorAll('.dropdown-menu');
                     dropdowns.forEach(function (menu) {
                         if (menu.classList.contains('show')) {
