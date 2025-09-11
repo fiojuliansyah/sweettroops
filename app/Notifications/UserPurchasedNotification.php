@@ -29,7 +29,7 @@ class CoursePurchasedNotification extends Notification
     
     public function toWhatsapp($notifiable)
     {
-        $adminPhone = $this->user->phone;
+        $Phone = $this->user->phone;
         $userName = $this->user->name ?? '-';
         $userEmail = $this->user->email ?? '-';
         $userPhone = $this->user->phone ?? '-';
@@ -39,7 +39,7 @@ class CoursePurchasedNotification extends Notification
         $amount = number_format($this->transaction->amount);
     
         return [
-            'number' => $adminPhone,
+            'number' => $Phone,
             'data'   => "🎉 Hi *$userName*, welcome to SweetTroops! 🎉\n\n"
                       . "Thank you so much for purchasing our *$courseTitle* 🧁✨\nWe’re super excited to have you join this sweet baking adventure.\n\n"
                       . "📂 The recipe file (pdf) will be sent to you manually here on WhatsApp by our team (it won’t be available on the website). Please keep an eye out—we’ll share it with you shortly!\n\n"
