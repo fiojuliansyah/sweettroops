@@ -35,7 +35,7 @@
                         style="padding: 10px 20px; background-color: #E0BFB4; color: white; border: none; border-radius: 5px; cursor: pointer;">
                         Apply
                 </button>
-                <a href="{{ route('troopers.my-detail-course') }}"
+                <a href="{{ route('troopers.my-course') }}"
                    style="padding: 10px 20px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">
                    Reset
                 </a>
@@ -60,7 +60,7 @@
                                     src="{{ asset('storage/' . $firstThumbnail) }}" 
                                     alt="{{ $course->title }}" 
                                     class="course-thumbnail">
-                                <a href="{{ route('course.detail', $course->slug) }}" class="link-4" style="margin-top: 15px">
+                                <a href="{{ route('troopers.my-detail-course', $course->slug) }}" class="link-4" style="margin-top: 15px">
                                     {{ $course->title }}
                                 </a>
                             </div>
