@@ -10,11 +10,10 @@
         <div id="w-node-_8e5052ec-8ecd-1126-ef66-b2b7acd7b277-2e3d46b7" class="w-layout-layout wf-layout-layout">
             <div class="w-layout-cell cell-12">
                 <div class="video-responsive-wrapper">
-                <iframe src="{{ $video->link_url }}" 
-                    allow="autoplay; fullscreen" 
-                    allowfullscreen 
-                    frameborder="0"
-                    sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+                <iframe src="{{ $video->link_url }}"
+                    allow="autoplay; fullscreen"
+                    allowfullscreen
+                    frameborder="0"></iframe>
                     </div>
             </div>
             <div class="w-layout-cell cell-13">
