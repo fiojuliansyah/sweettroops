@@ -45,7 +45,6 @@
     <style>
     .video-responsive-wrapper {
         position: relative;
-        overflow: hidden;
         width: 100%;
         padding-top: 56.25%;
     }
