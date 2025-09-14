@@ -2,35 +2,40 @@
 
 @section('content')
 <section class="section-44">
-    <div class="w-layout-blockcontainer container-43 w-container"><a href="{{ route('troopers.my-course') }}"
-            class="button-4 w-button">&lt; BACK</a></div>
+    <div class="w-layout-blockcontainer container-43 w-container">
+        <a href="{{ route('troopers.my-course') }}" class="button-4 w-button">&lt; BACK</a>
+    </div>
 </section>
+
 <section class="section-47">
     <div class="w-layout-blockcontainer container-44 w-container">
-        <div id="w-node-_8e5052ec-8ecd-1126-ef66-b2b7acd7b277-2e3d46b7" class="w-layout-layout wf-layout-layout">
+        <div id="video-layout-wrapper" class="w-layout-layout wf-layout-layout">
+            <!-- VIDEO PLAYER -->
             <div class="w-layout-cell cell-12">
                 <div class="video-responsive-wrapper">
-                <iframe src="{{ $video->link_url }}" 
-                    allow="autoplay; fullscreen" 
-                    allowfullscreen 
-                    frameborder="0"
-                    sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-                    </div>
+                    <iframe src="{{ $video->link_url }}" 
+                        allow="autoplay; fullscreen; picture-in-picture" 
+                        allowfullscreen 
+                        frameborder="0"
+                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation">
+                    </iframe>
+                </div>
             </div>
-            <div class="w-layout-cell cell-13">
-            <p class="paragraph-21">List of Videos:</p>
-            
-            @foreach($course->videos as $listVideo)
-                <a href="{{ route('troopers.change-video', ['slug' => $course->slug, 'videoId' => $listVideo->id]) }}" 
-                class="link-8 {{ $listVideo->id == $video->id ? 'active' : '' }}">
-                    {{ sprintf('%02d', $loop->iteration) }}. {{ $listVideo->title }}
-                </a>
-            @endforeach
 
-        </div>
+            <!-- VIDEO LIST -->
+            <div class="w-layout-cell cell-13">
+                <p class="paragraph-21">List of Videos:</p>
+                @foreach($course->videos as $listVideo)
+                    <a href="{{ route('troopers.change-video', ['slug' => $course->slug, 'videoId' => $listVideo->id]) }}" 
+                        class="link-8 {{ $listVideo->id == $video->id ? 'active' : '' }}">
+                        {{ sprintf('%02d', $loop->iteration) }}. {{ $listVideo->title }}
+                    </a>
+                @endforeach
+            </div>
         </div>
     </div>
 </section>
+
 <section class="section-43">
     <div class="w-layout-blockcontainer container-41 w-container">
         <div class="rich-text-block-3 w-richtext">
@@ -38,27 +43,27 @@
         </div>
     </div>
 </section>
-
 @endsection
 
 @push('styles')
-    <style>
+<style>
+    /* VIDEO WRAPPER */
     .video-responsive-wrapper {
         position: relative;
+        overflow: hidden;
         width: 100%;
-        padding-top: 56.25%;
+        padding-top: 56.25%; /* 16:9 aspect ratio */
     }
 
     .video-responsive-wrapper iframe {
         position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+        top: 0; left: 0; right: 0; bottom: 0;
         width: 100%;
         height: 100%;
+        border: 0;
     }
 
+    /* ACTIVE VIDEO LIST STYLE */
     .link-8.active {
         font-weight: bold;
         color: #007bff;
@@ -75,26 +80,30 @@
         text-decoration: underline;
     }
 
-        #w-node-_8e5052ec-8ecd-1126-ef66-b2b7acd7b277-2e3d46b7 {
+    /* FLEX LAYOUT */
+    #video-layout-wrapper {
         display: flex;
-        align-items: flex-start; /* Konten dimulai dari atas */
-        gap: 24px; /* Jarak antara video dan daftar video */
+        align-items: flex-start;
+        gap: 24px;
     }
 
-    /* 2. Atur lebar untuk kolom video dan kolom daftar */
     .cell-12 {
-        flex: 3; /* Kolom video mengambil 3 bagian ruang */
-        min-width: 0; /* Diperlukan untuk flexbox agar tidak meluap */
+        flex: 3;
+        min-width: 0; /* prevent overflow */
     }
     .cell-13 {
-        flex: 1; /* Kolom daftar mengambil 1 bagian ruang */
-        min-width: 0;
+        flex: 1;
+        min-width: 200px; /* biar ga terlalu sempit di desktop */
     }
 
-    /* 3. Buat layout kembali vertikal di layar kecil (Responsif) */
+    /* RESPONSIVE FIX */
     @media (max-width: 767px) {
-        #w-node-_8e5052ec-8ecd-1126-ef66-b2b7acd7b277-2e3d46b7 {
-            flex-direction: column; /* Ubah arah flex menjadi vertikal */
+        #video-layout-wrapper {
+            flex-direction: column;
+        }
+        .cell-12, .cell-13 {
+            width: 100%;
+            min-width: auto;
         }
     }
 </style>
