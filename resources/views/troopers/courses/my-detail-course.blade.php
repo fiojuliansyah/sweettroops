@@ -13,12 +13,16 @@
             <!-- VIDEO PLAYER -->
             <div class="w-layout-cell cell-12">
                 <div class="video-responsive-wrapper">
-                    <iframe src="{{ $video->link_url }}" 
-                        allow="autoplay; fullscreen; picture-in-picture" 
-                        allowfullscreen 
-                        frameborder="0"
-                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation">
-                    </iframe>
+                    <div style="position: relative; width: 100%; height: 500px; overflow: hidden;">
+                        <iframe src="{{ $video->link_url }}"
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            allowfullscreen
+                            frameborder="0"
+                            style="width:100%; height:100%; border:0;">
+                        </iframe>
+                    <!-- Overlay untuk nutup tombol share -->
+                    <div style="position:absolute; top:0; right:0; width:80px; height:40px; background:#000; opacity:0; pointer-events:none;"></div>
+                    </div>
                 </div>
             </div>
 
