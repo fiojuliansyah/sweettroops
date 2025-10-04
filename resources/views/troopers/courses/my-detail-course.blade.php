@@ -18,7 +18,7 @@
                         allowfullscreen 
                         frameborder="0">
                     </iframe>
-                    <div class="iframe-overlay"></div>
+                    <div class="disable-popout"></div>
                 </div>
             </div>
 
@@ -48,14 +48,15 @@
 @push('styles')
 <style>
     /* VIDEO WRAPPER */
-    .iframe-overlay {
+    .disable-popout {
         position: absolute;
         top: 0;
         right: 0;
-        width: 60px;   /* kira-kira ukuran tombol popout */
-        height: 40px;
+        width: 80px;     /* sesuaikan lebar area tombol popout */
+        height: 50px;    /* sesuaikan tinggi area */
         background: transparent;
-        pointer-events: all; /* supaya klik ke tombol popout tertutup */
+        pointer-events: auto;  /* aktif menahan klik */
+        z-index: 2;
     }
     .video-responsive-wrapper {
         position: relative;
