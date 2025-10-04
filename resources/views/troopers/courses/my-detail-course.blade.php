@@ -13,16 +13,12 @@
             <!-- VIDEO PLAYER -->
             <div class="w-layout-cell cell-12">
                 <div class="video-responsive-wrapper">
-                    <div style="position: relative; width: 100%; height: 500px; overflow: hidden;">
-                        <iframe src="{{ $video->link_url }}"
-                            allow="autoplay; fullscreen; picture-in-picture"
-                            allowfullscreen
-                            frameborder="0"
-                            style="width:100%; height:100%; border:0;">
-                        </iframe>
-                    <!-- Overlay untuk nutup tombol share -->
-                    <div style="position:absolute; top:0; right:0; width:80px; height:40px; background:#000; opacity:0; pointer-events:none;"></div>
-                    </div>
+                    <iframe src="{{ $video->link_url }}" 
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen 
+                        frameborder="0">
+                    </iframe>
+                    <div class="iframe-overlay"></div>
                 </div>
             </div>
 
@@ -52,6 +48,15 @@
 @push('styles')
 <style>
     /* VIDEO WRAPPER */
+    .iframe-overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60px;   /* kira-kira ukuran tombol popout */
+        height: 40px;
+        background: transparent;
+        pointer-events: all; /* supaya klik ke tombol popout tertutup */
+    }
     .video-responsive-wrapper {
         position: relative;
         overflow: hidden;
