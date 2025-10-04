@@ -23,6 +23,6 @@ class AdminMiddleware
         }
 
         // Redirect to a specific route if not an admin
-        return redirect()->route('troopers.dashboard')->with('error', 'You do not have admin access.');
+        return redirect()->route('courses')->with('error', 'You do not have admin access.');
     }
 }

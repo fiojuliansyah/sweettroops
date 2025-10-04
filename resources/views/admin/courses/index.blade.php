@@ -1,43 +1,36 @@
-@extends('layouts.master')
+@extends('layouts.main')
 
 @section('content')
-<div class="dashboard-body">
-    <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
-        <!-- Breadcrumb Start -->
-        <div class="breadcrumb mb-24">
-            <ul class="flex-align gap-4">
-                <li><a href="{{ route('admin.dashboard') }}" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
-                <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                <li><span class="text-main-600 fw-normal text-15">Courses</span></li>
-            </ul>
+<div class="content-wrapper">
+    <div class="content-wrapper">
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h3 class="page-title"> Courses </h3>
+            <div class="d-flex gap-2">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#importCompetitionModal" class="btn btn-info">
+                    <i class="mdi mdi-upload"></i> Import Competitions
+                </a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#importModal" class="btn btn-info">
+                    <i class="mdi mdi-upload"></i> Import Excel
+                </a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#importVideoModal" class="btn btn-info">
+                    <i class="mdi mdi-upload"></i> Import Videos
+                </a>
+                <a href="{{ route('admin.courses.create') }}" class="btn btn-primary">
+                    <i class="mdi mdi-plus"></i> Add New Course
+                </a>
+            </div>
         </div>
-        <!-- Breadcrumb End -->
-
-        <!-- Breadcrumb Right Start -->
-        <div class="flex-align gap-8 flex-wrap">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#importCompetitionModal" class="btn btn-outline-main">
-                <i class="ph ph-upload-simple me-2"></i> Import Competitions
-            </a>            
-            <a href="#" data-bs-toggle="modal" data-bs-target="#importModal" class="btn btn-outline-main">
-                <i class="ph ph-upload-simple me-2"></i> Import Excel
-            </a>  
-            <a href="#" data-bs-toggle="modal" data-bs-target="#importVideoModal" class="btn btn-outline-main">
-                <i class="ph ph-upload-simple me-2"></i> Import Videos
-            </a>           
-            <a href="{{ route('admin.courses.create') }}" class="btn btn-main">
-                <i class="ph ph-plus-circle me-2"></i> Add New Course
-            </a>
-        </div>
-        <!-- Breadcrumb Right End -->
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-
-            {{ $dataTable->table() }}
+        
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="table-responsive">
+                    {{ $dataTable->table() }}
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <!-- Modal Import Excel -->
 <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -62,8 +55,9 @@
           </div>
       </form>
     </div>
-  </div>
-  <!-- Modal Import Competitions -->
+</div>
+
+<!-- Modal Import Competitions -->
 <div class="modal fade" id="importCompetitionModal" tabindex="-1" aria-labelledby="importCompetitionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <form action="{{ route('admin.competitions.import') }}" method="POST" enctype="multipart/form-data" class="modal-content">
@@ -88,6 +82,8 @@
         </form>
     </div>
 </div>
+
+<!-- Modal Import Videos -->
 <div class="modal fade" id="importVideoModal" tabindex="-1" aria-labelledby="importVideoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <form action="{{ route('admin.course.import-videos') }}" method="POST" enctype="multipart/form-data" class="modal-content">
@@ -113,8 +109,15 @@
     </div>
 </div>
 
-  
 @endsection
+
+@push('css')
+<style>
+.dataTables_wrapper {
+    overflow-x: auto;
+}
+</style>
+@endpush
 
 @push('js')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}

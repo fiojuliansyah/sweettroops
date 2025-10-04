@@ -1,0 +1,69 @@
+@extends('layouts.guest')
+
+@section('content')
+    <section class="section-26">
+        <div class="w-layout-blockcontainer container-25 w-container">
+            <h1 class="heading-16">Hands-On Classes</h1>
+        </div>
+    </section>
+    <section class="section-27">
+        <div class="w-layout-blockcontainer container-26 w-container">
+            <div class="text-block-7">
+                Our hands-on classes are where the magic truly happens - mixing, whisking, and creating
+                side by side in the SweetTroops kitchen.<br>
+                Each session is a chance to learn new techniques, share stories,
+                and turn fellow bakers into new friends and family.<br>
+                While our hands-on classes are currently taking a little break,
+                we&#x27;ll be back soon with fresh classes and even more memories to make together.<br>
+                In the meantime, feel free to explore the gallery below to see some of our favourite moments from past events!
+            </div>
+        </div>
+    </section>
+
+    <section class="section-28">
+        <div class="w-layout-blockcontainer container-27 w-container">
+            <div class="collection-list-wrapper-3 w-dyn-list">
+                <div role="list" class="collection-list-3 w-dyn-items w-row">
+                    
+                    @foreach($galleries as $gallery)
+                        @php
+                            // convert string JSON ke array PHP
+                            $images = json_decode($gallery->image, true);
+                        @endphp
+
+                        <div role="listitem" class="collection-item-3 w-dyn-item w-col w-col-6">
+                            <a href="{{ asset('storage/'.$images[0]) }}"
+                            class="w-inline-block w-lightbox"
+                            aria-label="open lightbox" aria-haspopup="dialog">
+
+                                <img src="{{ asset('storage/'.$images[0]) }}"
+                                    loading="lazy" alt="{{ $gallery->name }}"
+                                    class="image-14">
+
+                                <script type="application/json" class="w-json">
+                                {
+                                    "items": [
+                                        @foreach($images as $img)
+                                            {
+                                                "url": "{{ asset('storage/'.$img) }}",
+                                                "type": "image"
+                                            } @if(!$loop->last),@endif
+                                        @endforeach
+                                    ],
+                                    "group": "gallery-{{ $gallery->id }}"
+                                }
+                                </script>
+                            </a>
+
+                            <a href="#" class="link-5">{{ $gallery->name }}</a>
+                            <div class="text-block-8">
+                                {{ \Carbon\Carbon::parse($gallery->date)->format('d M Y') }}
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
+    </section>
+@endsection

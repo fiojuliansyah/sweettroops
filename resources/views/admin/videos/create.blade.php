@@ -1,83 +1,71 @@
-@extends('layouts.master')
+@extends('layouts.main')
 
 @section('content')
-    <div class="dashboard-body">
-        <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
-            <div class="breadcrumb mb-24">
-                <ul class="flex-align gap-4">
-                    <li><a href="{{ route('admin.dashboard') }}" class="text-gray-200 text-15 hover-text-main-600">Home</a></li>
-                    <li><i class="ph ph-caret-right text-gray-500"></i></li>
-                    <li><a href="{{ route('admin.courses.index') }}" class="text-gray-200 text-15 hover-text-main-600">Courses</a></li>
-                    <li><i class="ph ph-caret-right text-gray-500"></i></li>
-                    <li><a href="{{ route('admin.videos.index', $course->id) }}" class="text-gray-200 text-15 hover-text-main-600">{{ $course->title }}</a></li>
-                    <li><i class="ph ph-caret-right text-gray-500"></i></li>
-                    <li><span class="text-main-600 text-15">Upload Video</span></li>
-                </ul>
-            </div>
+<div class="content-wrapper blank-page">
+    <div class="content-wrapper">
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h3 class="page-title"> Upload Video </h3>
         </div>
-
+    
         <div class="card">
-            <div class="card-header border-bottom border-gray-100 flex-align gap-8">
-                <h5 class="mb-0">Upload Video</h5>
-            </div>
             <div class="card-body">
                 @if (session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
-
+    
                 <form id="upload-form" action="{{ route('admin.videos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="course_id" value="{{ $course->id }}">
                     <input type="hidden" id="filename" name="filename" />
-
+    
                     <div class="row gy-20">
                         <!-- Title -->
-                        <div class="col-sm-12">
-                            <label class="fw-semibold">Video Title <span class="text-danger">*</span></label>
+                        <div class="col-sm-12 mt-3">
+                            <label class="h5 mb-8 fw-semibold font-heading">Video Title <span class="text-danger">*</span></label>
                             <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" required value="{{ old('title') }}">
                             @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
-
+    
                         <!-- Description -->
-                        <div class="col-sm-12">
-                            <label class="fw-semibold">Description <span class="text-danger">*</span></label>
+                        <div class="col-sm-12 mt-3">
+                            <label class="h5 mb-8 fw-semibold font-heading">Description <span class="text-danger">*</span></label>
                             <textarea name="description" class="form-control @error('description') is-invalid @enderror" required rows="4">{{ old('description') }}</textarea>
                             @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
-
+    
                         <!-- Tipe Upload -->
-                        <div class="col-sm-12">
-                            <label class="fw-semibold">Tipe Upload <span class="text-danger">*</span></label>
-                            <select name="type" id="uploadType" class="form-control" required>
+                        <div class="col-sm-6 mt-3">
+                            <label class="h5 mb-8 fw-semibold font-heading">Tipe Upload <span class="text-danger">*</span></label>
+                            <select name="type" id="uploadType" class="form-select" required>
                                 <option value="">-- Pilih</option>
                                 <option value="url">URL</option>
                                 <option value="video">Video</option>
                             </select>
                         </div>
-
+    
                         <!-- Penyimpanan -->
-                        <div class="col-sm-12" id="storageSection" style="display: none;">
-                            <label class="fw-semibold">Penyimpanan <span class="text-danger">*</span></label>
-                            <select name="storage" id="storage" class="form-control">
+                        <div class="col-sm-6 mt-3" id="storageSection" style="display: none;">
+                            <label class="h5 mb-8 fw-semibold font-heading">Penyimpanan <span class="text-danger">*</span></label>
+                            <select name="storage" id="storage" class="form-select">
                                 <option value="">-- Pilih</option>
                                 <option value="youtube">Upload YouTube</option>
                                 <option value="aws">Storage AWS</option>
                             </select>
                         </div>
-
+    
                         <!-- URL -->
-                        <div class="col-sm-12" id="urlSection" style="display: none;">
-                            <label class="fw-semibold">URL Video <span class="text-danger">*</span></label>
+                        <div class="col-sm-12 mt-3" id="urlSection" style="display: none;">
+                            <label class="h5 mb-8 fw-semibold font-heading">URL Video <span class="text-danger">*</span></label>
                             <input type="text" name="link_url" id="link_url" class="form-control @error('link_url') is-invalid @enderror" value="{{ old('link_url') }}">
                             @error('link_url') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
-
+    
                         <!-- Upload Video -->
-                        <div class="col-sm-12" id="videoSection" style="display: none;">
-                            <div class="card">
-                                <div class="card-header text-center"><h5>Upload File</h5></div>
+                        <div class="col-sm-12 mt-3" id="videoSection" style="display: none;">
+                            <div class="card border">
+                                <div class="card-header"><h5 class="mb-0">Upload File</h5></div>
                                 <div class="card-body text-center">
-                                    <span id="browseFile" class="btn btn-primary" style="cursor: pointer;">Browse File</span>
+                                    <button type="button" id="browseFile" class="btn btn-primary">Browse File</button>
                                     <input type="file" id="fileInput" name="video_file" accept="video/*" style="display: none;">
                                     <div class="progress mt-3" style="height: 25px; display: none;">
                                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;">0%</div>
@@ -88,11 +76,11 @@
                                 </div>
                             </div>
                         </div>
-
+    
                         <!-- Action -->
-                        <div class="col-sm-12 flex-align justify-content-end gap-8 mt-3">
-                            <a href="{{ route('admin.videos.index', $course->id) }}" class="btn btn-outline-main rounded-pill">Cancel</a>
-                            <button type="submit" class="btn btn-main rounded-pill">
+                        <div class="col-sm-12 mt-4">
+                            <a href="{{ route('admin.videos.index', $course->id) }}" class="btn btn-danger">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
                                 <i class="ph ph-cloud-arrow-up me-2"></i> Upload Video
                             </button>
                         </div>
@@ -101,6 +89,8 @@
             </div>
         </div>
     </div>
+</div>
+
 @endsection
 
 @push('js')

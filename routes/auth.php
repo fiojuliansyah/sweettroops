@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\MagicLoginController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -15,6 +16,16 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 Route::middleware('guest')
     ->prefix('manage')
     ->group(function () {
+    
+});
+
+Route::middleware('guest')
+    ->group(function () {
+        Route::get('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappLogin'])
+            ->name('login-phone');
+
+        Route::post('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappStore']);
+
         Route::get('register', [RegisteredUserController::class, 'create'])
             ->name('register');
 
@@ -36,19 +47,16 @@ Route::middleware('guest')
 
         Route::post('reset-password', [NewPasswordController::class, 'store'])
             ->name('password.store');
-});
 
-Route::middleware('guest')
-    ->group(function () {
-        Route::get('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappLogin'])
-            ->name('login-phone');
+        //magic login
 
-        Route::post('login/phone', [PhoneAuthenticatedSessionController::class, 'whatsappStore']);
+        Route::get('magic-login', [MagicLoginController::class, 'showLoginForm'])->name('magic-login');
 
-        Route::get('login/email', [PhoneAuthenticatedSessionController::class, 'emailLogin'])
-            ->name('login-email');
+        Route::post('magic-login', [MagicLoginController::class, 'sendLoginLink'])->name('request.email');
 
-        Route::post('login/email', [PhoneAuthenticatedSessionController::class, 'emailStore']);
+        Route::get('magic-login/verify/{user}', [MagicLoginController::class, 'loginWithLink'])
+            ->middleware('signed')
+            ->name('magic-login.verify');
 });
 
 Route::middleware('auth')->group(function () {
@@ -61,15 +69,6 @@ Route::middleware('auth')->group(function () {
         
     Route::post('/resend-otp', [PhoneAuthenticatedSessionController::class, 'sendOTPNew'])
         ->name('resend.otp');
-
-    Route::get('login/verified/email', [PhoneAuthenticatedSessionController::class, 'emailVerified'])
-        ->name('login.verified.email');
-
-    Route::post('/verify-otp/email', [PhoneAuthenticatedSessionController::class, 'verifyOTPEmail'])
-        ->name('verify.otp.email');
-        
-    Route::post('/resend-otp/email', [PhoneAuthenticatedSessionController::class, 'sendOTPNewEmail'])
-        ->name('resend.otp.email');
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');

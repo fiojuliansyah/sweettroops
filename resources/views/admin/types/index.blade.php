@@ -1,33 +1,22 @@
-@extends('layouts.master')
+@extends('layouts.main')
 
 @section('content')
-<div class="dashboard-body">
-    <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
-        <!-- Breadcrumb Start -->
-        <div class="breadcrumb mb-24">
-            <ul class="flex-align gap-4">
-                <li><a href="{{ route('admin.dashboard') }}" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
-                <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-                <li><span class="text-main-600 fw-normal text-15">Types</span></li>
-            </ul>
+<div class="content-wrapper blank-page">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <div class="page-header d-flex justify-content-between align-items-center">
+            <h3 class="page-title"> Course Type </h3>
         </div>
-        <!-- Breadcrumb End -->
-
-        <!-- Breadcrumb Right Start -->
-        <div class="flex-align gap-8 flex-wrap">
-            <a href="{{ route('admin.types.create') }}" class="btn btn-main">
-                <i class="ph ph-plus-circle me-2"></i> Add New Type
-            </a>
-        </div>
-        <!-- Breadcrumb Right End -->
+        <a href="{{ route('admin.types.create') }}" class="btn btn-primary">
+            <i class="mdi mdi-plus"></i> Add Course Type
+        </a>
     </div>
-
     <div class="card">
         <div class="card-body">
-
             {{ $dataTable->table() }}
         </div>
     </div>
+
 </div>
 @endsection
 

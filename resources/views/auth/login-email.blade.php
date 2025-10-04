@@ -36,7 +36,7 @@
                         <i class="ph ph-google-logo"></i>
                         Login dengan No Whatsapp
                     </a>
-                    {{-- 
+                    
                     <ul class="flex-align gap-10 flex-wrap justify-content-center">
                         <li>
                             <a href="https://www.facebook.com" class="w-38 h-38 flex-center rounded-6 text-facebook-600 bg-facebook-50 hover-bg-facebook-600 hover-text-white text-lg">
@@ -53,7 +53,7 @@
                                 <i class="ph ph-google-logo"></i>
                             </a>
                         </li>
-                    </ul> --}}
+                    </ul>
                 </form>
             </div>
         </div>

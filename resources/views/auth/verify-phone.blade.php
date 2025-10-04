@@ -1,77 +1,89 @@
-@extends('layouts.auth')
+@extends('layouts.guest')
 
 @section('content')
-<section class="auth d-flex">
-    <div class="auth-left bg-main-50 flex-center p-24">
-        <img src="assets/images/thumbs/auth-img5.png" alt="">
-    </div>
-    <div class="auth-right py-40 px-24 flex-center flex-column">
-        <div class="auth-right__inner mx-auto w-100">
-            <a href="index.html" class="auth-right__logo">
-                <img src="assets/images/logo/logo.png" alt="">
-            </a>
-            <h2 class="mb-8">Two-Step Verification</h2>
-            <p class="text-gray-600 text-15 mb-32">We sent a verification code to your mobile. Enter the code from the mobile in the field below. 
-                <span class="fw-medium d-block">***{{ substr($user->phone, -3) }}</span>
-            </p>
-
-            <!-- Success message -->
-            @if (session('success'))
-                <div class="alert alert-success mb-24">
-                    {{ session('success') }}
+<section class="section-20">
+    <div class="w-layout-blockcontainer container-17 w-container">
+        <div class="div-block-15" style="justify-content: center;"> {{-- Dibuat ke tengah karena hanya satu kolom --}}
+            
+            {{-- Bagian Form Verifikasi OTP --}}
+            <div class="div-block-16">
+                <h1 class="heading-11">Two-Step Verification ✔️</h1>
+                <div class="text-block-5">
+                    Kami telah mengirimkan kode verifikasi ke nomor handphone Anda. Masukkan kode tersebut di bawah ini.
+                    <span class="fw-medium d-block" style="margin-top: 8px;">***{{ substr($user->phone, -3) }}</span>
                 </div>
-            @endif
 
-            <!-- Display validation errors if any -->
-            @if ($errors->any())
-                <div class="alert alert-danger mb-24">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form action="{{ route('verify.otp') }}" method="POST">
-                @csrf
-                <div class="mb-32">
-                    <label class="form-label mb-8 h6">Type your 6 digit security code</label>
-                    <div class="squire-input-wrapper flex-align">
-                        <input type="text" class="squire-input form-control text-center p-6" maxlength="1" id="digit-1" data-next="digit-2">
-                        <input type="text" class="squire-input form-control text-center p-6" maxlength="1" id="digit-2" data-next="digit-3" data-previous="digit-1">
-                        <input type="text" class="squire-input form-control text-center p-6" maxlength="1" id="digit-3" data-next="digit-4" data-previous="digit-2">
-                        <input type="text" class="squire-input form-control text-center p-6" maxlength="1" id="digit-4" data-next="digit-5" data-previous="digit-3">
-                        <input type="text" class="squire-input form-control text-center p-6" maxlength="1" id="digit-5" data-next="digit-6" data-previous="digit-4">
-                        <input type="text" class="squire-input form-control text-center p-6" maxlength="1" id="digit-6" data-previous="digit-5">
+                {{-- Menampilkan pesan sukses atau error --}}
+                @if (session('success'))
+                    <div class="alert alert-success" style="margin-top: 20px; text-align: left;">
+                        {{ session('success') }}
                     </div>
-                    <!-- Hidden input to store the combined OTP value -->
-                    <input type="hidden" name="otp" id="otp-value">
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger" style="margin-top: 20px; text-align: left; padding-bottom: 0;">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                
+                <div class="form-block-3 w-form">
+                    <form action="{{ route('verify.otp') }}" method="POST" style="margin-top: 20px;">
+                        @csrf
+                        <label class="field-label-7">Ketik 6 digit kode keamanan Anda</label>
+                        
+                        {{-- Input untuk 6 digit OTP --}}
+                        <div class="squire-input-wrapper" style="display: flex; justify-content: space-between; gap: 10px; margin-top: 10px; margin-bottom: 30px;">
+                            <input type="text" class="squire-input text-field-4 w-input text-center" maxlength="1" id="digit-1" data-next="digit-2" pattern="[0-9]*" inputmode="numeric">
+                            <input type="text" class="squire-input text-field-4 w-input text-center" maxlength="1" id="digit-2" data-next="digit-3" data-previous="digit-1" pattern="[0-9]*" inputmode="numeric">
+                            <input type="text" class="squire-input text-field-4 w-input text-center" maxlength="1" id="digit-3" data-next="digit-4" data-previous="digit-2" pattern="[0-9]*" inputmode="numeric">
+                            <input type="text" class="squire-input text-field-4 w-input text-center" maxlength="1" id="digit-4" data-next="digit-5" data-previous="digit-3" pattern="[0-9]*" inputmode="numeric">
+                            <input type="text" class="squire-input text-field-4 w-input text-center" maxlength="1" id="digit-5" data-next="digit-6" data-previous="digit-4" pattern="[0-9]*" inputmode="numeric">
+                            <input type="text" class="squire-input text-field-4 w-input text-center" maxlength="1" id="digit-6" data-previous="digit-5" pattern="[0-9]*" inputmode="numeric">
+                        </div>
+                        
+                        {{-- Input tersembunyi untuk menampung nilai OTP gabungan --}}
+                        <input type="hidden" name="otp" id="otp-value">
+                        
+                        <button type="submit" class="button-7 w-button">Verify Now</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-main rounded-pill w-100">Verify Now</button>
-            </form>
 
-            <p class="mt-24 text-gray-600 text-center">Didn't get the code?
-                <a href="javascript:void(0)" onclick="document.getElementById('resend-form').submit();" class="text-main-600 hover-text-decoration-underline">Resend</a>
+                <p style="margin-top: 24px; text-align: center;">
+                    Tidak menerima kode?
+                    <a href="javascript:void(0)" onclick="document.getElementById('resend-form').submit();" style="color: #ff85a2; text-decoration: underline;">
+                        Kirim Ulang
+                    </a>
+                </p>
+
+                {{-- Form tersembunyi untuk fitur kirim ulang OTP --}}
                 <form id="resend-form" action="{{ route('resend.otp') }}" method="POST" class="d-none">
                     @csrf
                 </form>
-            </p>
+            </div>
+
+            <div class="div-block-17">
+                <h1 id="w-node-_803d5886-e670-2807-d25c-ebd36aea8283-61f5beb9" class="heading-13">Be Part of SweetTroops</h1>
+                <div id="w-node-_183be123-2e6e-a3f4-9515-ad2d10d9731d-61f5beb9" class="text-block-4">Welcome to SweetTroops, your new baking home!<br>We're so excited to have you join our big, flour-dusted family.<br>Unlock step-by-step classes, secret recipes, and a sprinkle of inspiration in every lesson. Here, every recipe comes with a smile, every class feels like baking with friends, and there's always room at the table for you.<br>Let's roll up our sleeves and make something sweet together!</div>
+            
+                <a id="w-node-d254ce7d-e13d-e853-35ff-71a56911d398-61f5beb9" href="{{ route('register') }}" class="button w-button">COUNT ME IN!</a>
+            </div>
+
         </div>
     </div>
 </section>
 @endsection
 
 @push('js')
+{{-- JavaScript dari template lama disalin sepenuhnya ke sini --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Get all digit input fields
         const digitInputs = document.querySelectorAll('.squire-input');
         const otpValueInput = document.getElementById('otp-value');
         
-        // Add event listeners to each digit input
         digitInputs.forEach(input => {
-            // Auto-focus to next input when a digit is entered
             input.addEventListener('input', function() {
                 const nextInput = document.getElementById(this.dataset.next);
                 if (nextInput && this.value) {
@@ -80,7 +92,6 @@
                 updateOtpValue();
             });
             
-            // Handle backspace to go to previous input
             input.addEventListener('keydown', function(e) {
                 if (e.key === 'Backspace' && !this.value) {
                     const prevInput = document.getElementById(this.dataset.previous);
@@ -91,7 +102,6 @@
             });
         });
         
-        // Function to update the hidden OTP input with combined values
         function updateOtpValue() {
             let otp = '';
             digitInputs.forEach(input => {
@@ -100,7 +110,6 @@
             otpValueInput.value = otp;
         }
         
-        // Focus on the first input when page loads
         if (digitInputs.length > 0) {
             digitInputs[0].focus();
         }

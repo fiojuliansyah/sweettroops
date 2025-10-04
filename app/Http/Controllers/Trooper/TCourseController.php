@@ -41,7 +41,7 @@ class TCourseController extends Controller
     
         $query->where('is_active', 1);
         
-        $courses = $query->paginate(8);
+        $courses = $query->get();
     
         $title = 'All Courses';
         $categories = Category::all();
@@ -77,7 +77,7 @@ class TCourseController extends Controller
             $q->where('user_id', $user->id);
         });
         
-        $courses = $query->paginate(12);
+        $courses = $query->get();
         
         $title = 'All Courses';
         $categories = Category::all();

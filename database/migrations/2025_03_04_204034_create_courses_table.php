@@ -19,13 +19,15 @@ return new class extends Migration
             $table->string('trailer')->nullable();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
-            $table->string('description')->nullable();
+            $table->longtext('description')->nullable();
             $table->string('instructor')->nullable();
             $table->string('normal_price')->nullable();
             $table->string('price')->nullable();
             $table->string('point')->nullable();
             $table->string('is_featured')->nullable();
             $table->string('is_recommend')->nullable();
+            $table->string('is_upcoming')->nullable();
+            $table->string('is_newest')->nullable();
             $table->string('is_active')->nullable();
             $table->timestamps();
         });

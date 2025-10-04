@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Course;
-use App\Models\Transaction;
-use App\Models\Competition;
-use App\Notifications\CoursePurchasedNotification;
-use Midtrans\Config;
 use Midtrans\Snap;
-use Illuminate\Support\Facades\Auth;
+use Midtrans\Config;
+use App\Models\Course;
+use App\Models\Competition;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserPurchasedNotification;
+use App\Notifications\CoursePurchasedNotification;
 
 class PaymentController extends Controller
 {
@@ -111,6 +112,7 @@ class PaymentController extends Controller
 
                     if ($transaction->user && $transaction->course) {
                         Notification::send($admin, new CoursePurchasedNotification($transaction->user, $transaction->course, $transaction));
+                        Notification::send($admin, new UserPurchasedNotification($transaction->user, $transaction->course, $transaction));
                     } else {
                         \Log::warning('User atau Course null saat kirim notifikasi.');
                     }

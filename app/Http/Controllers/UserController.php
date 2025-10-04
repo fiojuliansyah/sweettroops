@@ -29,24 +29,45 @@ class UserController extends Controller
     public function create()
     {
         $title = 'Create User';
-        return view('admin.users.create', compact('title'));
+        $courses = Course::all();
+        return view('admin.users.create', compact('title','courses'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(UserRequest $request)
-    {
-        $validated = $request->validated();
 
-        // Create a new user
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-            'role' => $validated['role'],
-            'password' => Hash::make($validated['password']),
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'nullable|string|max:20',
+            'role' => 'required|string|in:admin,user',
+            'password' => 'required|string|min:8',
+            'courses' => 'nullable|array',
+            'courses.*' => 'exists:courses,id',
         ]);
+
+        // Buat user baru
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+        ]);
+
+        if ($request->has('courses')) {
+            $user->competitions()->whereNotIn('course_id', $request->courses)->delete();
+    
+            foreach ($request->courses as $courseId) {
+                if (!$user->competitions->contains('course_id', $courseId)) {
+                    $user->competitions()->create([
+                        'course_id' => $courseId,
+                    ]);
+                }
+            }
+        } else {
+            $user->competitions()->delete();
+        }
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
@@ -65,14 +86,10 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $title = 'Edit User';
-        $courses = Course::all(); // Fetch all courses
+        $courses = Course::all();
         return view('admin.users.edit', compact('title', 'user', 'courses'));
     }
     
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -83,7 +100,6 @@ class UserController extends Controller
             'courses.*' => 'exists:courses,id',
         ]);
     
-        // Update user data
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -92,23 +108,17 @@ class UserController extends Controller
             'password' => $request->password ? Hash::make($request->password) : $user->password,
         ]);
     
-        // If courses are provided, handle the relationships
         if ($request->has('courses')) {
-            // First, remove any competition records for courses not selected (unchecked courses)
             $user->competitions()->whereNotIn('course_id', $request->courses)->delete();
     
-            // Then, add new competition records for selected courses that do not exist yet
             foreach ($request->courses as $courseId) {
-                // Check if the competition already exists
                 if (!$user->competitions->contains('course_id', $courseId)) {
-                    // If not, create a new competition
                     $user->competitions()->create([
                         'course_id' => $courseId,
                     ]);
                 }
             }
         } else {
-            // If no courses are selected, delete all competitions for the user
             $user->competitions()->delete();
         }
     

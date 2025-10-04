@@ -6,6 +6,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
@@ -18,7 +19,13 @@ use App\Http\Controllers\Trooper\TDiscussController;
 use App\Http\Controllers\Trooper\TDashboardController;
 
 Route::get('/', [PageController::class, 'index'])->name('welcome');
-Route::get('/courses/{slug}', [PageController::class, 'courses'])->name('courses.byCategory');
+Route::get('/about-us', [PageController::class, 'about'])->name('about');
+Route::get('/contacts', [PageController::class, 'contact'])->name('contacts');
+Route::get('/faqs', [PageController::class, 'faq'])->name('faqs');
+Route::get('/login-first', [PageController::class, 'loginFirst'])->name('login-first');
+Route::get('/courses', [PageController::class, 'courses'])->name('courses');
+Route::get('/course/{slug}', [PageController::class, 'courseDetail'])->name('course.detail');
+Route::get('/hands-on-classes', [PageController::class, 'galleries'])->name('handson');
 Route::get('/home', [PageController::class, 'index']);
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
@@ -35,8 +42,7 @@ Route::get('/course/all', [TCourseController::class, 'allCourse'])->name('all-co
 });
 
 
-Route::middleware(['phone.verified'])
-->prefix('troopers')
+Route::prefix('troopers')
 ->name('troopers.')
 ->group(function () {
     Route::get('/dashboard', [TDashboardController::class, 'index'])->name('dashboard');
@@ -64,7 +70,7 @@ Route::middleware(['phone.verified'])
 });
 
 Route::middleware(['auth','admin'])
-->prefix('manage')
+->prefix('cms')
 ->name('admin.')
 ->group(function () {
 
@@ -74,6 +80,7 @@ Route::middleware(['auth','admin'])
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('categories', CategoryController::class);
+    Route::resource('hands-on-class', GalleryController::class)->names('galleries')->parameters(['hands-on-class' => 'gallery']);
     Route::resource('transactions', TransactionController::class);
     Route::resource('types', TypeController::class);
     Route::resource('sliders', SliderController::class);
