@@ -13,8 +13,12 @@
             
             <!-- VIDEO PLAYER -->
             <div class="w-layout-cell cell-12">
-                <div class="video-responsive-wrapper">
-                    <div id="playerjs"></div>
+                <div class="video-responsive-wrapper" id="video-container">
+                    <iframe id="video-frame" src="{{ $video->link_url }}" 
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen 
+                        frameborder="0">
+                    </iframe>
                     <div class="disable-popout"></div>
                 </div>
             </div>
@@ -64,7 +68,7 @@
         padding-top: 56.25%; /* 16:9 */
     }
 
-    #playerjs {
+    .video-responsive-wrapper iframe {
         position: absolute;
         top: 0; left: 0;
         width: 100%;
@@ -113,49 +117,33 @@
 @endpush
 
 @push('js')
-<!-- PLAYERJS SCRIPT -->
-<script src="https://cdn.jsdelivr.net/npm/playerjs@1.0.0/playerjs.js"></script>
-
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const player = new Playerjs({
-        id: "playerjs",
-        file: "{{ $video->link_url }}", // file video dari backend
-        poster: "{{ $video->thumbnail ?? '' }}", // opsional jika ada thumbnail
-        autoplay: 0,
-    });
+document.addEventListener("DOMContentLoaded", function () {
+    const videoContainer = document.getElementById('video-container');
 
-    // --- FULLSCREEN ORIENTATION HANDLER ---
-    document.addEventListener('fullscreenchange', async () => {
-        try {
-            if (document.fullscreenElement) {
-                // Saat masuk fullscreen
-                if (screen.orientation && screen.orientation.lock) {
+    // Detect when user enters fullscreen
+    ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'msfullscreenchange'].forEach(eventType => {
+        document.addEventListener(eventType, async function () {
+            const isFullscreen = document.fullscreenElement || 
+                                 document.webkitFullscreenElement || 
+                                 document.mozFullScreenElement || 
+                                 document.msFullscreenElement;
+
+            // Try to lock orientation when fullscreen
+            if (isFullscreen && screen.orientation && screen.orientation.lock) {
+                try {
                     await screen.orientation.lock('landscape');
+                } catch (e) {
+                    console.warn('Orientation lock not supported:', e);
                 }
             } else {
-                // Saat keluar fullscreen
+                // Unlock orientation when exit fullscreen
                 if (screen.orientation && screen.orientation.unlock) {
                     screen.orientation.unlock();
                 }
             }
-        } catch (err) {
-            console.warn('Orientation lock not supported:', err);
-        }
-    });
-
-    // --- SAFARI FALLBACK (karena Safari tidak support orientation.lock) ---
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    if (isSafari) {
-        player.api("play");
-        // Safari fullscreen pakai webkit API
-        player.on('fullscreen', function(full) {
-            const videoEl = document.querySelector('#playerjs video');
-            if (videoEl && videoEl.webkitEnterFullscreen) {
-                videoEl.webkitEnterFullscreen();
-            }
         });
-    }
+    });
 });
 </script>
 @endpush
