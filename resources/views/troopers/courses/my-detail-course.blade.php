@@ -10,14 +10,11 @@
 <section class="section-47">
     <div class="w-layout-blockcontainer container-44 w-container">
         <div id="video-layout-wrapper" class="w-layout-layout wf-layout-layout">
+            
             <!-- VIDEO PLAYER -->
             <div class="w-layout-cell cell-12">
                 <div class="video-responsive-wrapper">
-                    <iframe src="{{ $video->link_url }}" 
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        allowfullscreen 
-                        frameborder="0">
-                    </iframe>
+                    <div id="playerjs"></div>
                     <div class="disable-popout"></div>
                 </div>
             </div>
@@ -32,6 +29,7 @@
                     </a>
                 @endforeach
             </div>
+
         </div>
     </div>
 </section>
@@ -52,28 +50,28 @@
         position: absolute;
         top: 0;
         right: 0;
-        width: 80px;     /* sesuaikan lebar area tombol popout */
-        height: 50px;    /* sesuaikan tinggi area */
+        width: 80px;
+        height: 50px;
         background: transparent;
-        pointer-events: auto;  /* aktif menahan klik */
+        pointer-events: auto;
         z-index: 2;
     }
+
     .video-responsive-wrapper {
         position: relative;
         overflow: hidden;
         width: 100%;
-        padding-top: 56.25%; /* 16:9 aspect ratio */
+        padding-top: 56.25%; /* 16:9 */
     }
 
-    .video-responsive-wrapper iframe {
+    #playerjs {
         position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
+        top: 0; left: 0;
         width: 100%;
         height: 100%;
-        border: 0;
     }
 
-    /* ACTIVE VIDEO LIST STYLE */
+    /* ACTIVE VIDEO STYLE */
     .link-8.active {
         font-weight: bold;
         color: #007bff;
@@ -86,6 +84,7 @@
         text-decoration: none;
         color: #333;
     }
+
     .cell-13 a:hover {
         text-decoration: underline;
     }
@@ -97,16 +96,10 @@
         gap: 24px;
     }
 
-    .cell-12 {
-        flex: 3;
-        min-width: 0; /* prevent overflow */
-    }
-    .cell-13 {
-        flex: 1;
-        min-width: 200px; /* biar ga terlalu sempit di desktop */
-    }
+    .cell-12 { flex: 3; min-width: 0; }
+    .cell-13 { flex: 1; min-width: 200px; }
 
-    /* RESPONSIVE FIX */
+    /* RESPONSIVE */
     @media (max-width: 767px) {
         #video-layout-wrapper {
             flex-direction: column;
@@ -117,4 +110,52 @@
         }
     }
 </style>
+@endpush
+
+@push('js')
+<!-- PLAYERJS SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/playerjs@1.0.0/playerjs.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const player = new Playerjs({
+        id: "playerjs",
+        file: "{{ $video->link_url }}", // file video dari backend
+        poster: "{{ $video->thumbnail ?? '' }}", // opsional jika ada thumbnail
+        autoplay: 0,
+    });
+
+    // --- FULLSCREEN ORIENTATION HANDLER ---
+    document.addEventListener('fullscreenchange', async () => {
+        try {
+            if (document.fullscreenElement) {
+                // Saat masuk fullscreen
+                if (screen.orientation && screen.orientation.lock) {
+                    await screen.orientation.lock('landscape');
+                }
+            } else {
+                // Saat keluar fullscreen
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+            }
+        } catch (err) {
+            console.warn('Orientation lock not supported:', err);
+        }
+    });
+
+    // --- SAFARI FALLBACK (karena Safari tidak support orientation.lock) ---
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    if (isSafari) {
+        player.api("play");
+        // Safari fullscreen pakai webkit API
+        player.on('fullscreen', function(full) {
+            const videoEl = document.querySelector('#playerjs video');
+            if (videoEl && videoEl.webkitEnterFullscreen) {
+                videoEl.webkitEnterFullscreen();
+            }
+        });
+    }
+});
+</script>
 @endpush
