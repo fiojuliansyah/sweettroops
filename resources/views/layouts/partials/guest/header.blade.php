@@ -47,7 +47,7 @@
                                     @endguest
 
                                     @auth
-                                        @if (Auth::user()->phonr_verified === 'verified')
+                                        @if (Auth::user()->phone_verified === 'verified')
                                             <li>
                                                 <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
                                                     <div class="nav-dropdown-toggle w-dropdown-toggle button-primary w-button" style="padding-right: 35px;">
