@@ -22,7 +22,7 @@ class CheckOtpStatus
 
         // Jika ada OTP dan status masih pending -> blokir akses
         if ($latestOtp && $latestOtp->status === 'pending') {
-            return redirect()->route('verify.otp')
+            return redirect()->route('login.verified')
                 ->with('error', 'Anda harus verifikasi OTP terlebih dahulu.');
         }
 
