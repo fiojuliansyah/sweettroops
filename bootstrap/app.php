@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'phone.verified' => \App\Http\Middleware\PhoneVerified::class,
+            'otp.pending' => \App\Http\Middleware\CheckOtpStatus::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
         
