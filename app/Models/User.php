@@ -46,5 +46,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Competition::class);
     }
-    
+
+    public function otps()
+    {
+        return $this->hasMany(Otp::class);
+    }
+
 }
