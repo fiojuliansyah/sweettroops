@@ -47,35 +47,37 @@
                                     @endguest
 
                                     @auth
-                                        <li>
-                                            <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
-                                                <div class="nav-dropdown-toggle w-dropdown-toggle button-primary w-button" style="padding-right: 35px;">
-                                                    <div>{{ Auth::user()->name }}</div>
-                                                    <div class="nav-dropdown-icon w-icon-dropdown-toggle"></div>
-                                                </div>
-                                                <nav class="nav-dropdown-list shadow-three w-dropdown-list">
-                                                    @if (Auth::user()->role === 'admin')
-                                                        <a href="{{ route('admin.dashboard') }}" class="nav-dropdown-link w-dropdown-link">CMS</a>
-                                                        <a href="{{ route('admin.users.index') }}" class="nav-dropdown-link w-dropdown-link">Users Lists</a>
-                                                        <a href="{{ route('admin.transactions.index') }}" class="nav-dropdown-link w-dropdown-link">Transactions Lists</a>
-                                                    @endif
-                                                    <a href="{{ route('troopers.profile.edit') }}" class="nav-dropdown-link w-dropdown-link">Account Setting</a>
-                                                    <a href="{{ route('troopers.my-course') }}" class="nav-dropdown-link w-dropdown-link">My Classes</a>
-                                                    
-                                                    {{-- Logout Link --}}
-                                                    <div class="w-dropdown-link">
-                                                        <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
-                                                            @csrf
-                                                            <a href="{{ route('logout') }}"
-                                                            onclick="event.preventDefault(); this.closest('form').submit();"
-                                                            style="color: inherit; text-decoration: inherit; display: block;">
-                                                                Log Out
-                                                            </a>
-                                                        </form>
+                                        @if (Auth::user()->phonr_verified === 'verified')
+                                            <li>
+                                                <div data-hover="false" data-delay="0" class="nav-dropdown w-dropdown">
+                                                    <div class="nav-dropdown-toggle w-dropdown-toggle button-primary w-button" style="padding-right: 35px;">
+                                                        <div>{{ Auth::user()->name }}</div>
+                                                        <div class="nav-dropdown-icon w-icon-dropdown-toggle"></div>
                                                     </div>
-                                                </nav>
-                                            </div>
-                                        </li>
+                                                    <nav class="nav-dropdown-list shadow-three w-dropdown-list">
+                                                        @if (Auth::user()->role === 'admin')
+                                                            <a href="{{ route('admin.dashboard') }}" class="nav-dropdown-link w-dropdown-link">CMS</a>
+                                                            <a href="{{ route('admin.users.index') }}" class="nav-dropdown-link w-dropdown-link">Users Lists</a>
+                                                            <a href="{{ route('admin.transactions.index') }}" class="nav-dropdown-link w-dropdown-link">Transactions Lists</a>
+                                                        @endif
+                                                        <a href="{{ route('troopers.profile.edit') }}" class="nav-dropdown-link w-dropdown-link">Account Setting</a>
+                                                        <a href="{{ route('troopers.my-course') }}" class="nav-dropdown-link w-dropdown-link">My Classes</a>
+                                                        
+                                                        {{-- Logout Link --}}
+                                                        <div class="w-dropdown-link">
+                                                            <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                                                                @csrf
+                                                                <a href="{{ route('logout') }}"
+                                                                onclick="event.preventDefault(); this.closest('form').submit();"
+                                                                style="color: inherit; text-decoration: inherit; display: block;">
+                                                                    Log Out
+                                                                </a>
+                                                            </form>
+                                                        </div>
+                                                    </nav>
+                                                </div>
+                                            </li>
+                                        @endif
                                     @endauth                                  
                                 </ul>
                             </nav>
