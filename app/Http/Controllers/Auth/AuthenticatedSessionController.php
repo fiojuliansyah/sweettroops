@@ -13,17 +13,11 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Display the login view.
-     */
     public function create(): View
     {
         return view('auth.login');
     }
 
-    /**
-     * Handle an incoming authentication request.
-     */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -44,13 +38,11 @@ class AuthenticatedSessionController extends Controller
         RateLimiter::clear($this->throttleKey($request));
         
         $request->session()->regenerate();
+        session(['auth_method' => 'password']);
         
         return redirect()->intended(route('troopers.my-course', absolute: false));
     }
 
-    /**
-     * Destroy an authenticated session.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
@@ -59,9 +51,6 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Ensure the login request is not rate limited.
-     */
     private function ensureIsNotRateLimited(Request $request): void
     {
         if (!RateLimiter::tooManyAttempts($this->throttleKey($request), 5)) {
@@ -80,9 +69,6 @@ class AuthenticatedSessionController extends Controller
         ]);
     }
 
-    /**
-     * Get the rate limiting throttle key for the request.
-     */
     private function throttleKey(Request $request): string
     {
         return Str::lower($request->input('email')) . '|' . $request->ip();

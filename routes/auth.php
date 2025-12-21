@@ -48,7 +48,6 @@ Route::middleware('guest')
         Route::post('reset-password', [NewPasswordController::class, 'store'])
             ->name('password.store');
 
-        //magic login
 
         Route::get('magic-login', [MagicLoginController::class, 'showLoginForm'])->name('magic-login');
 

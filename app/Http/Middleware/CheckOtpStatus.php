@@ -10,19 +10,25 @@ class CheckOtpStatus
 {
     public function handle(Request $request, Closure $next)
     {
-        // Jika belum login, lanjutkan saja
         if (!Auth::check()) {
+            return $next($request);
+        }
+
+        $authMethod = session('auth_method');
+
+        if ($authMethod !== 'otp') {
             return $next($request);
         }
 
         $user = Auth::user();
 
-        // Ambil OTP paling baru
-        $latestOtp = $user->otps()->latest()->first();
+        $latestOtp = $user->otps()
+            ->latest()
+            ->first();
 
-        // Jika ada OTP dan status masih pending -> blokir akses
         if ($latestOtp && $latestOtp->status === 'pending') {
-            return redirect()->route('login.verified')
+            return redirect()
+                ->route('login.verified')
                 ->with('error', 'Anda harus verifikasi OTP terlebih dahulu.');
         }
 
