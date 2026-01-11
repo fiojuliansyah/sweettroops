@@ -23,7 +23,7 @@
                         <input class="text-field-12 w-input" name="phone" value="{{ $user->phone }}" type="text">
 
                         <label for="password" class="field-label-16">Password</label>
-                        <input class="text-field-12 w-input" name="password" value="{{ $user->password }}" type="password">
+                        <input class="text-field-12 w-input" name="password" type="password">
 
 
                         <select id="Role" name="role" required="" class="select-field w-select">

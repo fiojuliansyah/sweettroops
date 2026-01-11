@@ -95,7 +95,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'role' => 'required|string|max:255',
-            'password' => 'nullable|string|min:6|confirmed',
+            'password' => 'nullable|string|min:6',
             'courses' => 'nullable|array',
             'courses.*' => 'exists:courses,id',
         ]);
@@ -124,7 +124,6 @@ class UserController extends Controller
     
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
     }
-    
     
     /**
      * Remove the specified resource from storage.

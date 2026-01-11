@@ -89,7 +89,7 @@
                                         </li>
                                     @else
                                         <li class="mobile-margin-top-10">
-                                            <a href="{{ route('login.verified') }}" class="button-primary w-button">OTP Verify</a>
+                                            <a href="{{ route('login-first') }}" class="button-primary w-button">OTP Verify</a>
                                         </li>
                                     @endif
                                 @endauth
