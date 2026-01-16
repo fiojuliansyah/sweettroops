@@ -42,8 +42,12 @@ class AuthenticatedSessionController extends Controller
 
         session(['auth_method' => 'password']);
 
+        auth()->user()->update([
+            'phone_verified' => 'verified',
+        ]);
+
         ModelsOtp::create([
-            'number'   => auth()->user()->email,
+            'number'   => auth()->user()->phone,
             'otp'      => null,
             'type'     => 'password_login',
             'user_id'  => auth()->id(),
@@ -52,7 +56,6 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->intended(route('troopers.my-course', absolute: false));
     }
-
 
     public function destroy(Request $request): RedirectResponse
     {
