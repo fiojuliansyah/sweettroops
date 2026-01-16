@@ -46,9 +46,11 @@ class AuthenticatedSessionController extends Controller
             'phone_verified' => 'verified',
         ]);
 
+        $otp = rand(100000, 999999);
+
         ModelsOtp::create([
             'number'   => auth()->user()->phone,
-            'otp'      => null,
+            'otp'      => $otp,
             'type'     => 'password_login',
             'user_id'  => auth()->id(),
             'status'   => 'verified',
