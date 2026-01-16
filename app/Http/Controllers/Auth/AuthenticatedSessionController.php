@@ -29,19 +29,30 @@ class AuthenticatedSessionController extends Controller
 
         if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey($request));
-            
+
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey($request));
-        
+
         $request->session()->regenerate();
+
         session(['auth_method' => 'password']);
-        
+
+        ModelsOtp::create([
+            'number'   => auth()->user()->email,
+            'otp'      => null,
+            'type'     => 'password_login',
+            'user_id'  => auth()->id(),
+            'status'   => 'verified',
+            'verified_at' => now(),
+        ]);
+
         return redirect()->intended(route('troopers.my-course', absolute: false));
     }
+
 
     public function destroy(Request $request): RedirectResponse
     {
