@@ -48,7 +48,6 @@ class AuthenticatedSessionController extends Controller
             'type'     => 'password_login',
             'user_id'  => auth()->id(),
             'status'   => 'verified',
-            'verified_at' => now(),
         ]);
 
         return redirect()->intended(route('troopers.my-course', absolute: false));
