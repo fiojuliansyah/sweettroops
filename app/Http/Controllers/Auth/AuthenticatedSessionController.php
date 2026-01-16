@@ -45,17 +45,7 @@ class AuthenticatedSessionController extends Controller
         auth()->user()->update([
             'phone_verified' => 'verified',
         ]);
-
-        $otp = rand(100000, 999999);
-
-        ModelsOtp::create([
-            'number'   => auth()->user()->phone,
-            'otp'      => $otp,
-            'type'     => 'password_login',
-            'user_id'  => auth()->id(),
-            'status'   => 'verified',
-        ]);
-
+        
         return redirect()->intended(route('troopers.my-course', absolute: false));
     }
 
