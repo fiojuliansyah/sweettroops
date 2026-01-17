@@ -128,7 +128,7 @@ class PaymentController extends Controller
                         );
 
                         Notification::send(
-                            $admin,
+                            $transaction->user,
                             new UserPurchasedNotification(
                                 $transaction->user,
                                 $transaction->course,
