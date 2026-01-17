@@ -51,7 +51,6 @@ class AuthenticatedSessionController extends Controller
                 'type'        => 'login_password',
                 'user_id'     => $user->id,
                 'status'      => 'verified',
-                'verified_at' => now(),
             ]);
         }
 
