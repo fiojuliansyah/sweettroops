@@ -40,11 +40,21 @@ class Otp extends Notification
 
     public function toWhatsapp($notifiable)
     {
-        $name = $notifiable->name; 
-        
+        $name = $notifiable->name;
+
         return [
-            'number'    => $this->number,
-            'data'      => "Hallo $name,\n\nKode OTP kamu adalah: ".$this->otp."\n\nTolong jangan sebarkan informasi ini kepada siapa pun yaa.",        
+            'number' => $this->number,
+            'data'   => "Hi $name, 🍰\n\n"
+                . "Psst… here’s your secret code 🤫\n"
+                . "OTP: " . $this->otp . " \n\n"
+                . "This is a one-time code, just for you.\n"
+                . "Please don’t share it with anyone (even fellow bakers 😉).\n\n"
+                . "⏰ It’ll expire soon.\n"
+                . "📲 This number is OTP-only - for questions or help, chat with our SweetTroops Admin instead.\n"
+                . "For classes info: 085311232377\n"
+                . "For website: 087889892306\n\n"
+                . "See you in class!\n"
+                . "SweetTroops Team",
         ];
     }
 }
