@@ -44,7 +44,7 @@ Route::get('/course/all', [TCourseController::class, 'allCourse'])->name('all-co
 
 Route::prefix('troopers')
 ->name('troopers.')
-->middleware(['auth', 'otp.pending'])
+->middleware(['auth'])
 ->group(function () {
     Route::get('/dashboard', [TDashboardController::class, 'index'])->name('dashboard');
     Route::get('/account', [TDashboardController::class, 'account'])->name('account');
