@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\GatewayController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
@@ -88,7 +89,7 @@ Route::middleware(['auth','admin'])
     Route::resource('users', UserController::class);
     Route::get('admin/homepages', [HomePageController::class, 'index'])->name('homepages.index');
     Route::post('admin/homepages/save/{id?}', [HomePageController::class, 'save'])->name('homepages.save');
-
+    
     Route::post('/admin/users/import', [UserController::class, 'importExcel'])->name('users.import');
     Route::post('/admin/competitions/import', [CourseController::class, 'importCompetitionExcel'])->name('competitions.import');
     Route::post('/admin/course-video/import', [CourseController::class, 'importVideos'])->name('course.import-videos');
@@ -103,8 +104,10 @@ Route::middleware(['auth','admin'])
     Route::delete('/videos/{id}', [CourseVideoController::class, 'destroy'])->name('videos.destroy');
     Route::post('/videos', [CourseVideoController::class, 'store'])->name('videos.store');
     Route::post('/video-upload/large', [CourseVideoController::class, 'upload'])->name('videos.upload')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-
+    
     Route::get('/test-aws', [CourseVideoController::class, 'tesAWS'])->name('test-aws');
+
+    Route::get('gateway/whatsapp', [GatewayController::class, 'index'])->name('gateway.whatsapp');
 });
 
 require __DIR__.'/auth.php';

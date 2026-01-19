@@ -67,6 +67,8 @@
                                                             class="nav-dropdown-link w-dropdown-link">Users Lists</a>
                                                         <a href="{{ route('admin.transactions.index') }}"
                                                             class="nav-dropdown-link w-dropdown-link">Transactions Lists</a>
+                                                        <a href="{{ route('admin.gateway.whatsapp') }}"
+                                                            class="nav-dropdown-link w-dropdown-link">Whatsapp gateway</a>
                                                     @endif
                                                     <a href="{{ route('troopers.profile.edit') }}"
                                                         class="nav-dropdown-link w-dropdown-link">Account Setting</a>
