@@ -26,6 +26,6 @@ class GatewayController extends Controller
             ]);
         }
 
-        return view('gateway.whatsapp', compact('qr', 'message'));
+        return view('admin.gateway.whatsapp', compact('qr', 'message'));
     }
 }
