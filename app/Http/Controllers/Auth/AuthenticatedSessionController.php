@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use App\Models\Otp as ModelsOtp;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,18 +30,37 @@ class AuthenticatedSessionController extends Controller
 
         if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey($request));
-            
+
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey($request));
-        
         $request->session()->regenerate();
+
+        $user = auth()->user();
+        $otp = rand(100000, 999999);
+
         session(['auth_method' => 'password']);
-        
-        return redirect()->intended(route('troopers.my-course', absolute: false));
+
+        if ($user->phone) {
+            ModelsOtp::create([
+                'number'      => $user->phone,
+                'otp'         => $otp,
+                'type'        => 'login_password',
+                'user_id'     => $user->id,
+                'status'      => 'verified',
+            ]);
+        }
+
+        if ($user->phone_verified !== 'verified') {
+            $user->update([
+                'phone_verified' => 'verified',
+            ]);
+        }
+
+        return redirect()->intended(route('troopers.my-course', false));
     }
 
     public function destroy(Request $request): RedirectResponse

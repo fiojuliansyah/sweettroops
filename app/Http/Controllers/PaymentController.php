@@ -20,32 +20,30 @@ class PaymentController extends Controller
     {
         try {
             $course = Course::findOrFail($id);
-    
-            
+
             if (!config('midtrans.server_key')) {
-                throw new \Exception("Midtrans Server Key is missing! Check .env file.");
+                throw new \Exception('Midtrans Server Key is missing');
             }
-    
-            
+
             Config::$serverKey = config('midtrans.server_key');
             Config::$isProduction = config('midtrans.is_production');
             Config::$isSanitized = config('midtrans.is_sanitized');
             Config::$is3ds = config('midtrans.is_3ds');
-    
-            $order_id = 'TRX-' . uniqid();
-    
-            
+
+            $orderId = 'TRX-' . uniqid();
+
             $transaction = Transaction::create([
                 'user_id' => Auth::id(),
                 'course_id' => $course->id,
-                'order_id' => $order_id,
+                'order_id' => $orderId,
                 'amount' => $course->price,
                 'payment_status' => 'pending',
+                'status' => 'waiting_payment',
             ]);
-    
-            $transaction_data = [
+
+            $transactionData = [
                 'transaction_details' => [
-                    'order_id' => $order_id,
+                    'order_id' => $orderId,
                     'gross_amount' => $course->price,
                 ],
                 'customer_details' => [
@@ -57,88 +55,111 @@ class PaymentController extends Controller
                         'id' => $course->id,
                         'price' => $course->price,
                         'quantity' => 1,
-                        'name' => $course->title
+                        'name' => $course->title,
                     ],
                 ],
             ];
-    
-            $snapToken = Snap::getSnapToken($transaction_data);
-    
-            
-            $admin = (object) ['phone' => env('ADMIN_WHATSAPP_NUMBER'), 'name' => 'Admin'];
-            Notification::send($admin, new CoursePurchasedNotification(Auth::user(), $course, $transaction));
-    
-            return response()->json(['snapToken' => $snapToken]);
-    
+
+            $snapToken = Snap::getSnapToken($transactionData);
+
+            return response()->json([
+                'snapToken' => $snapToken,
+            ]);
         } catch (\Exception $e) {
-            Log::error("Midtrans Error: " . $e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Midtrans Error', ['message' => $e->getMessage()]);
+            return response()->json([
+                'message' => 'Payment initialization failed',
+            ], 500);
         }
     }
 
     public function callback(Request $request)
     {
         $serverKey = config('midtrans.server_key');
-        $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
 
-        if ($hashed != $request->signature_key) {
-            \Log::warning('Signature tidak valid', [
-                'expected' => $hashed,
-                'actual' => $request->signature_key,
-            ]);
+        $signature = hash(
+            'sha512',
+            $request->order_id .
+            $request->status_code .
+            $request->gross_amount .
+            $serverKey
+        );
+
+        if ($signature !== $request->signature_key) {
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
         $transaction = Transaction::where('order_id', $request->order_id)->first();
 
         if (!$transaction) {
-            \Log::warning('Transaksi tidak ditemukan', ['order_id' => $request->order_id]);
             return response()->json(['message' => 'Transaction not found'], 404);
+        }
+
+        if ($transaction->payment_status === 'paid') {
+            return response()->json(['message' => 'Already processed'], 200);
         }
 
         try {
             switch ($request->transaction_status) {
                 case 'settlement':
-                    $transaction->payment_status = 'paid';
-                    $transaction->status = 'completed';
-                    $transaction->save();
+                    $transaction->update([
+                        'payment_status' => 'paid',
+                        'status' => 'completed',
+                    ]);
 
-                    Competition::create([
+                    Competition::firstOrCreate([
                         'user_id' => $transaction->user_id,
                         'course_id' => $transaction->course_id,
                     ]);
 
-                    $admin = (object) ['phone' => env('ADMIN_WHATSAPP_NUMBER'), 'name' => 'Admin'];
+                    $admin = (object) [
+                        'phone' => env('ADMIN_WHATSAPP_NUMBER'),
+                        'name' => 'Admin',
+                    ];
 
                     if ($transaction->user && $transaction->course) {
-                        Notification::send($admin, new CoursePurchasedNotification($transaction->user, $transaction->course, $transaction));
-                        Notification::send($admin, new UserPurchasedNotification($transaction->user, $transaction->course, $transaction));
-                    } else {
-                        \Log::warning('User atau Course null saat kirim notifikasi.');
+                        Notification::send(
+                            $admin,
+                            new CoursePurchasedNotification(
+                                $transaction->user,
+                                $transaction->course,
+                                $transaction
+                            )
+                        );
+
+                        Notification::send(
+                            $transaction->user,
+                            new UserPurchasedNotification(
+                                $transaction->user,
+                                $transaction->course,
+                                $transaction
+                            )
+                        );
                     }
 
                     break;
 
                 case 'pending':
-                    $transaction->payment_status = 'pending';
-                    $transaction->status = 'waiting_payment';
-                    $transaction->save();
+                    $transaction->update([
+                        'payment_status' => 'pending',
+                        'status' => 'waiting_payment',
+                    ]);
                     break;
 
                 case 'expire':
                 case 'cancel':
                 case 'failure':
-                    $transaction->payment_status = 'failed';
-                    $transaction->status = 'failed';
-                    $transaction->save();
+                    $transaction->update([
+                        'payment_status' => 'failed',
+                        'status' => 'failed',
+                    ]);
                     break;
             }
         } catch (\Exception $e) {
-            \Log::error('Callback error:', ['error' => $e->getMessage()]);
-            return response()->json(['message' => 'Internal server error'], 500);
+            Log::error('Callback Error', ['message' => $e->getMessage()]);
+            return response()->json(['message' => 'Callback error'], 500);
         }
 
         return response()->json(['message' => 'Callback handled'], 200);
     }
-
 }

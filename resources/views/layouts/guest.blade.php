@@ -28,8 +28,8 @@
                 .className += t + "touch")
         }(window, document);
     </script>
-    <link href="/frontend/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <link href="/frontend/assets/images/webclip.png" rel="apple-touch-icon">
+    <link href="/frontend/assets/images/icon.jpeg" rel="shortcut icon" type="image/x-icon">
+    <link href="/frontend/assets/images/icon.jpeg" rel="apple-touch-icon">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     @stack('styles')
 

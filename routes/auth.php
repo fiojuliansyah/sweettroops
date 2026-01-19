@@ -58,7 +58,7 @@ Route::middleware('guest')
             ->name('magic-login.verify');
 });
 
-Route::middleware(['auth', 'otp.pending'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::get('login/verified', [PhoneAuthenticatedSessionController::class, 'phoneVerified'])
         ->name('login.verified');
