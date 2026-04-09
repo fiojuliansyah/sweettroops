@@ -1,7 +1,7 @@
 @extends('layouts.guest')
 
 @section('content')
-<div class="spark-section spark-hero-background-image-with-centered-content">
+    <div class="spark-section spark-hero-background-image-with-centered-content">
         <div class="spark-container spark-centered-content w-container">
             <img src="/frontend/assets/images/Logo-ST-Pink.png" width="40%">
             <h1>SWEET TROOPS</h1>
@@ -12,21 +12,19 @@
         <div class="container-4">
             <h2 class="centered-heading-2">UPCOMING&nbsp; CLASS</h2>
             <div class="team-grid-2">
-               @forelse ($upcomings as $upcoming)
-               <a href="{{ route('course.detail', $upcoming->slug) }}">
-                   <div id="w-node-ca84af2a-9836-8afa-9f74-52860d2bdefe-05a7959e" class="pc-card">
-                     @php
-                         $thumbnails = json_decode($upcoming->thumbnail, true);
-                         $firstThumbnail = isset($thumbnails[0])
-                             ? $thumbnails[0]
-                             : 'default-thumbnail.jpg';
-                     @endphp
-                   <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a href="#" class="pc-link">{{ $upcoming->title }}</a>
-                   </div> 
-               </a>
-               @empty
-                   
-               @endforelse
+                @forelse ($upcomings as $upcoming)
+                    <div id="w-node-ca84af2a-9836-8afa-9f74-52860d2bdefe-05a7959e" class="pc-card">
+                        <a href="{{ route('course.detail', $upcoming->slug) }}">
+                            @php
+                                $thumbnails = json_decode($upcoming->thumbnail, true);
+                                $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                            @endphp
+                            <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a
+                                href="#" class="pc-link">{{ $upcoming->title }}</a>
+                        </a>
+                    </div>
+                @empty
+                @endforelse
             </div>
         </div>
     </section>
@@ -34,21 +32,19 @@
         <div class="container-4">
             <h2 class="centered-heading-2">NEWEST &nbsp;CLASS</h2>
             <div class="team-grid-2">
-               @forelse ($courses as $course)
-               <a href="{{ route('course.detail', $course->slug) }}">
-                   <div id="w-node-ca84af2a-9836-8afa-9f74-52860d2bdefe-05a7959e" class="pc-card">
-                     @php
-                         $thumbnails = json_decode($course->thumbnail, true);
-                         $firstThumbnail = isset($thumbnails[0])
-                             ? $thumbnails[0]
-                             : 'default-thumbnail.jpg';
-                     @endphp
-                   <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a href="#" class="pc-link">{{ $course->title }}</a>
-                   </div> 
-               </a>
-               @empty
-                   
-               @endforelse
+                @forelse ($courses as $course)
+                    <div id="w-node-ca84af2a-9836-8afa-9f74-52860d2bdefe-05a7959e" class="pc-card">
+                        <a href="{{ route('course.detail', $course->slug) }}">
+                            @php
+                                $thumbnails = json_decode($course->thumbnail, true);
+                                $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
+                            @endphp
+                            <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a
+                                href="#" class="pc-link">{{ $course->title }}</a>
+                        </a>
+                    </div>
+                @empty
+                @endforelse
             </div>
         </div>
     </section>
