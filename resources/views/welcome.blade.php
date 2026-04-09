@@ -20,7 +20,7 @@
                                 $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
                             @endphp
                             <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a
-                                href="#" class="pc-link">{{ $upcoming->title }}</a>
+                                href="{{ route('course.detail', $upcoming->slug) }}" class="pc-link">{{ $upcoming->title }}</a>
                         </a>
                     </div>
                 @empty
@@ -40,7 +40,7 @@
                                 $firstThumbnail = isset($thumbnails[0]) ? $thumbnails[0] : 'default-thumbnail.jpg';
                             @endphp
                             <img src="{{ asset('storage/' . $firstThumbnail) }}" loading="lazy" class="pc-image"><a
-                                href="#" class="pc-link">{{ $course->title }}</a>
+                                href="{{ route('course.detail', $course->slug) }}" class="pc-link">{{ $course->title }}</a>
                         </a>
                     </div>
                 @empty
