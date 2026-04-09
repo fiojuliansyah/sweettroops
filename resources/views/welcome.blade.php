@@ -13,7 +13,7 @@
             <h2 class="centered-heading-2">UPCOMING&nbsp; CLASS</h2>
             <div class="team-grid-2">
                @forelse ($upcomings as $upcoming)
-               <a href="{{ route('course.show', $upcoming->id) }}">
+               <a href="#">
                    <div id="w-node-ca84af2a-9836-8afa-9f74-52860d2bdefe-05a7959e" class="pc-card">
                      @php
                          $thumbnails = json_decode($upcoming->thumbnail, true);
@@ -35,7 +35,7 @@
             <h2 class="centered-heading-2">NEWEST &nbsp;CLASS</h2>
             <div class="team-grid-2">
                @forelse ($courses as $course)
-               <a href="{{ route('course.show', $course->id) }}">
+               <a href="#">
                    <div id="w-node-ca84af2a-9836-8afa-9f74-52860d2bdefe-05a7959e" class="pc-card">
                      @php
                          $thumbnails = json_decode($course->thumbnail, true);
